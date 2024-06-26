@@ -16,11 +16,7 @@ unsigned short IMEM[IMEM_SIZE / 2];
 // Define a 64 KiB byte-addressable data memory array
 unsigned char DMEM[DMEM_SIZE];
 
-// Define IMAR, ICTRL, and IR
-unsigned short IMAR;
-unsigned short ICTRL;
-unsigned short IR;
-unsigned long clock_ticks = 0; // Initialize clock ticks
+
 
 PSW psw = { 0, 0, 0, 0 }; // Initialize PSW
 

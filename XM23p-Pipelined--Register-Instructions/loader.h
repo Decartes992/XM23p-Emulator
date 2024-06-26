@@ -36,6 +36,7 @@ extern unsigned short IMAR;
 extern unsigned short ICTRL;
 extern unsigned short IR; // Instruction Register
 extern unsigned long clock_ticks; // Global variable to store clock ticks
+extern unsigned short breakpoint;
 extern PSW psw; // Processor Status Word
 
 // Declare functions for loading S-Records and displaying memory

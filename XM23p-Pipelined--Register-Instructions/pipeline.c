@@ -11,15 +11,8 @@ File Purpose: This file contains functions to fetch, decode, and execute instruc
 #include <stdio.h>
 #include "loader.h"
 #include "pipeline.h"
-#include "decode_instructions.h"
 #include "execute_instructions.h"
-#include "instructions.h"
 
-extern unsigned short breakpoint;
-unsigned short IMAR;
-unsigned short ICTRL;
-unsigned short IR;
-unsigned long clock_ticks; // Global variable to store clock ticks
 
 
 void pipelineExecute(unsigned short* PC, int display) {

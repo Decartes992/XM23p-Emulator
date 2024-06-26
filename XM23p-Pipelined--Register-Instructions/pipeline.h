@@ -12,4 +12,3 @@ void E0Stage(InstructionType type, unsigned char rc, unsigned char wb, unsigned 
 void tick();
 
 #endif // PIPELINE_H
-

@@ -15,6 +15,13 @@ File Purpose: This file contains the manager function which handles user input f
 unsigned short reg_file[REGFILE_SIZE]; // Define the register file
 unsigned short breakpoint = 0xFFFF; // Initialize breakpoint to an invalid address
 
+// Define IMAR, ICTRL, and IR
+unsigned short breakpoint;
+unsigned short IMAR;
+unsigned short ICTRL;
+unsigned short IR;
+unsigned long clock_ticks = 0; // Initialize clock ticks
+
 void manager(int argc, char* argv[]) {
     if (argc != ARG_COUNT) {
         fprintf(stderr, "Error: XME file not detected.");
