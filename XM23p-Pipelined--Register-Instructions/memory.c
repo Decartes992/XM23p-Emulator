@@ -7,7 +7,6 @@ Instructor: Larry Hughes
 File Name: memory.c
 File Purpose: This file contains the memory arrays and a function to display a range of memory.
 */
-
 #include <stdio.h>
 #include "loader.h"
 
@@ -16,6 +15,11 @@ unsigned short IMEM[IMEM_SIZE / 2];
 
 // Define a 64 KiB byte-addressable data memory array
 unsigned char DMEM[DMEM_SIZE];
+
+// Define IMAR and ICTRL
+unsigned short IMAR;
+unsigned short ICTRL;
+unsigned long clock_ticks = 0; // Initialize clock ticks
 
 // Function to display a range of memory
 void displayMemory(unsigned char* memory, int start, int end) {
@@ -68,3 +72,4 @@ void displayMemory(unsigned char* memory, int start, int end) {
     // Wait for the user to press enter before continuing
     getchar();
 }
+

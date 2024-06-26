@@ -1,12 +1,3 @@
-/*
-Name: Iftekhar Rafi
-ID: B00871031
-Course: ECED 3403 Computer Architecture
-Instructor: Larry Hughes
-
-File Name: loader.h
-File Purpose: This file contains the declarations of functions and memory arrays used in the project.
-*/
 #ifndef LOADER_H
 #define LOADER_H
 
@@ -27,21 +18,22 @@ File Purpose: This file contains the declarations of functions and memory arrays
 #define ADDRESS_SHIFT 1
 #define DATA_SHIFT 8
 #define LINE_SIZE 100
+#define READ 0x1
 
 // Declare memory arrays
 extern unsigned short IMEM[IMEM_SIZE / 2];
 extern unsigned char DMEM[DMEM_SIZE];
 extern unsigned short reg_file[REGFILE_SIZE];
+extern unsigned short IMAR;
+extern unsigned short ICTRL;
+extern unsigned long clock_ticks; // Global variable to store clock ticks
 
 // Declare functions for loading S-Records, displaying memory, and fetching and decoding instructions
 void loadSRecord(const char* filename);
 void displayMemory(unsigned char* memory, int start, int end);
 void fetchInstructions();
 void decodeInstruction(unsigned short instruction, unsigned short address);
-void displayRegisters();
-void changeRegister();
-void changeMemory();
-void setBreakpoint(unsigned short address);
+void tick();
 
 // Declare an enum for instruction types
 typedef enum {
@@ -52,5 +44,7 @@ typedef enum {
 InstructionType getInstructionType(unsigned short instruction);
 void extractFields(unsigned short instruction, InstructionType type, unsigned char* rc, unsigned char* wb, unsigned char* src, unsigned char* dst, unsigned char* con, unsigned char* bb);
 const char* getInstructionName(InstructionType type);
+void executeInstruction(InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb);
+void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb);
 
 #endif // LOADER_H
