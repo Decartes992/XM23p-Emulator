@@ -10,17 +10,11 @@ File Purpose: This file contains the runMode function which executes instruction
 
 #include <stdio.h>
 #include "loader.h"
-#include "fetch_instructions.h"
+#include "pipeline.h"
 #include "decode_instructions.h"
 #include "execute_instructions.h"
 
 extern unsigned short breakpoint;
-
-// Function prototypes
-void displayRegisters();
-void changeRegister();
-void changeMemory();
-void setBreakpoint();
 
 void runMode(int debug) {
     unsigned short PC = 0x1000;

@@ -20,31 +20,27 @@
 #define LINE_SIZE 100
 #define READ 0x1
 
+// PSW structure
+typedef struct {
+    unsigned char ZF; // Zero Flag
+    unsigned char SF; // Sign Flag
+    unsigned char OF; // Overflow Flag
+    unsigned char CF; // Carry Flag
+} PSW;
+
 // Declare memory arrays
 extern unsigned short IMEM[IMEM_SIZE / 2];
 extern unsigned char DMEM[DMEM_SIZE];
 extern unsigned short reg_file[REGFILE_SIZE];
 extern unsigned short IMAR;
 extern unsigned short ICTRL;
+extern unsigned short IR; // Instruction Register
 extern unsigned long clock_ticks; // Global variable to store clock ticks
+extern PSW psw; // Processor Status Word
 
-// Declare functions for loading S-Records, displaying memory, and fetching and decoding instructions
+// Declare functions for loading S-Records and displaying memory
 void loadSRecord(const char* filename);
 void displayMemory(unsigned char* memory, int start, int end);
-void fetchInstructions();
-void decodeInstruction(unsigned short instruction, unsigned short address);
-void tick();
-
-// Declare an enum for instruction types
-typedef enum {
-    ADD, ADDC, SUB, SUBC, DADD, CMP, XOR, AND, OR, BIT, BIC, BIS, MOV, SWAP, SRA, RRC, SWPB, SXT, MOVLZ, MOVL, MOVLS, MOVH, INVALID
-} InstructionType;
-
-// Declare functions for getting the type of an instruction, extracting fields from an instruction, and getting the name of an instruction type
-InstructionType getInstructionType(unsigned short instruction);
-void extractFields(unsigned short instruction, InstructionType type, unsigned char* rc, unsigned char* wb, unsigned char* src, unsigned char* dst, unsigned char* con, unsigned char* bb);
-const char* getInstructionName(InstructionType type);
-void executeInstruction(InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb);
-void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb);
+void manager(int argc, char* argv[]);
 
 #endif // LOADER_H

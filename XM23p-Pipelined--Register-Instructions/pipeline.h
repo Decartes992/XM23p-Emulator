@@ -1,10 +1,15 @@
-#ifndef FETCH_INSTRUCTIONS_H
-#define FETCH_INSTRUCTIONS_H
+#ifndef PIPELINE_H
+#define PIPELINE_H
 
-// Function prototypes
+#include "decode_instructions.h"
+
+// Function prototypes for pipeline execution
+void pipelineExecute(unsigned short* PC, int display);
 void F0Stage(unsigned short* PC);
 void D0Stage(InstructionType* type, unsigned char* rc, unsigned char* wb, unsigned char* src, unsigned char* dst, unsigned char* con, unsigned char* bb);
 void F1Stage();
 void E0Stage(InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb);
+void tick();
 
-#endif // FETCH_INSTRUCTIONS_H
+#endif // PIPELINE_H
+

@@ -4,20 +4,22 @@ ID: B00871031
 Course: ECED 3403 Computer Architecture
 Instructor: Larry Hughes
 
-File Name: fetch_instructions.c
+File Name: pipeline.c
 File Purpose: This file contains functions to fetch, decode, and execute instructions from IMEM.
 */
 
 #include <stdio.h>
 #include "loader.h"
-#include "fetch_instructions.h"
+#include "pipeline.h"
 #include "decode_instructions.h"
 #include "execute_instructions.h"
+#include "instructions.h"
 
 extern unsigned short breakpoint;
 unsigned short IMAR;
 unsigned short ICTRL;
 unsigned short IR;
+unsigned long clock_ticks; // Global variable to store clock ticks
 
 
 void pipelineExecute(unsigned short* PC, int display) {
@@ -73,3 +75,6 @@ void E0Stage(InstructionType type, unsigned char rc, unsigned char wb, unsigned 
     }
 }
 
+void tick() {
+    clock_ticks++;
+}

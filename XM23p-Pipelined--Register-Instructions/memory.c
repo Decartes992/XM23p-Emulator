@@ -16,10 +16,13 @@ unsigned short IMEM[IMEM_SIZE / 2];
 // Define a 64 KiB byte-addressable data memory array
 unsigned char DMEM[DMEM_SIZE];
 
-// Define IMAR and ICTRL
+// Define IMAR, ICTRL, and IR
 unsigned short IMAR;
 unsigned short ICTRL;
+unsigned short IR;
 unsigned long clock_ticks = 0; // Initialize clock ticks
+
+PSW psw = { 0, 0, 0, 0 }; // Initialize PSW
 
 // Function to display a range of memory
 void displayMemory(unsigned char* memory, int start, int end) {
@@ -72,4 +75,3 @@ void displayMemory(unsigned char* memory, int start, int end) {
     // Wait for the user to press enter before continuing
     getchar();
 }
-
