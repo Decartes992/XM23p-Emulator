@@ -99,24 +99,40 @@ void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionTy
     // Print the fields based on the instruction type
     if (type == ADD || type == ADDC || type == SUB || type == SUBC || type == DADD || type == CMP || type == XOR || type == AND || type == OR || type == BIT || type == BIC || type == BIS) {
         if (!rc) printf("RC: %d WB: %d SRC: R%d DST: R%d\n", rc, wb, src, dst);
-        else printf("RC: %d WB: %d CON: #%d DST: R%d \n", rc, wb, con, dst);
+        else printf("RC: %d WB: %d CON: #%d DST: R%d\n", rc, wb, con, dst);
+        printf("Registers: ");
+        printf("R%d: %04X ", src, reg_file[src-1]);
     }
     else if (type == MOV) {
         printf("WB: %d SRC: R%d DST: R%d\n", wb, src, dst);
+        printf("Registers: ");
+        printf("R%d: %04X ", src, reg_file[src-1]);
     }
     else if (type == SWAP) {
         printf("SRC: R%d DST: R%d\n", src, dst);
+        printf("Registers: ");
+        printf("R%d: %04X ", src, reg_file[src-1]);
     }
     else if (type == SWPB || type == SXT) {
-        printf("dst: R%d\n", dst);
+        printf("DST: R%d\n", dst);
+        printf("Registers: ");
     }
     else if (type == SRA || type == RRC) {
-        printf("WB: %d dst: R%d\n", wb, dst);
+        printf("WB: %d DST: R%d\n", wb, dst);
+        printf("Registers: ");
     }
     else if (type == MOVL || type == MOVLZ || type == MOVLS || type == MOVH) {
-        printf("D: R%d BB: %d\n", dst, bb);
+        printf("DST: R%d BB: %d\n", dst, bb);
+        printf("Registers: ");
     }
     else {
         printf("\n");
     }
+
+    // Print the destination register values
+    printf("R%d: %04X\n", dst, reg_file[dst-1]);
+
+
+    // Print the PSW values
+    printf("PSW: [ ZF: %d SF: %d OF: %d CF: %d ]\n\n", psw.ZF, psw.SF, psw.OF, psw.CF);
 }

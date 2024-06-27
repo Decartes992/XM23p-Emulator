@@ -22,7 +22,7 @@ unsigned short IMAR;
 unsigned short ICTRL;
 unsigned short IR;
 unsigned long clock_ticks = 0; 
-unsigned short start_address = 0x1000; // Start address set by S9 record
+unsigned short start_address = 0x0000; // Start address set by S9 record - default is 0x0000
 
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];

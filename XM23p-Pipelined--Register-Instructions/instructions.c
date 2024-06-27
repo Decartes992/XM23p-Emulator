@@ -96,6 +96,23 @@ void executeDADD(unsigned char dst, unsigned short operand) {
     reg_file[dst] = result;
 }
 
+// Function to execute a CMP instruction
+void executeCMP(unsigned char dst, unsigned short operand) {
+    unsigned short result = reg_file[dst] - operand;
+    updatePSW_ZF(result);
+    updatePSW_SF(result);
+    updatePSW_OF(reg_file[dst], operand, result);
+    updatePSW_CF((unsigned int)reg_file[dst] - operand);
+}
+
+// Function to execute an XOR instruction
+void executeXOR(unsigned char dst, unsigned short operand) {
+    unsigned short result = reg_file[dst] ^ operand;
+    updatePSW_ZF(result);
+    updatePSW_SF(result);
+    reg_file[dst] = result;
+}
+
 // Function to execute a BIT instruction
 void executeBIT(unsigned char dst, unsigned short operand) {
     unsigned short result = reg_file[dst] & operand;

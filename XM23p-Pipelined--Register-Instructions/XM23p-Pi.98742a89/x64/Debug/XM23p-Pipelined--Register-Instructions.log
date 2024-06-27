@@ -1,4 +1,2 @@
-﻿  memory.c
-  srecord.c
-  Generating Code...
+﻿  decode_instructions.c
   XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
