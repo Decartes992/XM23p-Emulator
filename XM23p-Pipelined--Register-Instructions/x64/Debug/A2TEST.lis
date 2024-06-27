@@ -1,0 +1,110 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: A2TEST.txt
+Time of assembly: Thu 27 Jun 2024 11:13:56 
+  1	    	     	;
+  2	    	     	; XM23P Assembly Code Example
+  3	    	     	;
+  4	    	     	; ECED 3403
+  5	    	     	; All 22 Instructions
+  6	    	     	;
+  7	    	     	
+  8	    	     		org	#1000
+  9	    	     	
+ 10	    	     	Main	; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6878		movlz	#0F,R0		; R0 <- 0x000F
+ 12	    	     		
+ 13	    	     		; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	60D1		movl	#1A,R1		; R1 <- 0x001A
+ 15	    	     		
+ 16	    	     		; 3. MOVLS: Load immediate value (lower byte) into a register (shifted left)
+ 17	1004	715A		movls	#2B,R2		; R2 <- 0x2B00
+ 18	    	     		
+ 19	    	     		; 4. MOVH: Load immediate value (higher byte) into a register
+ 20	1006	7803		movh	#3C,R3		; R3 <- 0x3C00
+ 21	    	     		
+ 22	    	     		; 5. ADD: Add SRC/CON to DST
+ 23	1008	4001		add	R0,R1		; R1 <- R1 + R0
+ 24	    	     		
+ 25	    	     		; 6. ADDC: Add SRC/CON + Carry to DST
+ 26	100A	4102		addc	R0,R2		; R2 <- R2 + R0 + Carry
+ 27	    	     		
+ 28	    	     		; 7. SUB: Subtract SRC/CON from DST
+ 29	100C	4208		sub	R1,R0		; R0 <- R0 - R1
+ 30	    	     		
+ 31	    	     		; 8. SUBC: Subtract SRC/CON + Carry from DST
+ 32	100E	4311		subc	R2,R1		; R1 <- R1 - R2 - Carry
+ 33	    	     		
+ 34	    	     		; 9. DADD: Decimal Add SRC/CON to DST
+ 35	1010	449B		dadd	$4,R3		; R3 <- R3 + 0x0004 (Decimal add)
+ 36	    	     		
+ 37	    	     		; 10. CMP: Compare DST with SRC/CON
+ 38	1012	4588		cmp	#1,R0		; Compare R0 with 0x0005
+ 39	    	     		
+ 40	    	     		; 11. XOR: XOR SRC/CON with DST
+ 41	1014	4691		xor	#2,R1		; R1 <- R1 ^ 0x0006
+ 42	    	     		
+ 43	    	     		; 12. AND: AND SRC/CON with DST
+ 44	1016	4782		and	#0,R2		; R2 <- R2 & 0x0007
+ 45	    	     		
+ 46	    	     		; 13. OR: OR SRC/CON with DST
+ 47	1018	48A3		or	#8,R3		; R3 <- R3 | 0x0008
+ 48	    	     		
+ 49	    	     		; 14. BIT: Test bits (AND) of SRC/CON with DST
+ 50	101A	4980		bit	#0,R0		; Test bits in R0 with 0x0009
+ 51	    	     		
+ 52	    	     		; 15. BIC: Clear bits (AND NOT) of SRC/CON in DST
+ 53	101C	4A89		bic	#1,R1		; R1 <- R1 & ~0x000A
+ 54	    	     		
+ 55	    	     		; 16. BIS: Set bits (OR) of SRC/CON in DST
+ 56	101E	4B92		bis	#2,R2		; R2 <- R2 | 0x000B
+ 57	    	     		
+ 58	    	     		; 17. MOV: Move SRC/CON to DST
+ 59	1020	4C08		mov	R1,R0		; R0 <- R1
+ 60	    	     		
+ 61	    	     		; 18. SWAP: Swap bytes in DST
+ 62	1022	4C82		swap	R0,R2		; Swap bytes of R0 and R2
+ 63	    	     		
+ 64	    	     		; 19. SRA: Shift right arithmetic DST
+ 65	1024	4D01		sra	R1		; R1 <- R1 >> 1 (arithmetic)
+ 66	    	     		
+ 67	    	     		; 20. RRC: Rotate right through carry DST
+ 68	1026	4D0A		rrc	R2		; R2 <- Rotate R2 right through carry
+ 69	    	     		
+ 70	    	     		; 21. SWPB: Swap bytes in DST (swap the bytes within the word)
+ 71	1028	4D1B		swpb	R3		; R3 <- Swap bytes within the word of R3
+ 72	    	     		
+ 73	    	     		; 22. SXT: Sign extend DST (extend byte to word with sign)
+ 74	102A	4D20		sxt	R0		; R0 <- Sign extend R0
+ 75	    	     	
+ 76	102C	3FFF	Done	bra	Done		; Infinite loop to end program
+ 77	    	     	
+ 78	    	     		end	Main		; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+Done                               	REL	102C	4140	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Downloads\Assembler\A2TEST.xme
+
