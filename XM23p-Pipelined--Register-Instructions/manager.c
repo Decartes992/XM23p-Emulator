@@ -12,15 +12,25 @@ File Purpose: This file contains the manager function which handles user input f
 #include "loader.h"
 #include "debugger_mode.h"
 
+//Global variables are defined in the manager.c file
 unsigned short reg_file[REGFILE_SIZE]; // Define the register file
 unsigned short breakpoint = 0xFFFF; // Initialize breakpoint to an invalid address
 
-// Define IMAR, ICTRL, and IR
+// Define IMAR, ICTRL, IR, breakpoint, and clock_ticks
 unsigned short breakpoint;
 unsigned short IMAR;
 unsigned short ICTRL;
 unsigned short IR;
-unsigned long clock_ticks = 0; // Initialize clock ticks
+unsigned long clock_ticks = 0; 
+unsigned short start_address = 0x1000; // Start address set by S9 record
+
+// Define a 64 KiB word-addressable instruction memory array
+unsigned short IMEM[IMEM_SIZE / 2];
+
+// Define a 64 KiB word-addressable data memory array
+unsigned short DMEM[DMEM_SIZE/2];
+
+PSW psw = { 0, 0, 0, 0 }; // Initialize PSW
 
 void manager(int argc, char* argv[]) {
     if (argc != ARG_COUNT) {
@@ -42,8 +52,9 @@ void manager(int argc, char* argv[]) {
         scanf(" %c", &choice);
 
         switch (choice) {
-        case 'I':
-        case 'i':
+
+        // Display Instruction Memory
+        case 'I':case 'i': 
             printf("\nDisplaying Instruction Memory (IMEM):\n");
             printf("Enter start address (in hex): ");
             scanf("%x", &start);
@@ -51,45 +62,55 @@ void manager(int argc, char* argv[]) {
             scanf("%x", &end);
             displayMemory((unsigned char*)IMEM, start, end);
             break;
-        case 'D':
-        case 'd':
+
+        // Display Data Memory
+        case 'D':case 'd': 
             printf("Displaying Data Memory (DMEM):\n");
             printf("Enter start address (in hex): ");
             scanf("%x", &start);
             printf("Enter end address (in hex): ");
             scanf("%x", &end);
-            displayMemory(DMEM, start, end);
+            displayMemory((unsigned char*)DMEM, start, end);
             break;
-        case 'R':
-        case 'r':
+
+        // Display Registers
+        case 'R':case 'r':
             displayRegisters();
             break;
-        case 'C':
-        case 'c':
-            changeRegister();
+
+		// Change Register
+        case 'C': case 'c': 
+            changeRegister(); 
             break;
-        case 'M':
-        case 'm':
+
+        // Change Memory
+        case 'M': case 'm':
             changeMemory();
             break;
-        case 'B':
-        case 'b':
+
+        // Set Breakpoint
+        case 'B':case 'b':
             printf("Enter breakpoint address (in hex): ");
             scanf("%hx", &address);
             setBreakpoint(address);
             break;
-        case 'E':
-        case 'e':
-            runMode(0); // Execute mode
+
+        // Execute Program
+        case 'E':case 'e':
+            runMode(EXECUTION_MODE); 
             break;
-        case 'X':
-        case 'x':
-            runMode(1); // Debugger mode
+
+        // Debugger Mode
+        case 'X':case 'x':
+            runMode(DEBUGGER_MODE); 
             break;
+
+        // Invalid command
         default:
             printf("Invalid choice. Please enter a valid command.\n");
         }
 
+        // Ask user if they want to enter another command
         do {
             printf("Do you want to enter another command? (Y for yes, N for no): ");
             scanf(" %c", &continueChoice);

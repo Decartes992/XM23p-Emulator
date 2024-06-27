@@ -70,8 +70,8 @@ void changeMemory() {
 
     if (memType == 'I' || memType == 'i') {
         if (address < IMEM_SIZE) {
-            IMEM[address / 2] = value;
-            printf("IMEM[%04X] changed to %04X\n", address, value);
+            IMEM[address >> 1] = value;  // Store as word
+            printf("IMEM[%04X] changed to %04X\n", address >> 1, value);
         }
         else {
             printf("Invalid IMEM address.\n");
@@ -79,9 +79,8 @@ void changeMemory() {
     }
     else if (memType == 'D' || memType == 'd') {
         if (address < DMEM_SIZE) {
-            DMEM[address] = value & 0xFF;
-            DMEM[address + 1] = (value >> 8) & 0xFF;
-            printf("DMEM[%04X] changed to %04X\n", address, value);
+            DMEM[address >> 1] = value;  // Store as word
+            printf("DMEM[%04X] changed to %04X\n", address >> 1, value);
         }
         else {
             printf("Invalid DMEM address.\n");

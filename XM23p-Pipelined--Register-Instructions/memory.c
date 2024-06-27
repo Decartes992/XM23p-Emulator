@@ -10,15 +10,8 @@ File Purpose: This file contains the memory arrays and a function to display a r
 #include <stdio.h>
 #include "loader.h"
 
-// Define a 64 KiB word-addressable instruction memory array
-unsigned short IMEM[IMEM_SIZE / 2];
-
-// Define a 64 KiB byte-addressable data memory array
-unsigned char DMEM[DMEM_SIZE];
 
 
-
-PSW psw = { 0, 0, 0, 0 }; // Initialize PSW
 
 // Function to display a range of memory
 void displayMemory(unsigned char* memory, int start, int end) {

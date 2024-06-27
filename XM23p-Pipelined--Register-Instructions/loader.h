@@ -13,12 +13,16 @@
 #define BYTE_SIZE 2
 #define ASCII_SIZE 4
 #define IMEM_SHIFT 1
-#define DMEM_SHIFT 2
+#define DMEM_SHIFT 1
 #define BYTE_MASK 0xFF
 #define ADDRESS_SHIFT 1
 #define DATA_SHIFT 8
 #define LINE_SIZE 100
 #define READ 0x1
+#define WRITE 0x2 // RECHECK
+#define DEBUGGER_MODE 1
+#define EXECUTION_MODE 0
+
 
 // PSW structure
 typedef struct {
@@ -30,7 +34,7 @@ typedef struct {
 
 // Declare memory arrays
 extern unsigned short IMEM[IMEM_SIZE / 2];
-extern unsigned char DMEM[DMEM_SIZE];
+extern unsigned short DMEM[DMEM_SIZE/2];
 extern unsigned short reg_file[REGFILE_SIZE];
 extern unsigned short IMAR;
 extern unsigned short ICTRL;
@@ -38,6 +42,9 @@ extern unsigned short IR; // Instruction Register
 extern unsigned long clock_ticks; // Global variable to store clock ticks
 extern unsigned short breakpoint;
 extern PSW psw; // Processor Status Word
+extern unsigned short start_address; // Start address set by S9 record
+
+
 
 // Declare functions for loading S-Records and displaying memory
 void loadSRecord(const char* filename);

@@ -1,5 +1,4 @@
-﻿  debugger_mode.c
-  execute_instructions.c
-  pipeline.c
+﻿  memory.c
+  srecord.c
   Generating Code...
   XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
