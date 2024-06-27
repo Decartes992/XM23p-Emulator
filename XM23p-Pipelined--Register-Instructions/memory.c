@@ -64,3 +64,4 @@ void displayMemory(unsigned char* memory, int start, int end) {
     // Wait for the user to press enter before continuing
     getchar();
 }
+

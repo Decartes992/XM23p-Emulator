@@ -51,7 +51,8 @@ void loadSRecord(const char* filename) {
                 sscanf(line + HEADER_START + i, "%4x", &data);
                 IMEM[(address >> IMEM_SHIFT) + (i >> BYTE_SIZE)] = (data >> DATA_SHIFT) | ((data & BYTE_MASK) << DATA_SHIFT); // Correctly handle high and low byte
 
-                printf("IMEM[%04d] = %04X\n", (address >> IMEM_SHIFT) + (i >> BYTE_SIZE), IMEM[(address >> IMEM_SHIFT) + (i >> BYTE_SIZE)]);
+                //Test to see if the data is being stored correctly
+                //printf("IMEM[%04d] = %04X\n", (address >> IMEM_SHIFT) + (i >> BYTE_SIZE), IMEM[(address >> IMEM_SHIFT) + (i >> BYTE_SIZE)]);
             }
         }
         else if (line[ADDRESS_SHIFT] == '2') {
@@ -59,7 +60,8 @@ void loadSRecord(const char* filename) {
             for (int i = 0; i < dataLength; i += ASCII_SIZE) {
                 sscanf(line + HEADER_START + i, "%4x", &data);
                 DMEM[(address >> DMEM_SHIFT) + (i >> BYTE_SIZE)] = (data >> DATA_SHIFT) | ((data & BYTE_MASK) << DATA_SHIFT); // Correctly handle high and low byte
-                printf("DMEM[%04d] = %04X\n", (address >> DMEM_SHIFT) + (i >> BYTE_SIZE), DMEM[(address >> DMEM_SHIFT) + (i >> BYTE_SIZE)]);
+                // Test to see if the data is being stored correctly
+                //printf("DMEM[%04d] = %04X\n", (address >> DMEM_SHIFT) + (i >> BYTE_SIZE), DMEM[(address >> DMEM_SHIFT) + (i >> BYTE_SIZE)]);
             }
         }
         else if (line[ADDRESS_SHIFT] == '9') {
