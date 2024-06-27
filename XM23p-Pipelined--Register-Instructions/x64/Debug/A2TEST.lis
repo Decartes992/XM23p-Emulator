@@ -1,6 +1,6 @@
 X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
-Input file name: A2TEST.txt
-Time of assembly: Thu 27 Jun 2024 11:13:56 
+Input file name: A2TEST.asm
+Time of assembly: Thu 27 Jun 2024 11:55:48 
   1	    	     	;
   2	    	     	; XM23P Assembly Code Example
   3	    	     	;
