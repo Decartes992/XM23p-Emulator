@@ -101,17 +101,17 @@ void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionTy
         if (!rc) printf("RC: %d WB: %d SRC: R%d DST: R%d\n", rc, wb, src, dst);
         else printf("RC: %d WB: %d CON: #%d DST: R%d\n", rc, wb, con, dst);
         printf("Registers: ");
-        printf("R%d: %04X ", src, reg_file[src-1]);
+        printf("R%d: %04X ", src, reg_file[src]);
     }
     else if (type == MOV) {
         printf("WB: %d SRC: R%d DST: R%d\n", wb, src, dst);
         printf("Registers: ");
-        printf("R%d: %04X ", src, reg_file[src-1]);
+        printf("R%d: %04X ", src, reg_file[src]);
     }
     else if (type == SWAP) {
         printf("SRC: R%d DST: R%d\n", src, dst);
         printf("Registers: ");
-        printf("R%d: %04X ", src, reg_file[src-1]);
+        printf("R%d: %04X ", src, reg_file[src]);
     }
     else if (type == SWPB || type == SXT) {
         printf("DST: R%d\n", dst);
@@ -130,9 +130,9 @@ void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionTy
     }
 
     // Print the destination register values
-    printf("R%d: %04X\n", dst, reg_file[dst-1]);
+    printf("R%d: %04X\n", dst, reg_file[dst]);
 
 
     // Print the PSW values
-    printf("PSW: [ ZF: %d SF: %d OF: %d CF: %d ]\n\n", psw.ZF, psw.SF, psw.OF, psw.CF);
+    printf("PSW: [ Z: %d N: %d V: %d C: %d ]\n\n", psw.ZF, psw.SF, psw.OF, psw.CF);
 }

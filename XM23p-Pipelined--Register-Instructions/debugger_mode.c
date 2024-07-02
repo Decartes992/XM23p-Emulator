@@ -11,10 +11,11 @@ File Purpose: This file contains the runMode function which executes instruction
 #include <stdio.h>
 #include "loader.h"
 #include "pipeline.h"
+#include "debugger_mode.h"
 
 
 void runMode(int debug) {
-    unsigned short PC = 0x1000;
+    unsigned short PC = start_address;
 
     pipelineExecute(&PC, debug);
 
@@ -29,6 +30,8 @@ void runMode(int debug) {
             }
         }
     }
+    displayRegisters();
+    saveRegisterInfoToFile();
 }
 
 // Function to display register contents
@@ -95,4 +98,19 @@ void changeMemory() {
 void setBreakpoint(unsigned short address) {
     breakpoint = address;
     printf("Breakpoint set at address %04X\n", address);
+}
+
+void saveRegisterInfoToFile() {
+    FILE* file = fopen("RegisterFile.txt", "w");
+    if (file == NULL) {
+        printf("Failed to open file for writing.\n");
+        return;
+    }
+
+    fprintf(file, "Register Contents:\n");
+    for (int i = 0; i < REGFILE_SIZE; i++) {
+        fprintf(file, "R%d: %04X\n", i, reg_file[i]);
+    }
+
+    fclose(file);
 }

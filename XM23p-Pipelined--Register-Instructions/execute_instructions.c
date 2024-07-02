@@ -65,7 +65,7 @@ void executeInstruction(InstructionType type, unsigned char rc, unsigned char wb
         executeMOV(dst, operand);
         break;
     case SWAP:
-        executeSWAP(dst);
+        executeSWAP(src, dst);
         break;
     case SRA:
         executeSRA(dst);
@@ -80,16 +80,16 @@ void executeInstruction(InstructionType type, unsigned char rc, unsigned char wb
         executeSXT(dst);
         break;
     case MOVLZ:
-        executeMOVLZ(dst, operand);
+        executeMOVLZ(dst, bb);
         break;
     case MOVL:
-        executeMOVL(dst, operand);
+        executeMOVL(dst, bb);
         break;
     case MOVLS:
-        executeMOVLS(dst, operand);
+        executeMOVLS(dst, bb);
         break;
     case MOVH:
-        executeMOVH(dst, operand);
+        executeMOVH(dst, bb);
         break;
     default:
         // Handle invalid instruction or not implemented

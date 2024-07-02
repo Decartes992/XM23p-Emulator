@@ -17,7 +17,7 @@ Main	; 1. MOVLZ: Load immediate value (lower byte) into a register
 	movls	#2B,R2		; R2 <- 0x2B00
 	
 	; 4. MOVH: Load immediate value (higher byte) into a register
-	movh	#3C,R3		; R3 <- 0x3C00
+	movh	#3C00,R3		; R3 <- 0x3C00
 	
 	; 5. ADD: Add SRC/CON to DST
 	add	R0,R1		; R1 <- R1 + R0

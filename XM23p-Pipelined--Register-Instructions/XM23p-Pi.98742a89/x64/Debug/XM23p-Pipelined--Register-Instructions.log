@@ -1,2 +1,4 @@
-﻿  decode_instructions.c
-  XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
+﻿  debugger_mode.c
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\debugger_mode.c(41,16): warning C4476: 'printf' : unknown type field character 'B' in format specifier
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\debugger_mode.c(41,42): warning C4474: 'printf' : too many arguments passed for format string
+  XM23p-Pipelined--Register-Instructions.vcxproj -> D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe

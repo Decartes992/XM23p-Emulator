@@ -142,7 +142,7 @@ void executeMOV(unsigned char dst, unsigned short operand) {
 }
 
 // Function to execute a SWAP instruction
-void executeSWAP(unsigned char dst) {
+void executeSWPB(unsigned char dst) {
     unsigned short value = reg_file[dst];
     reg_file[dst] = (value << 8) | (value >> 8);
     updatePSW_ZF(reg_file[dst]);
@@ -168,9 +168,10 @@ void executeRRC(unsigned char dst) {
 }
 
 // Function to execute an SWPB instruction
-void executeSWPB(unsigned char dst) {
+void executeSWAP(unsigned char src, unsigned char dst) {
     unsigned short value = reg_file[dst];
-    reg_file[dst] = (value << 8) | (value >> 8);
+    reg_file[dst] = reg_file[src];
+    reg_file[src] = value;
 }
 
 // Function to execute an SXT instruction
@@ -179,31 +180,31 @@ void executeSXT(unsigned char dst) {
     updatePSW_ZF(reg_file[dst]);
     updatePSW_SF(reg_file[dst]);
 }
-
 // Function to execute a MOVLZ instruction
-void executeMOVLZ(unsigned char dst, unsigned short operand) {
-    reg_file[dst] = operand & 0x00FF;
+void executeMOVLZ(unsigned short dst, unsigned short operand) {
+    reg_file[dst] = operand & 0x00FF;    // Low byte of operand to low byte of destination
     updatePSW_ZF(reg_file[dst]);
     updatePSW_SF(reg_file[dst]);
+
 }
 
 // Function to execute a MOVL instruction
 void executeMOVL(unsigned char dst, unsigned short operand) {
-    reg_file[dst] = operand & 0x00FF;
+    reg_file[dst] = (reg_file[dst] & 0xFF00) | (operand & 0x00FF);    // Low byte of operand to low byte of destination
     updatePSW_ZF(reg_file[dst]);
     updatePSW_SF(reg_file[dst]);
 }
 
 // Function to execute a MOVLS instruction
 void executeMOVLS(unsigned char dst, unsigned short operand) {
-    reg_file[dst] = (operand & 0x00FF) << 8;
+    reg_file[dst] = 0xFF00 | (operand & 0x00FF);    // Low byte of operand to low byte of destination, high byte set to 11111111
     updatePSW_ZF(reg_file[dst]);
     updatePSW_SF(reg_file[dst]);
 }
 
 // Function to execute a MOVH instruction
 void executeMOVH(unsigned char dst, unsigned short operand) {
-    reg_file[dst] = operand << 8;
+    reg_file[dst] = (operand << 8) | (reg_file[dst] & 0x00FF);    // High byte of operand to high byte of destination, low byte unchanged
     updatePSW_ZF(reg_file[dst]);
     updatePSW_SF(reg_file[dst]);
 }
