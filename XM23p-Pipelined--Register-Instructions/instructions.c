@@ -65,6 +65,7 @@ void executeOR(unsigned char dst, unsigned short operand) {
     updatePSW_ZF(result);
     updatePSW_SF(result);
     reg_file[dst] = result;
+    printf("OR executed\n");
 }
 
 // Function to execute an ADDC instruction

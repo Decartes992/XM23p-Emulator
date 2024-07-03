@@ -15,23 +15,10 @@ File Purpose: This file contains the runMode function which executes instruction
 
 
 void runMode(int debug) {
-    unsigned short PC = start_address;
-
-    pipelineExecute(&PC, debug);
-
-    // Check for breakpoint or end of instructions
-    if (IR == 0x0000 || PC == breakpoint) {
-        if (IR == 0x0000 || PC == breakpoint) {
-            if (debug) {
-                printf("Program terminated at address %04X.\n", PC);
-                if (PC == breakpoint) {
-                    printf("Breakpoint reached at %04X. Execution stopped.\n", PC);
-                }
-            }
-        }
-    }
-    displayRegisters();
-    saveRegisterInfoToFile();
+    unsigned short * PC = &reg_file[7];  // Start execution at address in R7
+    pipelineExecute( PC, debug);          // Execute instructions
+    displayRegisters();                  // Display register contents
+    saveRegisterInfoToFile();            // Save register contents to file
 }
 
 // Function to display register contents

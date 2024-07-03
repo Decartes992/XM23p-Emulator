@@ -12,16 +12,8 @@ File Purpose: This file contains the function to execute instructions.
 #include "execute_instructions.h"
 #include "instructions.h"
 
-void executeInstruction(InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
-    unsigned short operand;
+void executeInstruction(InstructionType type, unsigned short operand, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
 
-    // Determine if the operand is a constant or a register value
-    if (rc) {
-        operand = con;
-    }
-    else {
-        operand = reg_file[src];
-    }
 
     // Execute the instruction based on the decoded type
     switch (type) {

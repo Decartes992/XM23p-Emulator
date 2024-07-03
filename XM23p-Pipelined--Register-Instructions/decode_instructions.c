@@ -95,39 +95,44 @@ const char* getInstructionName(InstructionType type) {
 
 void printDecodedInstruction( unsigned short PC, InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
     
-    printf("%04X: %s ", PC - 4, getInstructionName(type));
+    printf("                  %04X: %s ", PC - 4, getInstructionName(type));
 
     // Print the fields based on the instruction type
     if (type == ADD || type == ADDC || type == SUB || type == SUBC || type == DADD || type == CMP || type == XOR || type == AND || type == OR || type == BIT || type == BIC || type == BIS) {
-        if (!rc) printf("RC: %d WB: %d SRC: R%d DST: R%d\n", rc, wb, src, dst);
-        else printf("RC: %d WB: %d CON: #%d DST: R%d\n", rc, wb, con, dst);
-        printf("Registers: ");
-        printf("R%d: %04X ", src, reg_file[src]);
+        if (!rc) {
+            printf("RC: %d WB: %d SRC: R%d DST: R%d\n", rc, wb, src, dst);
+            printf("                  Registers: ");
+            printf("R%d: %04X ", src, reg_file[src]);
+        }
+        else {
+            printf("RC: %d WB: %d CON: #%d DST: R%d\n", rc, wb, con, dst);
+            printf("                  Registers: ");
+        }
     }
     else if (type == MOV) {
         printf("WB: %d SRC: R%d DST: R%d\n", wb, src, dst);
-        printf("Registers: ");
+        printf("                  Registers: ");
         printf("R%d: %04X ", src, reg_file[src]);
     }
     else if (type == SWAP) {
         printf("SRC: R%d DST: R%d\n", src, dst);
-        printf("Registers: ");
+        printf("                  Registers: ");
         printf("R%d: %04X ", src, reg_file[src]);
     }
     else if (type == SWPB || type == SXT) {
         printf("DST: R%d\n", dst);
-        printf("Registers: ");
+        printf("                  Registers: ");
     }
     else if (type == SRA || type == RRC) {
         printf("WB: %d DST: R%d\n", wb, dst);
-        printf("Registers: ");
+        printf("                  Registers: ");
     }
     else if (type == MOVL || type == MOVLZ || type == MOVLS || type == MOVH) {
         printf("DST: R%d BB: %d\n", dst, bb);
-        printf("Registers: ");
+        printf("                  Registers: ");
     }
     else {
-        printf("\n");
+        printf("\n                  ");
     }
 
 
@@ -135,4 +140,21 @@ void printDecodedInstruction( unsigned short PC, InstructionType type, unsigned 
     printf("R%d: %04X\n", dst, reg_file[dst]);
     printf("\n");
 
+}
+
+
+// Function to get the operand based on the rc flag and src value
+unsigned short getOperand(unsigned char rc, unsigned char src) {
+
+    // Define the table according to the given mapping
+    const unsigned short constants_table[8] = { 0, 1, 2, 4, 8, 16, 32, (unsigned short)-1 };
+
+    if (rc) {
+        // Return the constant value
+        return src;
+    }
+    else {
+        // Return the register value
+        return reg_file[src];
+    }
 }

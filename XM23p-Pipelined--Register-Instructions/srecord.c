@@ -68,7 +68,7 @@ void loadSRecord(const char* filename) {
             // S9 record: starting address
             sscanf(line + 4, "%4x", &address);
             printf("Starting address: %04X\n\n", address);
-            start_address = address;
+            reg_file[7] = address; // Store starting address in PC
         }
     }
     fclose(file);

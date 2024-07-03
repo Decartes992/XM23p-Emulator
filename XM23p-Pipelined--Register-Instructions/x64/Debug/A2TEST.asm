@@ -1,4 +1,3 @@
-;
 ; XM23P Assembly Code Example
 ;
 ; ECED 3403
@@ -17,7 +16,7 @@ Main	; 1. MOVLZ: Load immediate value (lower byte) into a register
 	movls	#2B,R2		; R2 <- 0x2B00
 	
 	; 4. MOVH: Load immediate value (higher byte) into a register
-	movh	#3C00,R3		; R3 <- 0x3C00
+	movh	#3C00,R3	; R3 <- 0x3C00
 	
 	; 5. ADD: Add SRC/CON to DST
 	add	R0,R1		; R1 <- R1 + R0
@@ -32,30 +31,30 @@ Main	; 1. MOVLZ: Load immediate value (lower byte) into a register
 	subc	R2,R1		; R1 <- R1 - R2 - Carry
 	
 	; 9. DADD: Decimal Add SRC/CON to DST
-	dadd	$4,R3		; R3 <- R3 + 0x0004 (Decimal add)
+	dadd	$4,R3		; R3 <- R3 + $4 (Decimal add)
 	
 	; 10. CMP: Compare DST with SRC/CON
-	cmp	#1,R0		; Compare R0 with 0x0005
+	cmp	#1,R0		; Compare R0 with #1
 	
 	; 11. XOR: XOR SRC/CON with DST
-	xor	#2,R1		; R1 <- R1 ^ 0x0006
+	xor	#2,R1		; R1 <- R1 ^ #2
 	
 	; 12. AND: AND SRC/CON with DST
-	and	#0,R2		; R2 <- R2 & 0x0007
+	and	#0,R2		; R2 <- R2 & #0
 	
 	; 13. OR: OR SRC/CON with DST
-	or	#8,R3		; R3 <- R3 | 0x0008
+	or	#8,R3		; R3 <- R3 | #8
 	
 	; 14. BIT: Test bits (AND) of SRC/CON with DST
-	bit	#0,R0		; Test bits in R0 with 0x0009
+	bit	#0,R0		; Test bits in R0 with #0
 	
 	; 15. BIC: Clear bits (AND NOT) of SRC/CON in DST
-	bic	#1,R1		; R1 <- R1 & ~0x000A
+	bic	#1,R1		; R1 <- R1 & ~#1
 	
 	; 16. BIS: Set bits (OR) of SRC/CON in DST
-	bis	#2,R2		; R2 <- R2 | 0x000B
+	bis	#2,R2		; R2 <- R2 | #2
 	
-	; 17. MOV: Move SRC/CON to DST
+	; 17. MOV: Move SRC to DST
 	mov	R1,R0		; R0 <- R1
 	
 	; 18. SWAP: Swap bytes in DST
