@@ -18,22 +18,36 @@ File Purpose: This file contains functions to fetch, decode, and execute instruc
 void pipelineExecute(unsigned short* PC, int display) {
     InstructionType type;
     unsigned char rc, wb, src, dst, con, bb;
+    printf("\n\n");
+    F0Stage(PC);
+    F1Stage();
+    printf("\n\n");
+    tick();
+
 
     while (1) {
 
         F0Stage(PC);
         D0Stage(&type, &rc, &wb, &src, &dst, &con, &bb);
 
+        if (display) {
+            printDecodedInstruction(*PC, type, rc, wb, src, dst, con, bb);
+        }
+
         tick();
 
         F1Stage();
+
+
         E0Stage(type, rc, wb, src, dst, con, bb);
 
-        tick();
+        // Print the destination register values
+        printf("Output: R%d: %04X\n", dst, reg_file[dst]);
 
-        if (display) {
-            printDecodedInstruction(IR, *PC, type, rc, wb, src, dst, con, bb);
-        }
+        // Print the PSW values
+        printf("PSW: [ Z: %d N: %d V: %d C: %d ]\n\n", psw.ZF, psw.SF, psw.OF, psw.CF);
+
+        tick();
 
         if (IR == 0x0000 || *PC == breakpoint) {
             if (display) {
@@ -51,23 +65,28 @@ void F0Stage(unsigned short* PC) {
     IMAR = *PC;
     ICTRL = READ;
     *PC += 2;
+    printf("F0 Stage: IMAR: %04X ICTRL: %d\n", IMAR, ICTRL);
 }
 
 void D0Stage(InstructionType* type, unsigned char* rc, unsigned char* wb, unsigned char* src, unsigned char* dst, unsigned char* con, unsigned char* bb) {
     *type = getInstructionType(IR);
     extractFields(IR, *type, rc, wb, src, dst, con, bb);
+    printf("D0 Stage: IR: %04X\n", IR);
 }
 
 void F1Stage() {
     IR = IMEM[IMAR / 2];
+    printf("F1 Stage: IR: %04X\n", IR);
 }
 
 void E0Stage(InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
     if (type != INVALID) {
+        printf("E0 Stage: Executing instruction...\n");
         executeInstruction(type, rc, wb, src, dst, con, bb);
     }
 }
 
 void tick() {
     clock_ticks++;
+    printf("Clock Ticks: %ld\n\n", clock_ticks);
 }

@@ -93,8 +93,9 @@ const char* getInstructionName(InstructionType type) {
     }
 }
 
-void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
-    printf("%04X: %s ", PC, getInstructionName(type));
+void printDecodedInstruction( unsigned short PC, InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
+    
+    printf("%04X: %s ", PC - 4, getInstructionName(type));
 
     // Print the fields based on the instruction type
     if (type == ADD || type == ADDC || type == SUB || type == SUBC || type == DADD || type == CMP || type == XOR || type == AND || type == OR || type == BIT || type == BIC || type == BIS) {
@@ -129,10 +130,9 @@ void printDecodedInstruction(unsigned short IR, unsigned short PC, InstructionTy
         printf("\n");
     }
 
+
     // Print the destination register values
     printf("R%d: %04X\n", dst, reg_file[dst]);
+    printf("\n");
 
-
-    // Print the PSW values
-    printf("PSW: [ Z: %d N: %d V: %d C: %d ]\n\n", psw.ZF, psw.SF, psw.OF, psw.CF);
 }
