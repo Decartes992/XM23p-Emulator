@@ -51,7 +51,7 @@ void loadSRecord(const char* filename) {
                 sscanf(line + HEADER_START + i, "%4x", &data);
                 IMEM[(address >> IMEM_SHIFT) + (i >> BYTE_SIZE)] = (data >> DATA_SHIFT) | ((data & BYTE_MASK) << DATA_SHIFT); // Correctly handle high and low byte
 
-                //Test to see if the data is being stored correctly
+                //` to see if the data is being stored correctly
                 //printf("IMEM[%04d] = %04X\n", (address >> IMEM_SHIFT) + (i >> BYTE_SIZE), IMEM[(address >> IMEM_SHIFT) + (i >> BYTE_SIZE)]);
             }
         }

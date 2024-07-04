@@ -30,6 +30,7 @@ typedef struct {
     unsigned char SF; // Sign Flag
     unsigned char OF; // Overflow Flag
     unsigned char CF; // Carry Flag
+    unsigned char slp; // SLP Flag
 } PSW;
 
 // Declare memory arrays

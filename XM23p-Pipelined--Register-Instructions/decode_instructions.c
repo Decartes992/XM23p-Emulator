@@ -53,17 +53,29 @@ InstructionType getInstructionType(unsigned short instruction) {
     case 0x7800: return MOVH;
     }
 
+    switch (instruction & 0xFFE0) {  // Check bits 15-5
+    case 0x4DA0: return SETCC;
+    case 0x4DC0: return CLRCC;
+    }
     return INVALID;
 }
 
-void extractFields(unsigned short instruction, InstructionType type, unsigned char* rc, unsigned char* wb, unsigned char* src, unsigned char* dst, unsigned char* con, unsigned char* bb) {
+void extractFields(unsigned short instruction, InstructionType type, unsigned char* rc, unsigned char* wb, unsigned char* src, unsigned char* dst, unsigned char* con, unsigned char* bb, unsigned char* v, unsigned char* c, unsigned char* slp, unsigned char* n, unsigned char* z) {
     *rc = (instruction >> 7) & 0x01;    // RC is at bit 7
     *wb = (instruction >> 6) & 0x01;    // WB is at bit 6
     *src = (instruction >> 3) & 0x07;   // SRC/CON is at bits 5-3
     *dst = instruction & 0x07;          // DST is at bits 2-0
     *con = *src;                        // CON is the same as SRC/CON
     *bb = (instruction >> 3) & 0xFF;    // BB is at bits 10-3 (byte-level data)
+    if (type == SETCC || type == CLRCC) {
+        *v = (instruction >> 4) & 0x01; //V is bit 4
+        *c = instruction & 0x01;         //C is bit 0
+        *n = (instruction >> 2) & 0x01;  //N is bit 2
+        *z = (instruction >> 1) & 0x01;  //Z is bit 1
+        *slp = (instruction >> 5) & 0x01; //SLP is bit 5
+    }
 }
+ 
 
 const char* getInstructionName(InstructionType type) {
     switch (type) {
@@ -89,6 +101,8 @@ const char* getInstructionName(InstructionType type) {
     case MOVLZ: return "MOVLZ";
     case MOVLS: return "MOVLS";
     case MOVH: return "MOVH";
+    case SETCC: return "SETCC";
+    case CLRCC: return "CLRCC";
     default: return "INVALID";
     }
 }
@@ -145,9 +159,6 @@ void printDecodedInstruction( unsigned short PC, InstructionType type, unsigned 
 
 // Function to get the operand based on the rc flag and src value
 unsigned short getOperand(unsigned char rc, unsigned char src) {
-
-    // Define the table according to the given mapping
-    const unsigned short constants_table[8] = { 0, 1, 2, 4, 8, 16, 32, (unsigned short)-1 };
 
     if (rc) {
         // Return the constant value

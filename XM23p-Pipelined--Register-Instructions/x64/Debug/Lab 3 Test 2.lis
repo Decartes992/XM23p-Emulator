@@ -1,0 +1,50 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Lab 3 Test 2.asm
+Time of assembly: Wed 3 Jul 2024 15:46:05 
+  1	    	     	; Program to test SETCC and CLRCC instructions
+  2	    	     	; This program sets the carry bit, performs a DADD instruction, and then clears the carry bit.
+  3	    	     	
+  4	    	     		org	#1000
+  5	    	     	START  
+  6	1000	4DA1	        SETCC   C               ; Set Carry bit
+  7	1002	6879	        MOVLZ     $15,R1        ; Load R1 with 0x000F
+  8	1004	6860	        MOVLZ     $12,R0        ; Load R0 with 0x000C
+  9	1006	4101	        ADDC      R0,R1         ; R1 <--- R1 + R0 + CARRY
+ 10	1008	4DC1	        CLRCC   C               ; Clear Carry bit
+ 11	100A	4389	        SUBC      $1,R1         ; R1 <---- R1 - 1 - CARRY
+ 12	100C	4DB1	        SETCC   CV              ; Set Carry and Overflow
+ 13	100E	4301	        SUBC    R0,R1           ; R1 <---- R1 - R0
+ 14	1010	4DC1	        CLRCC   C               ; Clear Carry bit
+ 15	1012	4DA4	        SETCC   N
+ 16	    	     	        HALT                    ; Halt the program
+ 17	    	     	
+ 18	    	     	        END     START
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+HALT                               	REL	1014	4116	PRI
+START                              	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Lab 3 Test 2.xme
+

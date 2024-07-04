@@ -30,7 +30,7 @@ unsigned short IMEM[IMEM_SIZE / 2];
 // Define a 64 KiB word-addressable data memory array
 unsigned short DMEM[DMEM_SIZE/2];
 
-PSW psw = { 0, 0, 0, 0 }; // Initialize PSW
+PSW psw = { 0, 0, 0, 0, 0 }; // Initialize PSW
 
 void manager(int argc, char* argv[]) {
     if (argc != ARG_COUNT) {

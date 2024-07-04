@@ -65,7 +65,6 @@ void executeOR(unsigned char dst, unsigned short operand) {
     updatePSW_ZF(result);
     updatePSW_SF(result);
     reg_file[dst] = result;
-    printf("OR executed\n");
 }
 
 // Function to execute an ADDC instruction
@@ -184,28 +183,34 @@ void executeSXT(unsigned char dst) {
 // Function to execute a MOVLZ instruction
 void executeMOVLZ(unsigned short dst, unsigned short operand) {
     reg_file[dst] = operand & 0x00FF;    // Low byte of operand to low byte of destination
-    updatePSW_ZF(reg_file[dst]);
-    updatePSW_SF(reg_file[dst]);
-
 }
 
 // Function to execute a MOVL instruction
 void executeMOVL(unsigned char dst, unsigned short operand) {
     reg_file[dst] = (reg_file[dst] & 0xFF00) | (operand & 0x00FF);    // Low byte of operand to low byte of destination
-    updatePSW_ZF(reg_file[dst]);
-    updatePSW_SF(reg_file[dst]);
 }
 
 // Function to execute a MOVLS instruction
 void executeMOVLS(unsigned char dst, unsigned short operand) {
     reg_file[dst] = 0xFF00 | (operand & 0x00FF);    // Low byte of operand to low byte of destination, high byte set to 11111111
-    updatePSW_ZF(reg_file[dst]);
-    updatePSW_SF(reg_file[dst]);
 }
 
 // Function to execute a MOVH instruction
 void executeMOVH(unsigned char dst, unsigned short operand) {
     reg_file[dst] = (operand << 8) | (reg_file[dst] & 0x00FF);    // High byte of operand to high byte of destination, low byte unchanged
-    updatePSW_ZF(reg_file[dst]);
-    updatePSW_SF(reg_file[dst]);
+}
+
+void executeSETCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z) {
+   if (c) psw.CF = 1;
+   if (v) psw.OF = 1;
+   if (n) psw.SF = 1;
+   if (z) psw.ZF = 1;
+   if (slp) psw.slp = 1;
+}
+void executeCLRCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z) {
+   if (c) psw.CF = 0;
+   if (v) psw.OF = 0;
+   if (n) psw.SF = 0;
+   if (z) psw.ZF = 0;
+   if (slp) psw.slp = 0;
 }

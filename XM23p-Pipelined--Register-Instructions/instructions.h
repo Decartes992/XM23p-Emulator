@@ -24,6 +24,7 @@ void executeMOVLZ(unsigned short dst, unsigned short operand);
 void executeMOVL(unsigned char dst, unsigned short operand);
 void executeMOVLS(unsigned char dst, unsigned short operand);
 void executeMOVH(unsigned char dst, unsigned short operand);
-
+void executeSETCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z);
+void executeCLRCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z);
 
 #endif // INSTRUCTIONS_H
