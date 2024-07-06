@@ -1,1 +1,44 @@
-﻿  XM23p-Pipelined--Register-Instructions.vcxproj -> D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
+﻿  debugger_mode.c
+  decode_instructions.c
+  execute_instructions.c
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(15,274): warning C4029: declared formal parameter list different from definition
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,22): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,22): warning C4024: 'executeSETCC': different types for formal and actual parameter 1
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,25): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,25): warning C4024: 'executeSETCC': different types for formal and actual parameter 2
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,28): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,28): warning C4024: 'executeSETCC': different types for formal and actual parameter 3
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,33): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,33): warning C4024: 'executeSETCC': different types for formal and actual parameter 4
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,36): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(88,36): warning C4024: 'executeSETCC': different types for formal and actual parameter 5
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,16): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,16): warning C4024: 'executeCLRCC': different types for formal and actual parameter 1
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,19): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,19): warning C4024: 'executeCLRCC': different types for formal and actual parameter 2
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,22): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,22): warning C4024: 'executeCLRCC': different types for formal and actual parameter 3
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,27): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,27): warning C4024: 'executeCLRCC': different types for formal and actual parameter 4
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,30): warning C4047: 'function': 'unsigned char' differs in levels of indirection from 'unsigned char *'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\execute_instructions.c(91,30): warning C4024: 'executeCLRCC': different types for formal and actual parameter 5
+  pipeline.c
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,50): warning C4047: 'function': 'unsigned char *' differs in levels of indirection from 'unsigned char'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,50): warning C4024: 'E0Stage': different types for formal and actual parameter 8
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,53): warning C4047: 'function': 'unsigned char *' differs in levels of indirection from 'unsigned char'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,53): warning C4024: 'E0Stage': different types for formal and actual parameter 9
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,56): warning C4047: 'function': 'unsigned char *' differs in levels of indirection from 'unsigned char'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,56): warning C4024: 'E0Stage': different types for formal and actual parameter 10
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,61): warning C4047: 'function': 'unsigned char *' differs in levels of indirection from 'unsigned char'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,61): warning C4024: 'E0Stage': different types for formal and actual parameter 11
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,64): warning C4047: 'function': 'unsigned char *' differs in levels of indirection from 'unsigned char'
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(39,64): warning C4024: 'E0Stage': different types for formal and actual parameter 12
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(96,70): warning C4020: 'executeInstruction': too many actual parameters
+  instructions.c
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\instructions.c(165,14): warning C4244: '=': conversion from 'unsigned short' to 'unsigned char', possible loss of data
+  loader.c
+  manager.c
+  memory.c
+  srecord.c
+  Generating Code...
+  XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
