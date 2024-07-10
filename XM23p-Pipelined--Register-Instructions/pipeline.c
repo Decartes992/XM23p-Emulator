@@ -24,12 +24,12 @@ void pipelineExecute(unsigned short* PC, int display) {
     printf("Clock  PC   Instruction      Fetch      Decode      Execute    Z N V C\n");
     printf("--------------------------------------------------------------------------\n");
 
-    while (1) {
+    while (!(IR == 0x0000 || *PC == breakpoint)) {
 
         F0Stage(PC);
         D0Stage(&type, &rc, &wb, &src, &dst, &con, &bb, display, PC, &v, &c, &slp, &n, &z);
 
-        if (display) printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, *PC - 2, IMEM[IMAR / 2], IMAR, IR);
+        if (display) StatusPrint(PC);
 
         tick();
         IR_prev = IR;
@@ -37,28 +37,23 @@ void pipelineExecute(unsigned short* PC, int display) {
         E0Stage(type, rc, wb, src, dst, con, bb, v, c, slp, n, z);
 
 
-        if(display) printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR_prev, psw.ZF, psw.SF, psw.OF, psw.CF);
-
+        if (display) StatusPrint(PC);
 
         tick();
-
-        if (IR == 0x0000 || *PC == breakpoint) {
-            if (display) {
-                printf("%04X: %04X\n", *PC, IR);
-                if (*PC == breakpoint) {
-                    printf("Breakpoint reached at %04X. Execution stopped.\n\n", *PC);
-                }
-                else {
-                    printf("End of program reached. Execution stopped.\n\n");
-                }
-            }
-            break;
+    }
+    if (display) {
+        if (*PC == breakpoint) {
+            printf("Breakpoint reached at %04X. Execution stopped.\n\n", *PC);
+        }
+        else {
+            printf("End of program reached. Execution stopped.\n\n");
         }
     }
-}
+} 
 
-void initialize_execution(unsigned short* PC) {
-
+void StatusPrint(unsigned short* PC) {
+	if(clock_ticks % 2 == 0)printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, *PC - 2, IMEM[IMAR / 2], IMAR, IR);
+	if(clock_ticks % 2 != 0)printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR, psw.ZF, psw.SF, psw.OF, psw.CF);
 }
 
 void F0Stage(unsigned short* PC) {

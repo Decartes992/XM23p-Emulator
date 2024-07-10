@@ -22,7 +22,6 @@ unsigned short IMAR;
 unsigned short ICTRL;
 unsigned short IR;
 unsigned long clock_ticks = 0; 
-//unsigned short start_address = 0x0000; // Start address set by S9 record - default is 0x0000
 
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];
@@ -46,7 +45,6 @@ void manager(int argc, char* argv[]) {
     unsigned short address;
 
     loadSRecord(argv[1]);
-
     do {
         printf("Enter command (I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
         scanf(" %c", &choice);
@@ -118,4 +116,5 @@ void manager(int argc, char* argv[]) {
         } while (continueChoice != 'Y' && continueChoice != 'y' && continueChoice != 'N' && continueChoice != 'n');
 
     } while (continueChoice == 'Y' || continueChoice == 'y');
+    return;
 }
