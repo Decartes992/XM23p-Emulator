@@ -20,78 +20,78 @@ void executeInstruction(InstructionType type, unsigned short operand, unsigned c
     switch (type) {
     case ADD:
         executeADD(dst, operand);
-        break;
+        return;
     case ADDC:
         executeADDC(dst, operand);
-        break;
+        return;
     case SUB:
         executeSUB(dst, operand);
-        break;
+        return;
     case SUBC:
         executeSUBC(dst, operand);
-        break;
+        return;
     case DADD:
         executeDADD(dst, operand);
-        break;
+        return;
     case CMP:
         executeCMP(dst, operand);
-        break;
+        return;
     case XOR:
         executeXOR(dst, operand);
-        break;
+        return;
     case AND:
         executeAND(dst, operand);
-        break;
+        return;
     case OR:
         executeOR(dst, operand);
-        break;
+        return;
     case BIT:
         executeBIT(dst, operand);
-        break;
+        return;
     case BIC:
         executeBIC(dst, operand);
-        break;
+        return;
     case BIS:
         executeBIS(dst, operand);
-        break;
+        return;
     case MOV:
         executeMOV(dst, operand);
-        break;
+        return;
     case SWAP:
         executeSWAP(src, dst);
-        break;
+        return;
     case SRA:
         executeSRA(dst);
-        break;
+        return;
     case RRC:
         executeRRC(dst);
-        break;
+        return;
     case SWPB:
         executeSWPB(dst);
-        break;
+        return;
     case SXT:
         executeSXT(dst);
-        break;
+        return;
     case MOVLZ:
         executeMOVLZ(dst, bb);
-        break;
+        return;
     case MOVL:
         executeMOVL(dst, bb);
-        break;
+        return;
     case MOVLS:
         executeMOVLS(dst, bb);
-        break;
+        return;
     case MOVH:
         executeMOVH(dst, bb);
-        break;
+        return;
     case SETCC:
         executeSETCC(v, c, slp, n, z);
-		break;
+		return;
     case CLRCC:
 		executeCLRCC(v, c, slp, n, z);
-	    break;
+	    return;
     default:
         // Handle invalid instruction or not implemented
-        break;
+        return;
     }
 }

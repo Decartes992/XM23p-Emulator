@@ -19,6 +19,7 @@ void runMode(int debug) {
     pipelineExecute( PC, debug);          // Execute instructions
     displayRegisters();                  // Display register contents
     saveRegisterInfoToFile();            // Save register contents to file
+    return;
 }
 
 // Function to display register contents
@@ -28,6 +29,7 @@ void displayRegisters() {
         printf("R%d: %04X\n", i, reg_file[i]);
     }
     printf("\n");
+    return;
 }
 
 // Function to change register contents
@@ -44,6 +46,7 @@ void changeRegister() {
     scanf("%hx", &value);
     reg_file[reg] = value;
     printf("Register R%d changed to %04X\n", reg, value);
+    return;
 }
 
 // Function to change memory contents
@@ -79,12 +82,14 @@ void changeMemory() {
     else {
         printf("Invalid memory type.\n");
     }
+    return;
 }
 
 // Function to set a breakpoint
 void setBreakpoint(unsigned short address) {
     breakpoint = address;
     printf("Breakpoint set at address %04X\n", address);
+    return;
 }
 
 void saveRegisterInfoToFile() {
@@ -100,4 +105,5 @@ void saveRegisterInfoToFile() {
     }
 
     fclose(file);
+    return;
 }
