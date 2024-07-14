@@ -49,11 +49,12 @@ void pipelineExecute(unsigned short* PC, int display) {
             printf("End of program reached. Execution stopped.\n\n");
         }
     }
+    return;
 } 
 
 void StatusPrint(unsigned short* PC) {
-	if(clock_ticks % 2 == 0)printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, *PC - 2, IMEM[IMAR / 2], IMAR, IR);
-	if(clock_ticks % 2 != 0)printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR, psw.ZF, psw.SF, psw.OF, psw.CF);
+	if(clock_ticks % 2 == 0) printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, *PC - 2, IMEM[IMAR / 2], IMAR, IR);
+    else printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR, psw.ZF, psw.SF, psw.OF, psw.CF);
 }
 
 void F0Stage(unsigned short* PC) {
