@@ -51,5 +51,7 @@ extern unsigned short start_address; // Start address set by S9 record
 void loadSRecord(const char* filename);
 void displayMemory(unsigned char* memory, int start, int end);
 void manager(int argc, char* argv[]);
+unsigned int calculateChecksum(const char* line, int count, int dataLength);
+
 
 #endif // LOADER_H
