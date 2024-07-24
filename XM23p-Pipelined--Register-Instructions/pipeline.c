@@ -29,15 +29,17 @@ void pipelineExecute(unsigned short* PC, int display) {
         F0Stage(PC);
         D0Stage(&type, &rc, &wb, &src, &dst, &con, &bb, display, PC, &v, &c, &slp, &n, &z);
 
-        if (display) StatusPrint(PC);
+        if (display) StatusPrint(PC, IR_prev);
 
         tick();
+
         IR_prev = IR;
+
         F1Stage();
         E0Stage(type, rc, wb, src, dst, con, bb, v, c, slp, n, z);
 
 
-        if (display) StatusPrint(PC);
+        if (display) StatusPrint(PC, IR_prev);
 
         tick();
     }
@@ -52,9 +54,9 @@ void pipelineExecute(unsigned short* PC, int display) {
     return;
 } 
 
-void StatusPrint(unsigned short* PC) {
-	if(clock_ticks % 2 == 0) printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, *PC - 2, IMEM[IMAR / 2], IMAR, IR);
-    else printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR, psw.ZF, psw.SF, psw.OF, psw.CF);
+void StatusPrint(unsigned short* PC, unsigned short IR_prev) {
+	if(clock_ticks % 2 == 0) printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, IMAR, IMEM[IMAR / 2], IMAR, IR);
+    else printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR_prev, psw.ZF, psw.SF, psw.OF, psw.CF);
 }
 
 void F0Stage(unsigned short* PC) {

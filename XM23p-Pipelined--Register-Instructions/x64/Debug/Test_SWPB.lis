@@ -1,0 +1,64 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_SWPB.asm
+Time of assembly: Wed 24 Jul 2024 09:51:34 
+  1	    	     	; Test_SWPB
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main
+ 11	    	     	    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 12	1000	6890	    movlz    #12,R0        ; R0 <- 0x0012
+ 13	    	     	    
+ 14	    	     	    ; 2. MOVH: Load immediate value (higher byte) into a register
+ 15	1002	79A0	    movh    #3400,R0       ; R0 <- 0x3412
+ 16	    	     	    
+ 17	    	     	    ; 3. SWPB: Swap bytes in R0
+ 18	1004	4D18	    swpb    R0             ; R0 <- 0x1234
+ 19	    	     	    
+ 20	    	     	    ; 4. MOVLZ: Load immediate value (lower byte) into a register
+ 21	1006	6AB1	    movlz    #56,R1        ; R1 <- 0x0038 (56 in decimal)
+ 22	    	     	    
+ 23	    	     	    ; 5. MOVH: Load immediate value (higher byte) into a register
+ 24	1008	7BC1	    movh    #7800,R1       ; R1 <- 0x7838
+ 25	    	     	    
+ 26	    	     	    ; 6. SWPB: Swap bytes in R1
+ 27	100A	4D19	    swpb    R1             ; R1 <- 0x3878
+ 28	    	     	    
+ 29	    	     	    ; 7. Halt program execution
+ 30	    	     	    halt
+ 31	    	     	    
+ 32	    	     	    end    Main            ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	100C	4108	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_SWPB.xme
+

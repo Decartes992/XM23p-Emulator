@@ -1,0 +1,69 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_BIC.asm
+Time of assembly: Wed 24 Jul 2024 04:12:55 
+  1	    	     	; Test_BIC
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6FF8	    movlz    #FF,R0        ; R0 <- 0x00FF
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	6781	    movl    #F0,R1        ; R1 <- 0x00F0
+ 15	    	     	    
+ 16	    	     	    ; 3. BIC: Clear bits of R0 in R1 (should clear lower nibble)
+ 17	1004	4A08	    bic    R1,R0        ; R0 <- R0 & ~R1
+ 18	    	     	    
+ 19	    	     	    ; 4. MOVLZ: Load immediate value (lower byte) into a register
+ 20	1006	687A	    movlz    #0F,R2        ; R2 <- 0x000F
+ 21	    	     	    
+ 22	    	     	    ; 5. MOVL: Load immediate value (lower byte) into a register
+ 23	1008	6783	    movl    #F0,R3        ; R3 <- 0x00F0
+ 24	    	     	    
+ 25	    	     	    ; 6. BIC: Clear bits of R2 in R3 (should clear upper nibble)
+ 26	100A	4A13	    bic    R2,R3        ; R3 <- R3 & ~R2
+ 27	    	     	    
+ 28	    	     	    ; 7. MOVLZ: Load immediate value (lower byte) into a register
+ 29	100C	6C04	    movlz    #80,R4        ; R4 <- 0x0080
+ 30	    	     	    
+ 31	    	     	    ; 8. BIC: Clear bits of R4 in R0 (should clear bit 7)
+ 32	100E	4A20	    bic    R4,R0        ; R0 <- R0 & ~R4
+ 33	    	     	    
+ 34	    	     	    ; 9. Halt program execution
+ 35	    	     	    halt
+ 36	    	     	    
+ 37	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1010	4112	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_BIC.xme
+

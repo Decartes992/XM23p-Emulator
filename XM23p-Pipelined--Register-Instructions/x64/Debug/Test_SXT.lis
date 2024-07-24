@@ -1,0 +1,63 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_SXT.asm
+Time of assembly: Wed 24 Jul 2024 09:58:40 
+  1	    	     	; Test_SXT
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6C00	    movlz    #80,R0        ; R0 <- 0x0080 (-128 in decimal, signed byte)
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVLZ: Load immediate value (lower byte) into a register
+ 14	1002	6BF9	    movlz    #7F,R1        ; R1 <- 0x007F (127 in decimal, signed byte)
+ 15	    	     	    
+ 16	    	     	    ; 3. SXT: Sign-extend byte to word
+ 17	1004	4D20	    sxt    R0         ; R0 <- Sign-extend R0 (R0 = 0xFF80)
+ 18	    	     	    
+ 19	    	     	    ; 4. SXT: Sign-extend byte to word
+ 20	1006	4D21	    sxt    R1         ; R1 <- Sign-extend R1 (R1 = 0x007F)
+ 21	    	     	    
+ 22	    	     	    ; 5. MOVLZ: Load immediate value (lower byte) into a register
+ 23	1008	6802	    movlz    #00,R2        ; R2 <- 0x0000 (0 in decimal, signed byte)
+ 24	    	     	    
+ 25	    	     	    ; 6. SXT: Sign-extend byte to word
+ 26	100A	4D22	    sxt    R2         ; R2 <- Sign-extend R2 (R2 = 0x0000)
+ 27	    	     	    
+ 28	    	     	    ; 7. Halt program execution
+ 29	    	     	    halt
+ 30	    	     	    
+ 31	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	100C	4108	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_SXT.xme
+

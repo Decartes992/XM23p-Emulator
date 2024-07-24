@@ -44,6 +44,7 @@ void loadSRecord(const char* filename) {
     }
     char line[LINE_SIZE];
     while (fgets(line, sizeof(line), file)) {
+
         if (line[0] != 'S') continue; // Not an S-Record
         int count, address;
         sscanf(line + 2, "%2x%4x", &count, &address);

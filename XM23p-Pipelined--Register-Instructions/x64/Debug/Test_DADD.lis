@@ -1,0 +1,73 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_DADD.asm
+Time of assembly: Wed 24 Jul 2024 01:28:46 
+  1	    	     	; Test_DADD_Carry
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6CC8	    movlz    #99,R0        ; R0 <- 0x0099
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	64C9	    movl    #99,R1        ; R1 <- 0x0099
+ 15	    	     	    
+ 16	    	     	    ; 3. MOVH: Load immediate value (higher byte) into R0 and R1
+ 17	1004	7CC8	    movh    #9900,R0      ; R0 <- 0x9999
+ 18	1006	7CC9	    movh    #9900,R1      ; R1 <- 0x9999
+ 19	    	     	    
+ 20	    	     	    ; 4. DADD: Decimal Add R1 to R0 (should set carry bit)
+ 21	1008	4408	    dadd    R1,R0         ; R0 <- R0 + R1
+ 22	    	     	    ; Check PSW bits after DADD (Decimal addition with carry)
+ 23	    	     	    
+ 24	    	     	    ; 5. MOVLZ: Load immediate value (lower byte) into a register
+ 25	100A	6A2A	    movlz    #45,R2       ; R2 <- 0x0045
+ 26	    	     	    
+ 27	    	     	    ; 6. MOVL: Load immediate value (lower byte) into a register
+ 28	100C	62AB	    movl    #55,R3        ; R3 <- 0x0055
+ 29	    	     	    
+ 30	    	     	    ; 7. MOVH: Load immediate value (higher byte) into R2 and R3
+ 31	100E	7A2A	    movh    #4500,R2      ; R2 <- 0x4545
+ 32	1010	7AAB	    movh    #5500,R3      ; R3 <- 0x5555
+ 33	    	     	    
+ 34	    	     	    ; 8. DADD: Decimal Add R3 to R2 using the carry bit set by previous DADD
+ 35	1012	441A	    dadd    R3,R2         ; R2 <- R2 + R3 + Carry
+ 36	    	     	    ; Check PSW bits after DADD (Decimal addition with carry from previous DADD)
+ 37	    	     	    
+ 38	    	     	    ; 9. Halt program execution
+ 39	    	     	    halt
+ 40	    	     	    
+ 41	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1014	4116	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_DADD.xme
+

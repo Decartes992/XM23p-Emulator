@@ -11,6 +11,6 @@ void D0Stage(InstructionType* type, unsigned char* rc, unsigned char* wb, unsign
 void F1Stage();
 void E0Stage(InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb, unsigned char* v, unsigned char* c, unsigned char* slp, unsigned char* n, unsigned char* z);
 void tick();
-void StatusPrint(unsigned short* PC);
+void StatusPrint(unsigned short* PC, unsigned short IR_prev);
 
 #endif // PIPELINE_H

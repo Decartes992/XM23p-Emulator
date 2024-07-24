@@ -1,0 +1,70 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_RRC.asm
+Time of assembly: Wed 24 Jul 2024 09:48:22 
+  1	    	     	; Test_RRC
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main
+ 11	    	     	    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 12	1000	6C00	    movlz    #80,R0        ; R0 <- 0x0080
+ 13	    	     	    
+ 14	    	     	    ; 2. RRC: Rotate right through carry
+ 15	1002	4D08	    rrc     R0             ; R0 <- R0 rotated right through carry
+ 16	    	     	    
+ 17	    	     	    ; 3. MOVLZ: Load immediate value (lower byte) into a register
+ 18	1004	6809	    movlz    #01,R1        ; R1 <- 0x0001
+ 19	    	     	    
+ 20	    	     	    ; 4. MOVH: Load immediate value (higher byte) into a register
+ 21	1006	7FF9	    movh     #FF01,R1      ; R1 <- 0xFF01
+ 22	    	     	    
+ 23	    	     	    ; 5. RRC: Rotate right through carry
+ 24	1008	4D09	    rrc     R1             ; R1 <- R1 rotated right through carry
+ 25	    	     	    
+ 26	    	     	    ; 6. MOVLZ: Load immediate value (lower byte) into a register
+ 27	100A	680A	    movlz    #01,R2        ; R2 <- 0x0001
+ 28	    	     	    
+ 29	    	     	    ; 7. MOVH: Load immediate value (higher byte) into a register
+ 30	100C	7BFA	    movh     #7F01,R2      ; R2 <- 0x7F01
+ 31	    	     	    
+ 32	    	     	    ; 8. RRC: Rotate right through carry
+ 33	100E	4D0A	    rrc     R2             ; R2 <- R2 rotated right through carry
+ 34	    	     	    
+ 35	    	     	    ; 9. Halt program execution
+ 36	    	     	    halt
+ 37	    	     	    
+ 38	    	     	    end    Main            ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1010	4112	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_RRC.xme
+

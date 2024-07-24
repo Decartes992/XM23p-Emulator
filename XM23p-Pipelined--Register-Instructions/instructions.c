@@ -79,7 +79,7 @@ void executeADDC(unsigned char dst, unsigned short operand) {
 
 // Function to execute a SUBC instruction
 void executeSUBC(unsigned char dst, unsigned short operand) {
-    unsigned int result = reg_file[dst] - operand - (1 - psw.CF);
+    unsigned int result = reg_file[dst] - operand - psw.CF;
     updatePSW_ZF(result);
     updatePSW_SF(result);
     updatePSW_OF(reg_file[dst], operand, result);
@@ -89,11 +89,13 @@ void executeSUBC(unsigned char dst, unsigned short operand) {
 
 // Function to execute a DADD instruction
 void executeDADD(unsigned char dst, unsigned short operand) {
-    unsigned short result = reg_file[dst] + operand + psw.CF;
-    // Decimal addition logic here (if needed)
+    unsigned int result = reg_file[dst] + operand + psw.CF;
+
+    // Update PSW flags for decimal addition
     updatePSW_ZF(result);
     updatePSW_CF(result);
-    reg_file[dst] = result;
+
+    reg_file[dst] = (unsigned short)result;
 }
 
 // Function to execute a CMP instruction
@@ -197,8 +199,9 @@ void executeMOVLS(unsigned char dst, unsigned short operand) {
 
 // Function to execute a MOVH instruction
 void executeMOVH(unsigned char dst, unsigned short operand) {
-    reg_file[dst] = (operand << 8) | (reg_file[dst] & 0x00FF);    // High byte of operand to high byte of destination, low byte unchanged
+    reg_file[dst] = (operand << 8) | (reg_file[dst] & 0x00FF);
 }
+
 
 void executeSETCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z) {
    if (c) psw.CF = 1;

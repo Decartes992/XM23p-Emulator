@@ -1,0 +1,72 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_CMP.asm
+Time of assembly: Wed 24 Jul 2024 03:29:40 
+  1	    	     	; Test_CMP
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6828	    movlz    #05,R0        ; R0 <- 0x0005
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	6029	    movl    #05,R1        ; R1 <- 0x0005
+ 15	    	     	    
+ 16	    	     	    ; 3. CMP: Compare R0 with R1 (should be equal, Z flag set)
+ 17	1004	4508	    cmp    R1,R0        ; Compare R0 with R1
+ 18	    	     	    
+ 19	    	     	    ; 4. MOVLZ: Load immediate value (lower byte) into a register
+ 20	1006	6FFA	    movlz    #FF,R2        ; R2 <- 0x00FF (255 in decimal)
+ 21	    	     	    
+ 22	    	     	    ; 5. MOVL: Load immediate value (lower byte) into a register
+ 23	1008	600B	    movl    #01,R3        ; R3 <- 0x0001
+ 24	    	     	    
+ 25	    	     	    ; 6. CMP: Compare R2 with R3 (R2 > R3, N flag set)
+ 26	100A	4513	    cmp    R2,R3        ; Compare R2 with R3
+ 27	    	     	    
+ 28	    	     	    ; 7. MOVLZ: Load immediate value (lower byte) into a register
+ 29	100C	680C	    movlz    #01,R4        ; R4 <- 0x0001
+ 30	    	     	    
+ 31	    	     	    ; 8. MOVL: Load immediate value (lower byte) into a register
+ 32	100E	6015	    movl    #02,R5        ; R5 <- 0x0002
+ 33	    	     	    
+ 34	    	     	    ; 9. CMP: Compare R4 with R5 (R4 < R5, no flags set)
+ 35	1010	4525	    cmp    R4,R5        ; Compare R4 with R5
+ 36	    	     	    
+ 37	    	     	    ; 10. Halt program execution
+ 38	    	     	    halt
+ 39	    	     	    
+ 40	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1012	4114	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_CMP.xme
+

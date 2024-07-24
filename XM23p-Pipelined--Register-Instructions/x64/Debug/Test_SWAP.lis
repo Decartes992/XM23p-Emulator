@@ -1,0 +1,63 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_SWAP.asm
+Time of assembly: Wed 24 Jul 2024 09:11:13 
+  1	    	     	; Test_SWAP
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6890	    movlz    #12,R0        ; R0 <- 0x0012 (18 in decimal)
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVLZ: Load immediate value (lower byte) into a register
+ 14	1002	69A1	    movlz    #34,R1        ; R1 <- 0x0022 (52 in decimal)
+ 15	    	     	    
+ 16	    	     	    ; 3. SWAP: Swap values between R0 and R1
+ 17	1004	4C81	    swap    R0,R1         ; R0 <-> R1
+ 18	    	     	    
+ 19	    	     	    ; 4. MOVLZ: Load immediate value (lower byte) into a register
+ 20	1006	6AB2	    movlz    #56,R2        ; R2 <- 0x0038 (86 in decimal)
+ 21	    	     	    
+ 22	    	     	    ; 5. MOVLZ: Load immediate value (lower byte) into a register
+ 23	1008	6BC3	    movlz    #78,R3        ; R3 <- 0x004E (126 in decimal)
+ 24	    	     	    
+ 25	    	     	    ; 6. SWAP: Swap values between R2 and R3
+ 26	100A	4C93	    swap    R2,R3         ; R2 <-> R3
+ 27	    	     	    
+ 28	    	     	    ; 7. Halt program execution
+ 29	    	     	    halt
+ 30	    	     	    
+ 31	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	100C	4108	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_SWAP.xme
+

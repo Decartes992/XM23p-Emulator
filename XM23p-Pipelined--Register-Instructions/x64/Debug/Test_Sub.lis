@@ -1,0 +1,65 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_Sub.asm
+Time of assembly: Tue 23 Jul 2024 23:30:19 
+  1	    	     	; Test_SUB
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6828	    movlz    #05,R0        ; R0 <- 0x0005
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	6019	    movl    #03,R1        ; R1 <- 0x0003
+ 15	    	     	    
+ 16	    	     	    ; 3. SUB: Subtract R1 from R0 (Normal subtraction)
+ 17	1004	4208	    sub    R1,R0        ; R0 <- R0 - R1
+ 18	    	     	    ; Check PSW bits after normal subtraction
+ 19	    	     	    
+ 20	    	     	    ; 4. MOVLZ: Load immediate value (lower byte) into a register
+ 21	1006	6FFA	    movlz    #FF,R2        ; R2 <- 0x00FF (255 in decimal)
+ 22	    	     	    
+ 23	    	     	    ; 5. MOVL: Load immediate value (lower byte) into a register
+ 24	1008	600B	    movl    #01,R3        ; R3 <- 0x0001
+ 25	    	     	    
+ 26	    	     	    ; 6. SUB: Subtract R3 from R2 (Subtraction causing borrow)
+ 27	100A	4213	    sub    R2,R3        ; R3 <- R3 - R2
+ 28	    	     	    ; Check PSW bits after subtraction causing borrow
+ 29	    	     	    
+ 30	    	     	    ; 7. Halt program execution
+ 31	    	     	    halt
+ 32	    	     	    
+ 33	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	100C	4108	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_Sub.xme
+

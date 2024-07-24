@@ -1,0 +1,54 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_Add.asm
+Time of assembly: Tue 23 Jul 2024 20:40:47 
+  1	    	     	; Test #:  ADD Instruction
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     		org	#1000
+  9	    	     	
+ 10	    	     	Main	; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6818		movlz	#03,R0		; R0 <- 0x0003
+ 12	    	     		
+ 13	    	     		; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	6011		movl	#02,R1		; R1 <- 0x0002
+ 15	    	     		
+ 16	    	     		; 3. ADD: Add R0 to R1
+ 17	1004	4001		add	R0,R1		; R1 <- R1 + R0
+ 18	    	     		
+ 19	    	     		; 4. Halt program execution
+ 20	    	     		halt
+ 21	    	     		
+ 22	    	     		end	Main		; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1006	4102	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_Add.xme
+

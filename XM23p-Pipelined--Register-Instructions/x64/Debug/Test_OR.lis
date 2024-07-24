@@ -1,0 +1,76 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_OR.asm
+Time of assembly: Wed 24 Jul 2024 03:59:12 
+  1	    	     	; Test_OR
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6800	    movlz    #00,R0        ; R0 <- 0x0000
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	6001	    movl    #00,R1        ; R1 <- 0x0000
+ 15	    	     	    
+ 16	    	     	    ; 3. OR: OR R1 with R0 (should set ZF since the result is zero)
+ 17	1004	4808	    or    R1,R0        ; R0 <- R0 | R1
+ 18	    	     	    ; Check PSW bits after OR
+ 19	    	     	    
+ 20	    	     	    ; 4. MOVH: Load immediate value (higher byte) into a register
+ 21	1006	7C02	    movh    #8000,R2        ; R2 <- 0x8000
+ 22	    	     	    
+ 23	    	     	    ; 5. OR: OR R2 with R0 (should set SF since the result has a high bit set)
+ 24	1008	4810	    or    R2,R0        ; R0 <- R0 | R2
+ 25	    	     	    ; Check PSW bits after OR
+ 26	    	     	    
+ 27	    	     	    ; 6. MOVLZ: Load immediate value (lower byte) into a register
+ 28	100A	6BFB	    movlz    #7F,R3        ; R3 <- 0x007F
+ 29	    	     	    
+ 30	    	     	    ; 7. OR: OR R3 with R0 (should keep SF set)
+ 31	100C	4818	    or    R3,R0        ; R0 <- R0 | R3
+ 32	    	     	    ; Check PSW bits after OR
+ 33	    	     	    
+ 34	    	     	    ; 8. MOVLZ: Load immediate value (lower byte) into a register
+ 35	100E	6804	    movlz    #00,R4        ; R4 <- 0x0000
+ 36	    	     	    
+ 37	    	     	    ; 9. OR: OR R4 with R0 (should keep SF set)
+ 38	1010	4820	    or    R4,R0        ; R0 <- R0 | R4
+ 39	    	     	    ; Check PSW bits after OR
+ 40	    	     	    
+ 41	    	     	    ; 10. Halt program execution
+ 42	    	     	    halt
+ 43	    	     	    
+ 44	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1012	4114	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_OR.xme
+

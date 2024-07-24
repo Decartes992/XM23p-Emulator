@@ -1,0 +1,69 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_SRA.asm
+Time of assembly: Wed 24 Jul 2024 09:23:13 
+  1	    	     	; Test_SRA
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6C00	    movlz    #80,R0        ; R0 <- 0x0080 (128 in decimal, 0b10000000)
+ 12	    	     	    
+ 13	    	     	    ; 2. SRA: Shift R0 right arithmetically (should preserve the sign bit)
+ 14	1002	4D00	    sra    R0              ; R0 >> 1
+ 15	    	     	    
+ 16	    	     	    ; 3. MOVLZ: Load immediate value (lower byte) into a register
+ 17	1004	6809	    movlz    #01,R1        ; R1 <- 0x0001 (1 in decimal, 0b00000001)
+ 18	    	     	    
+ 19	    	     	    ; 4. MOVH: Load immediate value (higher byte) into R1
+ 20	1006	7FF9	    movh    #FF01,R1       ; R1 <- 0xFF01 (-255 in decimal, 0b1111111100000001)
+ 21	    	     	    
+ 22	    	     	    ; 5. SRA: Shift R1 right arithmetically (should preserve the sign bit)
+ 23	1008	4D01	    sra    R1              ; R1 >> 1
+ 24	    	     	    
+ 25	    	     	    ; 6. MOVLZ: Load immediate value (lower byte) into a register
+ 26	100A	680A	    movlz    #01,R2        ; R2 <- 0x0001 (1 in decimal, 0b00000001)
+ 27	    	     	    
+ 28	    	     	    ; 7. MOVH: Load immediate value (higher byte) into R2
+ 29	100C	7BFA	    movh    #7F01,R2       ; R2 <- 0x7F01 (32513 in decimal, 0b0111111100000001)
+ 30	    	     	    
+ 31	    	     	    ; 8. SRA: Shift R2 right arithmetically (should not preserve the sign bit)
+ 32	100E	4D02	    sra    R2              ; R2 >> 1
+ 33	    	     	    
+ 34	    	     	    ; 9. Halt program execution
+ 35	    	     	    halt
+ 36	    	     	    
+ 37	    	     	    end    Main            ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1010	4112	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_SRA.xme
+

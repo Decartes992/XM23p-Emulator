@@ -1,0 +1,70 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_BIS.asm
+Time of assembly: Wed 24 Jul 2024 04:20:48 
+  1	    	     	; Test_BIS
+  2	    	     	;
+  3	    	     	; Student Name: Iftekhar Rafi
+  4	    	     	; ID: B00871031
+  5	    	     	;
+  6	    	     	; ECED 3403 - Computer Architecture
+  7	    	     	
+  8	    	     	    org    #1000
+  9	    	     	
+ 10	    	     	Main    ; 1. MOVLZ: Load immediate value (lower byte) into a register
+ 11	1000	6800	    movlz    #00,R0        ; R0 <- 0x0000
+ 12	    	     	    
+ 13	    	     	    ; 2. MOVL: Load immediate value (lower byte) into a register
+ 14	1002	6781	    movl    #F0,R1        ; R1 <- 0x00F0
+ 15	    	     	    
+ 16	    	     	    ; 3. MOVLZ: Load immediate value (lower byte) into a register
+ 17	1004	680D	    movlz    #01,R5       ; R5 <- 0x0001 (bit position 0)
+ 18	1006	4B28	    bis     R5,R0         ; R0 <- R0 | (1 << R5) (R0 = 0x0001)
+ 19	    	     	    
+ 20	    	     	    ; 4. MOVLZ: Load immediate value (lower byte) into a register
+ 21	1008	6C02	    movlz    #80,R2        ; R2 <- 0x0080 (128 in decimal)
+ 22	    	     	    
+ 23	    	     	    ; 5. MOVL: Load immediate value (lower byte) into a register
+ 24	100A	600B	    movl    #01,R3        ; R3 <- 0x0001
+ 25	    	     	    
+ 26	    	     	    ; 6. MOVLZ: Load immediate value (lower byte) into a register
+ 27	100C	683D	    movlz    #07,R5       ; R5 <- 0x0007 (bit position 7)
+ 28	100E	4B2B	    bis     R5,R3         ; R3 <- R3 | (1 << R5) (R3 = 0x0081)
+ 29	    	     	    
+ 30	    	     	    ; 7. MOVLZ: Load immediate value (lower byte) into a register
+ 31	1010	687D	    movlz    #0F,R5       ; R5 <- 0x000F (bit position 15)
+ 32	1012	6004	    movl    #00,R4        ; R4 <- 0x0000
+ 33	1014	4B2C	    bis     R5,R4         ; R4 <- R4 | (1 << R5) (R4 = 0x8000)
+ 34	    	     	    
+ 35	    	     	    ; 8. Halt program execution
+ 36	    	     	    halt
+ 37	    	     	    
+ 38	    	     	    end    Main        ; End of program
+
+Successful completion of assembly - 1P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+halt                               	REL	1016	4118	PRI
+Main                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_BIS.xme
+
