@@ -1,6 +1,6 @@
 X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
-Input file name: Lab 3 Test 1.asm
-Time of assembly: Wed 3 Jul 2024 16:11:18 
+Input file name: Lab 4 Test 1.asm
+Time of assembly: Wed 24 Jul 2024 10:29:56 
   1	    	     	; Program to test SETCC and CLRCC instructions
   2	    	     	; This program sets the carry bit, performs a DADD instruction, and then clears the carry bit.
   3	    	     	
@@ -47,5 +47,5 @@ R2                                 	REG	0002	2	PRI
 R1                                 	REG	0001	1	PRI
 R0                                 	REG	0000	0	PRI
 
-.XME file: D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Lab 3 Test 1.xme
+.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Lab 4 Test 1.xme
 
