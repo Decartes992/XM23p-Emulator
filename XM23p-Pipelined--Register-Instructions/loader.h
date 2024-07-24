@@ -1,5 +1,6 @@
 #ifndef LOADER_H
 #define LOADER_H
+#include <stdint.h> // Include stdint.h to use uint8_t and uint16_t
 
 // Define memory sizes and other constants
 #define IMEM_SIZE 65536
@@ -23,7 +24,6 @@
 #define DEBUGGER_MODE 1
 #define EXECUTION_MODE 0
 
-
 // PSW structure
 typedef struct {
     unsigned char ZF; // Zero Flag
@@ -35,7 +35,7 @@ typedef struct {
 
 // Declare memory arrays
 extern unsigned short IMEM[IMEM_SIZE / 2];
-extern unsigned short DMEM[DMEM_SIZE/2];
+extern unsigned short DMEM[DMEM_SIZE / 2];
 extern unsigned short reg_file[REGFILE_SIZE];
 extern unsigned short IMAR;
 extern unsigned short ICTRL;
@@ -45,7 +45,10 @@ extern unsigned short breakpoint;
 extern PSW psw; // Processor Status Word
 extern unsigned short start_address; // Start address set by S9 record
 
-
+// Declare new variables for memory access
+extern unsigned short DMAR; // Data Memory Address Register
+extern unsigned char DCTRL; // Data Control Register
+extern unsigned short DMBR; // Data Memory Buffer Register
 
 // Declare functions for loading S-Records and displaying memory
 void loadSRecord(const char* filename);
@@ -53,5 +56,10 @@ void displayMemory(unsigned char* memory, int start, int end);
 void manager(int argc, char* argv[]);
 unsigned int calculateChecksum(const char* line, int count, int dataLength);
 
+
+uint8_t memory_read_byte(uint16_t address);
+uint16_t memory_read_word(uint16_t address);
+void memory_write_byte(uint16_t address, uint8_t value);
+void memory_write_word(uint16_t address, uint16_t value);
 
 #endif // LOADER_H

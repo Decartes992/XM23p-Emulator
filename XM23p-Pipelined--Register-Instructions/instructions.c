@@ -202,7 +202,7 @@ void executeMOVH(unsigned char dst, unsigned short operand) {
     reg_file[dst] = (operand << 8) | (reg_file[dst] & 0x00FF);
 }
 
-
+// Function to execute a SETCC instruction
 void executeSETCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z) {
    if (c) psw.CF = 1;
    if (v) psw.OF = 1;
@@ -210,10 +210,41 @@ void executeSETCC(unsigned char v, unsigned char c, unsigned char slp, unsigned 
    if (z) psw.ZF = 1;
    if (slp) psw.slp = 1;
 }
+
+// Function to execute a CLRCC instruction
 void executeCLRCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z) {
    if (c) psw.CF = 0;
    if (v) psw.OF = 0;
    if (n) psw.SF = 0;
    if (z) psw.ZF = 0;
    if (slp) psw.slp = 0;
+}
+
+
+void execute_ld(unsigned char src, unsigned char dst) {
+    DMAR = reg_file[src];
+    DCTRL = READ;
+    DMBR = DMEM[DMAR];
+    reg_file[dst] = DMBR;
+}
+
+void execute_ldr(unsigned char src, unsigned char dst, char offset) {
+    DMAR = reg_file[src] + offset;
+    DCTRL = READ;
+    DMBR = DMEM[DMAR];
+    reg_file[dst] = DMBR;
+}
+
+void execute_st(unsigned char src, unsigned char dst) {
+    DMAR = reg_file[dst];
+    DCTRL = WRITE;
+    DMBR = reg_file[src];
+    DMEM[DMAR] = DMBR;
+}
+
+void execute_str(unsigned char src, unsigned char dst, char offset) {
+    DMAR = reg_file[dst] + offset;
+    DCTRL = WRITE;
+    DMBR = reg_file[src];
+    DMEM[DMAR] = DMBR;
 }

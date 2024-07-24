@@ -90,6 +90,18 @@ void executeInstruction(InstructionType type, unsigned short operand, unsigned c
     case CLRCC:
 		executeCLRCC(v, c, slp, n, z);
 	    return;
+    case LD:
+        execute_ld(src, dst);
+        return;
+    case LDR:
+        execute_ldr(src, dst, (char)operand);
+        return;
+    case ST:
+        execute_st(src, dst);
+        return;
+    case STR:
+        execute_str(src, dst, (char)operand);
+        return;
     default:
         // Handle invalid instruction or not implemented
         return;

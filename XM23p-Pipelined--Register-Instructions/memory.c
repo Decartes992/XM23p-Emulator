@@ -12,6 +12,27 @@ File Purpose: This file contains the memory arrays and a function to display a r
 
 
 
+// Function to read a byte from memory
+uint8_t memory_read_byte(uint16_t address) {
+    return DMEM[address];
+}
+
+// Function to read a word from memory
+uint16_t memory_read_word(uint16_t address) {
+    return (DMEM[address] << 8) | DMEM[address + 1];
+}
+
+// Function to write a byte to memory
+void memory_write_byte(uint16_t address, uint8_t value) {
+    DMEM[address] = value;
+}
+
+// Function to write a word to memory
+void memory_write_word(uint16_t address, uint16_t value) {
+    DMEM[address] = (value >> 8) & 0xFF;
+    DMEM[address + 1] = value & 0xFF;
+}
+
 
 // Function to display a range of memory
 void displayMemory(unsigned char* memory, int start, int end) {

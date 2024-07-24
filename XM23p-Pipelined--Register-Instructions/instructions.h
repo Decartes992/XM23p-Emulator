@@ -27,4 +27,9 @@ void executeMOVH(unsigned char dst, unsigned short operand);
 void executeSETCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z);
 void executeCLRCC(unsigned char v, unsigned char c, unsigned char slp, unsigned char n, unsigned char z);
 
+// Function prototypes for memory instructions
+void execute_ld(unsigned char src, unsigned char dst);
+void execute_ldr(unsigned char src, unsigned char dst, char offset);
+void execute_st(unsigned char src, unsigned char dst);
+void execute_str(unsigned char src, unsigned char dst, char offset);
 #endif // INSTRUCTIONS_H

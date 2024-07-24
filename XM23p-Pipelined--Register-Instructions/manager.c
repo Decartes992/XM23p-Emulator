@@ -22,6 +22,9 @@ unsigned short IMAR;
 unsigned short ICTRL;
 unsigned short IR;
 unsigned long clock_ticks = 0; 
+unsigned short DMAR; // Data Memory Address Register
+unsigned char DCTRL; // Data Control Register
+unsigned short DMBR; // Data Memory Buffer Register
 
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];
