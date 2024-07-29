@@ -7,12 +7,47 @@ Instructor: Larry Hughes
 File Name: decode_instructions.c
 File Purpose: This file contains the function to decode instructions from IMEM.
 */
-
 #include <stdio.h>
 #include "loader.h"
 #include "decode_instructions.h"
 
+void extractFields(unsigned short instruction, InstructionType type) {
+    rc = (instruction >> 7) & 0x01;    // RC is at bit 7
+    wb = (instruction >> 6) & 0x01;    // WB is at bit 6
+    src = (instruction >> 3) & 0x07;   // SRC/CON is at bits 5-3
+    dst = instruction & 0x07;          // DST is at bits 2-0
+    con = src;                         // CON is the same as SRC/CON
+    bb = (instruction >> 3) & 0xFF;    // BB is at bits 10-3 (byte-level data)
+    prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
+    dec = (instruction >> 9) & 0x01;   // DEC is at bit 9
+    inc = (instruction >> 8) & 0x01;   // INC is at bit 8
+
+    if (type == SETCC || type == CLRCC) {
+        v = (instruction >> 4) & 0x01; // V is bit 4
+        c = instruction & 0x01;        // C is bit 0
+        n = (instruction >> 2) & 0x01; // N is bit 2
+        z = (instruction >> 1) & 0x01; // Z is bit 1
+        slp = (instruction >> 5) & 0x01; // SLP is bit 5
+    }
+}
 InstructionType getInstructionType(unsigned short instruction) {
+
+
+    // Check for LD and ST instructions
+    switch (instruction & 0xFC00) {  // Check bits 15-10
+    case 0x5800: return LD;      // 010110xxxxxx
+    case 0x5C00: return ST;      // 010111xxxxxx
+    }
+
+
+    // Check for LDR and STR instructions
+    switch (instruction & 0xC000) {  // Check bits 15-14
+    case 0x8000: return LDR;     // 10xxxxxxxxxx
+    case 0xC000: return STR;     // 11xxxxxxxxxx
+    }
+
+
+    // Check for other instructions
     switch (instruction & 0xFF00) {  // Check bits 15-8
     case 0x4000: return ADD;
     case 0x4100: return ADDC;
@@ -57,62 +92,11 @@ InstructionType getInstructionType(unsigned short instruction) {
     case 0x4DA0: return SETCC;
     case 0x4DC0: return CLRCC;
     }
+
     return INVALID;
 }
 
-
-void extractFields(unsigned short instruction, InstructionType type) {
-    rc = (instruction >> 7) & 0x01;    // RC is at bit 7
-    wb = (instruction >> 6) & 0x01;    // WB is at bit 6
-    src = (instruction >> 3) & 0x07;   // SRC/CON is at bits 5-3
-    dst = instruction & 0x07;          // DST is at bits 2-0
-    con = src;                         // CON is the same as SRC/CON
-    bb = (instruction >> 3) & 0xFF;    // BB is at bits 10-3 (byte-level data)
-    prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
-    dec = (instruction >> 9) & 0x01;   // DEC is at bit 9
-    inc = (instruction >> 8) & 0x01;   // INC is at bit 8
-
-    if (type == SETCC || type == CLRCC) {
-        v = (instruction >> 4) & 0x01; // V is bit 4
-        c = instruction & 0x01;        // C is bit 0
-        n = (instruction >> 2) & 0x01; // N is bit 2
-        z = (instruction >> 1) & 0x01; // Z is bit 1
-        slp = (instruction >> 5) & 0x01; // SLP is bit 5
-    }
-}
-
-const char* getInstructionName(InstructionType type) {
-    switch (type) {
-    case ADD: return "ADD";
-    case ADDC: return "ADDC";
-    case SUB: return "SUB";
-    case SUBC: return "SUBC";
-    case DADD: return "DADD";
-    case CMP: return "CMP";
-    case XOR: return "XOR";
-    case AND: return "AND";
-    case OR: return "OR";
-    case BIT: return "BIT";
-    case BIC: return "BIC";
-    case BIS: return "BIS";
-    case MOV: return "MOV";
-    case SWAP: return "SWAP";
-    case SRA: return "SRA";
-    case RRC: return "RRC";
-    case SWPB: return "SWPB";
-    case SXT: return "SXT";
-    case MOVL: return "MOVL";
-    case MOVLZ: return "MOVLZ";
-    case MOVLS: return "MOVLS";
-    case MOVH: return "MOVH";
-    case SETCC: return "SETCC";
-    case CLRCC: return "CLRCC";
-    default: return "INVALID";
-    }
-}
-
-void printDecodedInstruction( unsigned short PC, InstructionType type, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb) {
-    
+void printDecodedInstruction(unsigned short PC, InstructionType type) {
     printf("                  %04X: %s ", PC - 4, getInstructionName(type));
 
     // Print the fields based on the instruction type
@@ -153,17 +137,13 @@ void printDecodedInstruction( unsigned short PC, InstructionType type, unsigned 
         printf("\n                  ");
     }
 
-
     // Print the destination register values
     printf("R%d: %04X\n", dst, reg_file[dst]);
     printf("\n");
-
 }
-
 
 // Function to get the operand based on the rc flag and src value
 unsigned short getOperand(unsigned char rc, unsigned char src) {
-
     if (rc) {
         // Return the constant value
         return src;
@@ -173,3 +153,4 @@ unsigned short getOperand(unsigned char rc, unsigned char src) {
         return reg_file[src];
     }
 }
+

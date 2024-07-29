@@ -8,6 +8,7 @@ File Name: debugger_mode.c
 File Purpose: This file contains the runMode function which executes instructions and shows memory contents and decoded instructions if in debug mode.
 */
 
+/*
 #include <stdio.h>
 #include "loader.h"
 #include "pipeline.h"
@@ -106,4 +107,97 @@ void saveRegisterInfoToFile() {
 
     fclose(file);
     return;
+}
+*/
+
+
+#include "loader.h"
+#include "debugger_mode.h"
+#include "pipeline.h"
+
+void runMode(int debug) {
+    unsigned short PC = reg_file[7];
+    if (debug) {
+        while (1) {
+            printf("Debugger> ");
+            char command[80];
+            fgets(command, 80, stdin);
+
+            switch (command[0]) {
+            case 'r': displayRegisters(); break;
+            case 'm': changeMemory(); break;
+            case 'c': changeRegister(); break;
+            case 'b': {
+                unsigned short address;
+                sscanf(command + 1, "%hx", &address);
+                setBreakpoint(address);
+                break;
+            }
+            case 's': {
+                pipelineExecute(&PC, 1);
+                break;
+            }
+            case 'q': return;
+            default: printf("Unknown command\n");
+            }
+        }
+    }
+    else {
+        pipelineExecute(&PC, 0);
+    }
+}
+
+void displayRegisters() {
+    for (int i = 0; i < 8; i++) {
+        printf("R%d: %04X\n", i, reg_file[i]);
+    }
+    printf("PSW: Z=%d N=%d V=%d C=%d SLP=%d\n", psw.ZF, psw.SF, psw.OF, psw.CF, psw.slp);
+}
+
+void changeRegister() {
+    unsigned short reg, value;
+    printf("Enter register number (0-7): ");
+    scanf("%hx", &reg);
+    printf("Enter new value (hex): ");
+    scanf("%hx", &value);
+    if (reg < 8) {
+        reg_file[reg] = value;
+    }
+    else {
+        printf("Invalid register number\n");
+    }
+}
+
+void changeMemory() {
+    unsigned short address, value;
+    printf("Enter memory address (hex): ");
+    scanf("%hx", &address);
+    printf("Enter new value (hex): ");
+    scanf("%hx", &value);
+    if (address < DMEM_SIZE) {
+        DMEM[address] = value;
+    }
+    else {
+        printf("Invalid memory address\n");
+    }
+}
+
+void setBreakpoint(unsigned short address) {
+    breakpoint = address;
+    printf("Breakpoint set at %04X\n", address);
+}
+
+void saveRegisterInfoToFile() {
+    FILE* file = fopen("registers.txt", "w");
+    if (file) {
+        for (int i = 0; i < 8; i++) {
+            fprintf(file, "R%d: %04X\n", i, reg_file[i]);
+        }
+        fprintf(file, "PSW: Z=%d N=%d V=%d C=%d SLP=%d\n", psw.ZF, psw.SF, psw.OF, psw.CF, psw.slp);
+        fclose(file);
+        printf("Register information saved to registers.txt\n");
+    }
+    else {
+        printf("Error opening file for writing\n");
+    }
 }
