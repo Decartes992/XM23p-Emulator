@@ -1,88 +1,88 @@
-/*
-Name: Iftekhar Rafi
-ID: B00871031
-Course: ECED 3403 Computer Architecture
-Instructor: Larry Hughes
-
-File Name: memory.c
-File Purpose: This file contains the memory arrays and a function to display a range of memory.
-*/
 #include <stdio.h>
 #include "loader.h"
+#include "debugger_mode.h"
 
+unsigned short reg_file[REGFILE_SIZE];
+unsigned short breakpoint = 0xFFFF;
 
+unsigned short IMAR;
+unsigned short ICTRL;
+unsigned short IR;
+unsigned long clock_ticks = 0;
+unsigned short DMAR;
+unsigned char DCTRL;
+unsigned short DMBR;
 
-// Function to read a byte from memory
-uint8_t memory_read_byte(uint16_t address) {
-    return DMEM[address];
-}
+unsigned short IMEM[IMEM_SIZE / 2];
+unsigned short DMEM[DMEM_SIZE / 2];
 
-// Function to read a word from memory
-uint16_t memory_read_word(uint16_t address) {
-    return (DMEM[address] << 8) | DMEM[address + 1];
-}
+PSW psw = { 0, 0, 0, 0, 0 };
 
-// Function to write a byte to memory
-void memory_write_byte(uint16_t address, uint8_t value) {
-    DMEM[address] = value;
-}
-
-// Function to write a word to memory
-void memory_write_word(uint16_t address, uint16_t value) {
-    DMEM[address] = (value >> 8) & 0xFF;
-    DMEM[address + 1] = value & 0xFF;
-}
-
-
-// Function to display a range of memory
-void displayMemory(unsigned char* memory, int start, int end) {
-    // Loop from the start to the end of the memory range
-    for (int i = start; i < end; i += HEX_BASE) {
-
-        // Print the memory address
-        printf("%04X: ", i);
-
-        // Loop through each byte in the current memory word
-        for (int j = 0; j < HEX_BASE; j++) {
-
-            // If the current byte is within the memory range, print its value
-            if (i + j < end) {
-                printf("%02X ", memory[i + j]);
-            }
-            // Otherwise, print a placeholder
-            else {
-                printf("   ");
-            }
-        }
-
-        printf(" ");
-
-        // Loop through each byte in the current memory word again
-        for (int j = 0; j < HEX_BASE; j++) {
-            // If the current byte is within the memory range
-            if (i + j < end) {
-                unsigned char c = memory[i + j];
-                // If the byte is a printable ASCII character, print it
-                if (c >= ASCII_PRINTABLE_START && c <= ASCII_PRINTABLE_END) {
-                    printf("%c", c);
-                }
-                // Otherwise, print a placeholder
-                else {
-                    printf(".");
-                }
-            }
-            // If the current byte is outside the memory range, print a placeholder
-            else {
-                printf(" ");
-            }
-        }
-        // Print a newline to separate memory words
-        printf("\n");
+void manager(int argc, char* argv[]) {
+    if (argc != ARG_COUNT) {
+        fprintf(stderr, "Error: XME file not detected.");
+        getchar();
+        return;
     }
-    // Print an extra newline for readability
-    printf("\n");
 
-    // Wait for the user to press enter before continuing
-    getchar();
+    const char* filename = argv[1];
+    int start, end;
+    char choice;
+    char continueChoice;
+    unsigned short address;
+
+    loadSRecord(argv[1]);
+    do {
+        printf("Enter command (I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
+        scanf(" %c", &choice);
+
+        switch (choice) {
+            case 'I':case 'i': 
+                printf("\nDisplaying Instruction Memory (IMEM):\n");
+                printf("Enter start address (in hex): ");
+                scanf("%x", &start);
+                printf("Enter end address (in hex): ");
+                scanf("%x", &end);
+                displayMemory((unsigned char*)IMEM, start, end);
+                break;
+            case 'D':case 'd': 
+                printf("Displaying Data Memory (DMEM):\n");
+                printf("Enter start address (in hex): ");
+                scanf("%x", &start);
+                printf("Enter end address (in hex): ");
+                scanf("%x", &end);
+                displayMemory((unsigned char*)DMEM, start, end);
+                break;
+            case 'R':case 'r':
+                displayRegisters();
+                break;
+            case 'C': case 'c': 
+                changeRegister(); 
+                break;
+            case 'M': case 'm':
+                changeMemory();
+                break;
+            case 'B':case 'b':
+                printf("Enter breakpoint address (in hex): ");
+                scanf("%hx", &address);
+                setBreakpoint(address);
+                break;
+            case 'E':case 'e':
+                runMode(EXECUTION_MODE); 
+                break;
+            case 'X':case 'x':
+                runMode(DEBUGGER_MODE); 
+                break;
+            default:
+                printf("Invalid choice. Please enter a valid command.\n");
+        }
+
+        do {
+            printf("Do you want to enter another command? (Y for yes, N for no): ");
+            scanf(" %c", &continueChoice);
+            printf("\n");
+        } while (continueChoice != 'Y' && continueChoice != 'y' && continueChoice != 'N' && continueChoice != 'n');
+
+    } while (continueChoice == 'Y' || continueChoice == 'y');
+    return;
 }
-

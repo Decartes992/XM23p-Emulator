@@ -24,6 +24,10 @@
 #define DEBUGGER_MODE 1
 #define EXECUTION_MODE 0
 
+
+
+
+
 // PSW structure
 typedef struct {
     unsigned char ZF; // Zero Flag
@@ -49,6 +53,22 @@ extern unsigned short start_address; // Start address set by S9 record
 extern unsigned short DMAR; // Data Memory Address Register
 extern unsigned char DCTRL; // Data Control Register
 extern unsigned short DMBR; // Data Memory Buffer Register
+
+// Declare variables for instruction fields
+extern unsigned char rc;
+extern unsigned char wb;
+extern unsigned char src;
+extern unsigned char dst;
+extern unsigned char con;
+extern unsigned char bb;
+extern unsigned char prpo;
+extern unsigned char dec;
+extern unsigned char inc;
+extern unsigned char v;
+extern unsigned char c;
+extern unsigned char n;
+extern unsigned char z;
+extern unsigned char slp;
 
 // Declare functions for loading S-Records and displaying memory
 void loadSRecord(const char* filename);

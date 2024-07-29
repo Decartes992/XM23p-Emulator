@@ -1,2 +1,5 @@
-﻿  manager.c
-  XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
+﻿  pipeline.c
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(60,9): error C2198: 'D0Stage': too few arguments for call
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(69,9): error C2198: 'E0Stage': too few arguments for call
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(115,70): warning C4020: 'executeInstruction': too many actual parameters
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(124,33): warning C4244: 'function': conversion from 'unsigned short' to 'uint8_t', possible loss of data

@@ -26,6 +26,22 @@ unsigned short DMAR; // Data Memory Address Register
 unsigned char DCTRL; // Data Control Register
 unsigned short DMBR; // Data Memory Buffer Register
 
+// Define variables for instruction fields
+unsigned char rc;
+unsigned char wb;
+unsigned char src;
+unsigned char dst;
+unsigned char con;
+unsigned char bb;
+unsigned char prpo;
+unsigned char dec;
+unsigned char inc;
+unsigned char v;
+unsigned char c;
+unsigned char n;
+unsigned char z;
+unsigned char slp;
+
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];
 

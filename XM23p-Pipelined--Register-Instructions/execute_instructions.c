@@ -12,8 +12,7 @@ File Purpose: This file contains the function to execute instructions.
 #include "execute_instructions.h"
 #include "instructions.h"
 
-void executeInstruction(InstructionType type, unsigned short operand, unsigned char rc, unsigned char wb, unsigned char src, unsigned char dst, unsigned char con, unsigned char bb, unsigned char* v, unsigned char* c, unsigned char* slp, unsigned char* n, unsigned char* z) {
-
+void executeInstruction(InstructionType type, unsigned short operand){
     operand = getOperand(rc, src);
 
     // Execute the instruction based on the decoded type
