@@ -23,6 +23,11 @@
 #define WRITE 0x2 // RECHECK
 #define DEBUGGER_MODE 1
 #define EXECUTION_MODE 0
+#define SET 1
+#define POST 1
+#define WORD 0
+
+
 
 
 
@@ -69,6 +74,9 @@ extern unsigned char c;
 extern unsigned char n;
 extern unsigned char z;
 extern unsigned char slp;
+extern short offset_DR;
+extern unsigned short EA; // Effective Address
+
 
 // Declare functions for loading S-Records and displaying memory
 void loadSRecord(const char* filename);

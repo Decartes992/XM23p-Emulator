@@ -1,5 +1,4 @@
-﻿  pipeline.c
-C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(83,9): warning C4013: 'displayRegisters' undefined; assuming extern returning int
-C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(121,16): warning C4013: 'memory_read_byte' undefined; assuming extern returning int
-C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(124,9): warning C4013: 'memory_write_byte' undefined; assuming extern returning int
+﻿  memory_instructions.c
+  pipeline.c
+  Generating Code...
   XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe

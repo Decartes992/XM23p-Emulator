@@ -7,10 +7,9 @@ Instructor: Larry Hughes
 File Name: instructions.c
 File Purpose: This file contains the functions to handle execution of specific instructions for the XM23P emulator.
 */
-// instructions.c
 
 #include "loader.h"
-#include "instructions.h"
+#include "register_instructions.h"
 
 void updatePSW_ZF(unsigned short result) {
     psw.ZF = (result == 0);
@@ -192,81 +191,3 @@ void executeCLRCC() {
 }
 
 
-void execute_ld(unsigned char src, unsigned char dst) {
-    DMAR = reg_file[src] / 2;
-    DCTRL = READ;
-
-    if (!wb) {
-        // Read byte
-        reg_file[dst] = memory_read_byte(DMAR);
-    }
-    else {
-        // Read word
-        reg_file[dst] = memory_read_word(DMAR);
-    }
-}
-
-void execute_ldr(unsigned char src, unsigned char dst, char offset) {
-    DMAR = (reg_file[src] + offset) / 2;
-    DCTRL = READ;
-
-    if (!wb) {
-        // Read byte
-        reg_file[dst] = memory_read_byte(DMAR);
-    }
-    else {
-        // Read word
-        reg_file[dst] = memory_read_word(DMAR);
-    }
-}
-
-void execute_st(unsigned char src, unsigned char dst) {
-    DMAR = reg_file[dst] / 2;
-    DCTRL = WRITE;
-    DMBR = reg_file[src];
-    
-    if (!wb) {
-        // Write byte
-        memory_write_byte(DMAR, DMBR & 0xFF);
-    } else {
-        // Write word
-        memory_write_word(DMAR, DMBR);
-    }
-}
-
-void execute_str(unsigned char src, unsigned char dst, char offset) {
-    DMAR = (reg_file[src] + offset) / 2;
-    DCTRL = WRITE;
-    DMBR = reg_file[src];
-    
-    if (!wb) {
-        // Write byte
-        memory_write_byte(DMAR, DMBR & 0xFF);
-    } else {
-        // Write word
-        memory_write_word(DMAR, DMBR);
-    }
-}
-
-
-// Function to write a byte to memory
-void memory_write_byte(uint16_t address, uint8_t value) {
-    DMEM[address] = value;
-}
-
-// Function to write a word to memory
-void memory_write_word(uint16_t address, uint16_t value) {
-    DMEM[address] = (value >> 8) & 0xFF;
-    DMEM[address + 1] = value & 0xFF;
-}
-
-
-// Function to read a byte from memory
-uint8_t memory_read_byte(uint16_t address) {
-    return DMEM[address];
-}
-
-// Function to read a word from memory
-uint16_t memory_read_word(uint16_t address) {
-    return (DMEM[address] << 8) | DMEM[address + 1];
-}

@@ -41,6 +41,8 @@ unsigned char c;
 unsigned char n;
 unsigned char z;
 unsigned char slp;
+short offset_DR;
+unsigned short EA; // Effective Address
 
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];

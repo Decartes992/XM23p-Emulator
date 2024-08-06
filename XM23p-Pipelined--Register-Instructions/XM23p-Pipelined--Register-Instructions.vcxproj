@@ -130,8 +130,9 @@
     <ClCompile Include="debugger_mode.c" />
     <ClCompile Include="decode_instructions.c" />
     <ClCompile Include="execute_instructions.c" />
+    <ClCompile Include="memory_instructions.c" />
     <ClCompile Include="pipeline.c" />
-    <ClCompile Include="instructions.c" />
+    <ClCompile Include="register_instructions.c" />
     <ClCompile Include="loader.c" />
     <ClCompile Include="manager.c" />
     <ClCompile Include="memory.c" />
@@ -141,7 +142,8 @@
     <ClInclude Include="debugger_mode.h" />
     <ClInclude Include="decode_instructions.h" />
     <ClInclude Include="execute_instructions.h" />
-    <ClInclude Include="instructions.h" />
+    <ClInclude Include="memory_instructions.h" />
+    <ClInclude Include="register_instructions.h" />
     <ClInclude Include="pipeline.h" />
     <ClInclude Include="loader.h" />
   </ItemGroup>

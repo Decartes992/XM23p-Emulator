@@ -39,7 +39,10 @@
     <ClCompile Include="debugger_mode.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="instructions.c">
+    <ClCompile Include="register_instructions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="memory_instructions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +62,10 @@
     <ClInclude Include="loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="instructions.h">
+    <ClInclude Include="register_instructions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="memory_instructions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

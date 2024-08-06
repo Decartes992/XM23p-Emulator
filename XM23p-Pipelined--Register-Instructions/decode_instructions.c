@@ -18,16 +18,27 @@ void extractFields(unsigned short instruction, InstructionType type) {
     dst = instruction & 0x07;          // DST is at bits 2-0
     con = src;                         // CON is the same as SRC/CON
     bb = (instruction >> 3) & 0xFF;    // BB is at bits 10-3 (byte-level data)
-    prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
-    dec = (instruction >> 9) & 0x01;   // DEC is at bit 9
-    inc = (instruction >> 8) & 0x01;   // INC is at bit 8
+
+    switch(type){
+		case LD:case ST:case LDR:case STR:
+            prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
+            dec = (instruction >> 9) & 0x01;   // DEC is at bit 9
+            inc = (instruction >> 8) & 0x01;   // INC is at bit 8
+            offset_DR = ((instruction >> 7) & 0x7f); // get the offset bit (LDR-STR)
+			break;
+        case SETCC: case CLRCC:
+            v = (instruction >> 4) & 0x01; // V is bit 4
+            c = instruction & 0x01;        // C is bit 0
+            n = (instruction >> 2) & 0x01; // N is bit 2
+            z = (instruction >> 1) & 0x01; // Z is bit 1
+            slp = (instruction >> 5) & 0x01; // SLP is bit 5
+			break;
+    }
+
+
 
     if (type == SETCC || type == CLRCC) {
-        v = (instruction >> 4) & 0x01; // V is bit 4
-        c = instruction & 0x01;        // C is bit 0
-        n = (instruction >> 2) & 0x01; // N is bit 2
-        z = (instruction >> 1) & 0x01; // Z is bit 1
-        slp = (instruction >> 5) & 0x01; // SLP is bit 5
+
     }
 }
 InstructionType getInstructionType(unsigned short instruction) {

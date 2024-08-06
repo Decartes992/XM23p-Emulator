@@ -59,7 +59,7 @@ void pipelineExecute(unsigned short* PC, int display) {
     unsigned short IR_prev = 0;
     IR = 0x6800;
 
-    printf("Clock  PC   Instruction      Fetch      Decode      Execute    Z N V C\n");
+    if(display)printf("Clock  PC   Instruction      Fetch      Decode      Execute    Z N V C\n");
     printf("--------------------------------------------------------------------------\n");
 
     while (!(IR == 0x0000 || *PC == breakpoint)) {
@@ -80,7 +80,7 @@ void pipelineExecute(unsigned short* PC, int display) {
         }
 
         if (display) StatusPrint(PC, IR_prev);
-        displayRegisters();
+        //displayRegisters();
         tick();
     }
     if (display) {
@@ -117,12 +117,12 @@ void F1Stage() {
 }
 
 void E1Stage() {
-    if (DCTRL == READ) {
-        DMBR = memory_read_byte(DMAR);
-    }
-    else if (DCTRL == WRITE) {
-        memory_write_byte(DMAR, DMBR);
-    }
+    //if (DCTRL == READ) {
+    //    DMBR = memory_read_byte(DMAR);
+    //}
+    //else if (DCTRL == WRITE) {
+    //    memory_write_byte(DMAR, DMBR);
+    //}
 }
 
 

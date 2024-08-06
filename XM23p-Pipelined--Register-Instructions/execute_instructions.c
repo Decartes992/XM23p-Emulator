@@ -10,7 +10,8 @@ File Purpose: This file contains the function to execute instructions.
 
 #include "loader.h"
 #include "execute_instructions.h"
-#include "instructions.h"
+#include "register_instructions.h"
+#include "memory_instructions.h"
 
 void executeInstruction(InstructionType type, unsigned short operand){
     operand = getOperand(rc, src);
@@ -93,16 +94,17 @@ void executeInstruction(InstructionType type, unsigned short operand){
         execute_ld(src, dst);
         return;
     case LDR:
-        execute_ldr(src, dst, (char)operand);
+        execute_ldr(src, dst, offset_DR);
         return;
     case ST:
         execute_st(src, dst);
         return;
     case STR:
-        execute_str(src, dst, (char)operand);
+        execute_str(src, dst, offset_DR);
         return;
     default:
         // Handle invalid instruction or not implemented
         return;
     }
 }
+
