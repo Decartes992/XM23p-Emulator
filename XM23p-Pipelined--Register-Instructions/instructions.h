@@ -32,4 +32,11 @@ void execute_ld(unsigned char src, unsigned char dst);
 void execute_ldr(unsigned char src, unsigned char dst, char offset);
 void execute_st(unsigned char src, unsigned char dst);
 void execute_str(unsigned char src, unsigned char dst, char offset);
+
+// Function prototypes for memory access
+uint8_t memory_read_byte(uint16_t address);
+uint16_t memory_read_word(uint16_t address);
+void memory_write_byte(uint16_t address, uint8_t value);
+void memory_write_word(uint16_t address, uint16_t value);
+
 #endif // INSTRUCTIONS_H

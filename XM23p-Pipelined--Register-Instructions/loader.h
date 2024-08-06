@@ -77,9 +77,6 @@ void manager(int argc, char* argv[]);
 unsigned int calculateChecksum(const char* line, int count, int dataLength);
 
 
-uint8_t memory_read_byte(uint16_t address);
-uint16_t memory_read_word(uint16_t address);
-void memory_write_byte(uint16_t address, uint8_t value);
-void memory_write_word(uint16_t address, uint16_t value);
+
 
 #endif // LOADER_H

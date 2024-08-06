@@ -154,3 +154,38 @@ unsigned short getOperand(unsigned char rc, unsigned char src) {
     }
 }
 
+
+// Function to get the name of the instruction type
+const char* getInstructionName(InstructionType type) {
+    switch (type) {
+    case ADD: return "ADD";
+    case ADDC: return "ADDC";
+    case SUB: return "SUB";
+    case SUBC: return "SUBC";
+    case DADD: return "DADD";
+    case CMP: return "CMP";
+    case XOR: return "XOR";
+    case AND: return "AND";
+    case OR: return "OR";
+    case BIT: return "BIT";
+    case BIC: return "BIC";
+    case BIS: return "BIS";
+    case MOV: return "MOV";
+    case SWAP: return "SWAP";
+    case SRA: return "SRA";
+    case RRC: return "RRC";
+    case SWPB: return "SWPB";
+    case SXT: return "SXT";
+    case MOVL: return "MOVL";
+    case MOVLZ: return "MOVLZ";
+    case MOVLS: return "MOVLS";
+    case MOVH: return "MOVH";
+    case SETCC: return "SETCC";
+    case CLRCC: return "CLRCC";
+    case LD: return "LD";
+    case LDR: return "LDR";
+    case ST: return "ST";
+    case STR: return "STR";
+    default: return "INVALID";
+    }
+}

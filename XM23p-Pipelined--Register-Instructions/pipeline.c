@@ -80,7 +80,7 @@ void pipelineExecute(unsigned short* PC, int display) {
         }
 
         if (display) StatusPrint(PC, IR_prev);
-
+        displayRegisters();
         tick();
     }
     if (display) {
@@ -107,13 +107,13 @@ void E0Stage(InstructionType type) {
 }
 
 void F0Stage(unsigned short* PC) {
-    IMAR = *PC;
+    IMAR = *PC/2;
     ICTRL = READ;
     *PC += 2;
 }
 
 void F1Stage() {
-    IR = IMEM[IMAR / 2];
+    IR = IMEM[IMAR];
 }
 
 void E1Stage() {
@@ -124,6 +124,7 @@ void E1Stage() {
         memory_write_byte(DMAR, DMBR);
     }
 }
+
 
 void tick() {
     clock_ticks++;
