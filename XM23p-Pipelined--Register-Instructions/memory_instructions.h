@@ -22,17 +22,9 @@ void execute_st();
 
 // Helper function prototypes
 void adjustAddressWithOffset(unsigned char base_reg, short offset);
-void loadFromEffectiveAddress(unsigned char dst, unsigned char wb);
-void storeToEffectiveAddress(unsigned char src, unsigned char wb);
-void handlePRPOAdjustment(unsigned char reg, unsigned char prpo, unsigned char inc, unsigned char dec, unsigned char wb);
+void handlePRPOAdjustment(int PRPO, unsigned char reg, unsigned char prpo, unsigned char inc, unsigned char dec, unsigned char wb);
 void storeToMemory(unsigned short address, unsigned short value, unsigned char wb);
 unsigned short loadFromMemory(unsigned short address, unsigned char wb);
-
-// Memory access function prototypes
-void memory_write_byte(unsigned short address, unsigned char value);
-void memory_write_word(unsigned short address, unsigned short value);
-unsigned char memory_read_byte(unsigned short address);
-unsigned short memory_read_word(unsigned short address);
 
 // Sign extension function prototype
 short SignExt(short offset, int msb);

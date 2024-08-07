@@ -22,8 +22,8 @@ void extractFields(unsigned short instruction, InstructionType type) {
     switch(type){
 		case LD:case ST:case LDR:case STR:
             prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
-            dec = (instruction >> 9) & 0x01;   // DEC is at bit 9
-            inc = (instruction >> 8) & 0x01;   // INC is at bit 8
+            dec = (instruction >> 8) & 0x01;   // DEC is at bit 9
+            inc = (instruction >> 7) & 0x01;   // INC is at bit 8
             offset_DR = ((instruction >> 7) & 0x7f); // get the offset bit (LDR-STR)
 			break;
         case SETCC: case CLRCC:
@@ -33,6 +33,15 @@ void extractFields(unsigned short instruction, InstructionType type) {
             z = (instruction >> 1) & 0x01; // Z is bit 1
             slp = (instruction >> 5) & 0x01; // SLP is bit 5
 			break;
+         case BEQ:case BNE:case BC:case BNC:case BN:case BGE:case BLT:case BRA:
+			offset_BR = (instruction & 0x03FF); // get the offset bit (BR-BRA)
+            offset_BR = SignExt(offset_BR, 9); // Sign-extend the offsetbuffer (was 9 bits)
+            break;
+         case BL:
+			offset_BL = ((instruction) & 0x1FFF); // get the offset bit (BL)
+            offset_BL = SignExt(offset_BL, 12); // Sign-extend the offsetbuffer (was 12 bits)
+
+			break;
     }
 
 
@@ -40,16 +49,14 @@ void extractFields(unsigned short instruction, InstructionType type) {
     if (type == SETCC || type == CLRCC) {
 
     }
-}
+
+}// Updated getInstructionType function to include branch instructions
 InstructionType getInstructionType(unsigned short instruction) {
-
-
     // Check for LD and ST instructions
     switch (instruction & 0xFC00) {  // Check bits 15-10
     case 0x5800: return LD;      // 010110xxxxxx
     case 0x5C00: return ST;      // 010111xxxxxx
     }
-
 
     // Check for LDR and STR instructions
     switch (instruction & 0xC000) {  // Check bits 15-14
@@ -57,7 +64,21 @@ InstructionType getInstructionType(unsigned short instruction) {
     case 0xC000: return STR;     // 11xxxxxxxxxx
     }
 
+    // Check for branch instructions
+    switch (instruction & 0xE000) {  // Check bits 15-13
+    case 0x0000: return BL;       // 000000000000xxxx
+    }
 
+    switch (instruction & 0xFC00) {  // Check bits 15-10
+    case 0x2000: return BEQ;      
+    case 0x2400: return BNE;      
+    case 0x2800: return BC;       
+    case 0x2C00: return BNC;      
+    case 0x3000: return BN;       
+    case 0x3400: return BGE;      
+    case 0x3800: return BLT;      
+    case 0x3C00: return BRA;      
+    } 
     // Check for other instructions
     switch (instruction & 0xFF00) {  // Check bits 15-8
     case 0x4000: return ADD;
@@ -108,6 +129,7 @@ InstructionType getInstructionType(unsigned short instruction) {
 }
 
 void printDecodedInstruction(unsigned short PC, InstructionType type) {
+    printf("%04x", IR);
     printf("                  %04X: %s ", PC - 4, getInstructionName(type));
 
     // Print the fields based on the instruction type
@@ -144,14 +166,35 @@ void printDecodedInstruction(unsigned short PC, InstructionType type) {
         printf("DST: R%d BB: %d\n", dst, bb);
         printf("                  Registers: ");
     }
+    else if (type == BEQ || type == BNE || type == BC || type == BNC || type == BN || type == BGE || type == BLT || type == BRA) {
+        // For branch instructions, print the offset value
+        printf("Offset: #%d\n", offset_BR);
+        printf("                  PC: %04X\n", PC);
+    }
+    else if (type == BL) {
+        // For branch instructions, print the offset value
+        printf("Offset: #%d\n", offset_BL);
+        printf("                  PC: %04X\n", PC);
+    }
+	else if (type == LD || type == ST || type == LDR || type == STR) {
+		printf("PRPO: %d DEC: %d INC: %d Offset: #%d\n", prpo, dec, inc, offset_DR);
+		printf("                  Registers: ");
+	}
+	else if (type == SETCC || type == CLRCC) {
+		printf("V: %d C: %d N: %d Z: %d SLP: %d\n", v, c, n, z, slp);
+		printf("                  ");
+	}
     else {
         printf("\n                  ");
     }
 
     // Print the destination register values
-    printf("R%d: %04X\n", dst, reg_file[dst]);
+    if (type != BL && type != BEQ && type != BNE && type != BC && type != BNC && type != BN && type != BGE && type != BLT && type != BRA) {
+        printf("R%d: %04X\n", dst, reg_file[dst]);
+    }
     printf("\n");
 }
+
 
 // Function to get the operand based on the rc flag and src value
 unsigned short getOperand(unsigned char rc, unsigned char src) {
@@ -197,6 +240,16 @@ const char* getInstructionName(InstructionType type) {
     case LDR: return "LDR";
     case ST: return "ST";
     case STR: return "STR";
+    case BL: return "BL";
+    case BEQ: return "BEQ";
+    case BNE: return "BNE";
+    case BC: return "BC";
+    case BNC: return "BNC";
+    case BN: return "BN";
+    case BGE: return "BGE";
+    case BLT: return "BLT";
+    case BRA: return "BRA";
+
     default: return "INVALID";
     }
 }

@@ -16,6 +16,11 @@ File Purpose: This file contains the manager function which handles user input f
 unsigned short reg_file[REGFILE_SIZE]; // Define the register file
 unsigned short breakpoint = 0xFFFF; // Initialize breakpoint to an invalid address
 
+// Define the register pointers
+unsigned short* PC = &reg_file[7];  // Start execution at address in R7
+unsigned short* SP = &reg_file[6];  // Stack Pointer
+unsigned short* LR = &reg_file[5];  // Link Register
+
 // Define IMAR, ICTRL, IR, breakpoint, and clock_ticks
 unsigned short breakpoint;
 unsigned short IMAR;
@@ -43,6 +48,9 @@ unsigned char z;
 unsigned char slp;
 short offset_DR;
 unsigned short EA; // Effective Address
+short offset_BL;
+short offset_BR;
+int isBranch; // Flag to indicate if the previous instruction is a branch
 
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];

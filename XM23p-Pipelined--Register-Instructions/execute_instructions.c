@@ -12,10 +12,10 @@ File Purpose: This file contains the function to execute instructions.
 #include "execute_instructions.h"
 #include "register_instructions.h"
 #include "memory_instructions.h"
+#include "branch_instructions.h"
 
 void executeInstruction(InstructionType type, unsigned short operand){
     operand = getOperand(rc, src);
-
     // Execute the instruction based on the decoded type
     switch (type) {
     case ADD:
@@ -101,6 +101,41 @@ void executeInstruction(InstructionType type, unsigned short operand){
         return;
     case STR:
         execute_str(src, dst, offset_DR);
+        return;
+    case BL:
+        execute_BL();
+        return;
+
+    case BEQ:
+        execute_BEQBZ();
+        return;
+
+    case BNE:
+        execute_BNEBNZ();
+        return;
+
+    case BC:
+        execute_BCBHS();
+        return;
+
+    case BNC:
+        execute_BNCBLO();
+        return;
+
+    case BN:
+        execute_BN();
+        return;
+
+    case BGE:
+        execute_BGE();
+        return;
+
+    case BLT:
+        execute_BLT();
+        return;
+
+    case BRA:
+        execute_BRA();
         return;
     default:
         // Handle invalid instruction or not implemented

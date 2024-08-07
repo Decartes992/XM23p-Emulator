@@ -24,8 +24,11 @@
 #define DEBUGGER_MODE 1
 #define EXECUTION_MODE 0
 #define SET 1
-#define POST 1
+#define POST 0
+#define PRE 1
 #define WORD 0
+#define TRUE 1
+#define FALSE 0
 
 
 
@@ -53,6 +56,10 @@ extern unsigned long clock_ticks; // Global variable to store clock ticks
 extern unsigned short breakpoint;
 extern PSW psw; // Processor Status Word
 extern unsigned short start_address; // Start address set by S9 record
+extern unsigned short * PC; // Program Counter
+extern unsigned short * SP; // Stack Pointer
+extern unsigned short * LR; // Link Register
+
 
 // Declare new variables for memory access
 extern unsigned short DMAR; // Data Memory Address Register
@@ -76,6 +83,9 @@ extern unsigned char z;
 extern unsigned char slp;
 extern short offset_DR;
 extern unsigned short EA; // Effective Address
+extern short offset_BL;
+extern short offset_BR;
+extern int isBranch; // Flag to indicate if the previous instruction is a branch
 
 
 // Declare functions for loading S-Records and displaying memory

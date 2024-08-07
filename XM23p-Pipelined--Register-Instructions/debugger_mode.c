@@ -16,8 +16,7 @@ File Purpose: This file contains the runMode function which executes instruction
 
 
 void runMode(int debug) {
-    unsigned short * PC = &reg_file[7];  // Start execution at address in R7
-    pipelineExecute( PC, debug);          // Execute instructions
+    pipelineExecute(debug);          // Execute instructions
     displayRegisters();                  // Display register contents
     saveRegisterInfoToFile();            // Save register contents to file
     return;
