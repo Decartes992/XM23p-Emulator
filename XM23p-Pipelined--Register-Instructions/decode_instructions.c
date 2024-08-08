@@ -11,7 +11,10 @@ File Purpose: This file contains the function to decode instructions from IMEM.
 #include "loader.h"
 #include "decode_instructions.h"
 
+
+
 void extractFields(unsigned short instruction, InstructionType type) {
+    // Extract common fields
     rc = (instruction >> 7) & 0x01;    // RC is at bit 7
     wb = (instruction >> 6) & 0x01;    // WB is at bit 6
     src = (instruction >> 3) & 0x07;   // SRC/CON is at bits 5-3
@@ -19,51 +22,49 @@ void extractFields(unsigned short instruction, InstructionType type) {
     con = src;                         // CON is the same as SRC/CON
     bb = (instruction >> 3) & 0xFF;    // BB is at bits 10-3 (byte-level data)
 
-    switch(type){
-		case LD:case ST:case LDR:case STR:
-            prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
-            dec = (instruction >> 8) & 0x01;   // DEC is at bit 9
-            inc = (instruction >> 7) & 0x01;   // INC is at bit 8
-            offset_DR = ((instruction >> 7) & 0x7f); // get the offset bit (LDR-STR)
-			break;
-        case SETCC: case CLRCC:
-            v = (instruction >> 4) & 0x01; // V is bit 4
-            c = instruction & 0x01;        // C is bit 0
-            n = (instruction >> 2) & 0x01; // N is bit 2
-            z = (instruction >> 1) & 0x01; // Z is bit 1
-            slp = (instruction >> 5) & 0x01; // SLP is bit 5
-			break;
-         case BEQ:case BNE:case BC:case BNC:case BN:case BGE:case BLT:case BRA:
-			offset_BR = (instruction & 0x03FF); // get the offset bit (BR-BRA)
-            offset_BR = SignExt(offset_BR, 9); // Sign-extend the offsetbuffer (was 9 bits)
-            break;
-         case BL:
-			offset_BL = ((instruction) & 0x1FFF); // get the offset bit (BL)
-            offset_BL = SignExt(offset_BL, 12); // Sign-extend the offsetbuffer (was 12 bits)
-
-			break;
+    switch (type) {
+    case LD: case ST: case LDR: case STR:
+        prpo = (instruction >> 10) & 0x01; // PRPO is at bit 10
+        dec = (instruction >> 8) & 0x01;   // DEC is at bit 9
+        inc = (instruction >> 7) & 0x01;   // INC is at bit 8
+        offset_DR = ((instruction >> 7) & 0x7f); // get the offset bit (LDR-STR)
+        break;
+    case SETCC: case CLRCC:
+        v = (instruction >> 4) & 0x01; // V is bit 4
+        c = instruction & 0x01;        // C is bit 0
+        n = (instruction >> 2) & 0x01; // N is bit 2
+        z = (instruction >> 1) & 0x01; // Z is bit 1
+        slp = (instruction >> 5) & 0x01; // SLP is bit 5
+        break;
+    case BEQ: case BNE: case BC: case BNC: case BN: case BGE: case BLT: case BRA:
+        offset_BR = (instruction & 0x03FF); // get the offset bit (BR-BRA)
+        offset_BR = SignExt(offset_BR, 9); // Sign-extend the offset buffer (was 9 bits)
+        break;
+    case BL:
+        offset_BL = ((instruction) & 0x1FFF); // get the offset bit (BL)
+        offset_BL = SignExt(offset_BL, 12); // Sign-extend the offset buffer (was 12 bits)
+        break;
+    case CEX:
+        C = (instruction >> 6) & 0x0F;  // C is at bits 9-6
+        T = (instruction >> 3) & 0x07;  // T is at bits 5-3
+        F = instruction & 0x07;         // F is at bits 2-0
+        break;
     }
-
-
 
     if (type == SETCC || type == CLRCC) {
-
+        // Additional processing if needed
     }
+}
 
-}// Updated getInstructionType function to include branch instructions
+
+// Updated getInstructionType function to include branch instructions and CEX
 InstructionType getInstructionType(unsigned short instruction) {
-    // Check for LD and ST instructions
-    switch (instruction & 0xFC00) {  // Check bits 15-10
-    case 0x5800: return LD;      // 010110xxxxxx
-    case 0x5C00: return ST;      // 010111xxxxxx
-    }
 
     // Check for LDR and STR instructions
     switch (instruction & 0xC000) {  // Check bits 15-14
     case 0x8000: return LDR;     // 10xxxxxxxxxx
     case 0xC000: return STR;     // 11xxxxxxxxxx
     }
-
     // Check for branch instructions
     switch (instruction & 0xE000) {  // Check bits 15-13
     case 0x0000: return BL;       // 000000000000xxxx
@@ -77,7 +78,10 @@ InstructionType getInstructionType(unsigned short instruction) {
     case 0x3000: return BN;       
     case 0x3400: return BGE;      
     case 0x3800: return BLT;      
-    case 0x3C00: return BRA;      
+    case 0x3C00: return BRA;
+    case 0x5800: return LD;      // 010110xxxxxx
+    case 0x5C00: return ST;      // 010111xxxxxx
+    case 0x5000: return CEX;     // 0101xxxxxxxx
     } 
     // Check for other instructions
     switch (instruction & 0xFF00) {  // Check bits 15-8

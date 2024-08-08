@@ -9,7 +9,7 @@ typedef enum {
     ADD, ADDC, SUB, SUBC, DADD, CMP, XOR, AND, OR,
     BIT, BIC, BIS, MOV, SWAP, SRA, RRC, SWPB, SXT,
     MOVL, MOVLZ, MOVLS, MOVH, SETCC, CLRCC, LD, LDR,
-    ST, STR, BL, BEQ, BNE, BC, BNC, BN, BGE, BLT,BRA,    
+    ST, STR, BL, BEQ, BNE, BC, BNC, BN, BGE, BLT,BRA, CEX,   
     INVALID
 } InstructionType;
 
