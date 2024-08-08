@@ -18,7 +18,7 @@ File Purpose: This file contains the pipeline functions for the execution of ins
 
 // Global variable to keep track of interrupt signal
 volatile sig_atomic_t interrupted = 0;
-IR = 0x6800;
+
 
 // Signal handler function
 void handle_sigint(int sig) {

@@ -30,7 +30,7 @@ unsigned short* LR = &reg_file[5]; // Link Register
 // Define IMAR, ICTRL, IR, breakpoint, and clock_ticks
 unsigned short IMAR;
 unsigned short ICTRL;
-unsigned short IR;
+unsigned short IR = 0x6800;
 unsigned long clock_ticks = 0;
 unsigned short DMAR; // Data Memory Address Register
 unsigned char DCTRL; // Data Control Register
