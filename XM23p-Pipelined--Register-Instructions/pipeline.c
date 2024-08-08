@@ -22,12 +22,16 @@ void pipelineExecute(int display) {
     int instruction_count = 1;
     unsigned short IR_prev = 0;
     IR = 0x6800;
-
-    if (display) printf("Clock  PC   Instruction      Fetch      Decode      Execute    Z N V C\n");
-    printf("--------------------------------------------------------------------------\n");
     int count = 0;
     isBranch = 0;
+    type = getInstructionType(IR);
+
+    if (display) StatusPrint(IR_prev);
+
     while (!(IR == 0x0000 || *PC == breakpoint || interrupted)) {
+        if (type == LD || type == LDR || type == ST || type == STR) {
+            E1Stage(type);  // Execute memory access completion stage
+        }
 
         // Fetch the instruction
         F0Stage();
@@ -57,12 +61,12 @@ void pipelineExecute(int display) {
 
         tick();
         count++;
-    }
 
-    // Check if the loop was exited due to an interrupt
-    if (interrupted) {
-        printf("Execution interrupted by user. Stopping...\n\n");
-        interrupted = 0; // Reset the interrupted flag
+        // Check if the loop was exited due to an interrupt
+        if (interrupted) {
+            printf("Execution interrupted by user. Stopping...\n\n");
+            break; // Exit the loop
+        }
     }
 
     // Proceed with the rest of the function
@@ -75,7 +79,8 @@ void pipelineExecute(int display) {
         }
     }
 
-    return;
+    // Reset the interrupted flag
+    interrupted = 0;
 }
 
 void D0Stage(InstructionType* type) {
@@ -92,10 +97,6 @@ void E0Stage(InstructionType type) {
         unsigned short operand = getOperand(rc, src);
         executeInstruction(type, operand);
         saveRegisterInfoToFile();
-
-        if (type == LD || type == LDR || type == ST || type == STR) {
-            E1Stage();  // Execute memory access completion stage
-        }
     }
     else { // CEX enabled
         execute_cex_instructions(IR); // handle executions accordingly
@@ -112,9 +113,13 @@ void F1Stage() {
     IR = IMEM[IMAR];
 }
 
-void E1Stage() {
-    // Handle memory access completion stage if needed
-    // Placeholder for potential future implementation
+void E1Stage(InstructionType type) {
+    if (type == LD || type == ST) {
+        execute_ld();
+    }
+    else if (type == LDR || type == STR) {
+        execute_st();
+    }
 }
 
 void tick() {
@@ -122,8 +127,16 @@ void tick() {
 }
 
 void StatusPrint(unsigned short IR_prev) {
-    if (clock_ticks % 2 == 0)
-        printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, IMAR * 2, IMEM[IMAR], *PC, IR);
-    else
-        printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR_prev, psw.ZF, psw.SF, psw.OF, psw.CF);
+    if (clock_ticks != 0) {
+        if (clock_ticks % 2 == 0) {
+            printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, IMAR * 2, IMEM[IMAR], *PC, IR);
+        }
+        else {
+            printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR_prev, psw.ZF, psw.SF, psw.OF, psw.CF);
+        }
+    }
+    else {
+        printf("Clock  PC   Instruction      Fetch      Decode      Execute    Z N V C\n");
+        printf("--------------------------------------------------------------------------\n");
+    }
 }

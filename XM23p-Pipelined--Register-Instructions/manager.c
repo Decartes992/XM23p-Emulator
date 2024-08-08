@@ -7,8 +7,8 @@ Instructor: Larry Hughes
 File Name: manager.c
 File Purpose: This file contains the manager function which handles user input for memory display and calls the loadSRecord function to load S-Records from a file into memory.
 */
-
 #include <stdio.h>
+#include <stdlib.h>
 #include "loader.h"
 #include "debugger_mode.h"
 
@@ -22,11 +22,10 @@ unsigned short* SP = &reg_file[6];  // Stack Pointer
 unsigned short* LR = &reg_file[5];  // Link Register
 
 // Define IMAR, ICTRL, IR, breakpoint, and clock_ticks
-unsigned short breakpoint;
 unsigned short IMAR;
 unsigned short ICTRL;
 unsigned short IR;
-unsigned long clock_ticks = 0; 
+unsigned long clock_ticks = 0;
 unsigned short DMAR; // Data Memory Address Register
 unsigned char DCTRL; // Data Control Register
 unsigned short DMBR; // Data Memory Buffer Register
@@ -64,18 +63,13 @@ unsigned char cex_flag;
 unsigned short IMEM[IMEM_SIZE / 2];
 
 // Define a 64 KiB word-addressable data memory array
-unsigned short DMEM[DMEM_SIZE/2];
+unsigned short DMEM[DMEM_SIZE / 2];
 
 PSW psw = { 0, 0, 0, 0, 0 }; // Initialize PSW
 
 void manager(int argc, char* argv[]) {
-    //if (argc != ARG_COUNT) {
-    //    //fprintf(stderr, "Error: XME file not detected.");
-
-    //    getchar();
-    //    return;
-    //}
     char filename[256]; // Ensure filename buffer is properly allocated
+
     int start, end;
     char choice;
     char continueChoice;
@@ -87,66 +81,67 @@ void manager(int argc, char* argv[]) {
 
         switch (choice) {
 
-        // Display Instruction Memory
-        case 'I':case 'i': 
+            // Display Instruction Memory
+        case 'I':case 'i':
             printf("\nDisplaying Instruction Memory (IMEM):\n");
             printf("Enter start address (in hex): ");
             scanf("%x", &start);
             printf("Enter end address (in hex): ");
             scanf("%x", &end);
             displayMemory((unsigned char*)IMEM, start, end);
-            return;
+            break;
 
-        // Display Data Memory
-        case 'D':case 'd': 
+            // Display Data Memory
+        case 'D':case 'd':
             printf("Displaying Data Memory (DMEM):\n");
             printf("Enter start address (in hex): ");
             scanf("%x", &start);
             printf("Enter end address (in hex): ");
             scanf("%x", &end);
             displayMemory((unsigned char*)DMEM, start, end);
-            return;
+            break;
 
-        // Display Registers
+            // Display Registers
         case 'R':case 'r':
             displayRegisters();
-            return;
+            break;
 
-		// Change Register
-        case 'C': case 'c': 
-            changeRegister(); 
-            return;
+            // Change Register
+        case 'C': case 'c':
+            changeRegister();
+            break;
 
-        // Change Memory
+            // Change Memory
         case 'M': case 'm':
             changeMemory();
-            return;
+            break;
 
-        // Set Breakpoint
+            // Set Breakpoint
         case 'B':case 'b':
             printf("Enter breakpoint address (in hex): ");
             scanf("%hx", &address);
             setBreakpoint(address);
-            return;
+            break;
 
-        // Execute Program
+            // Execute Program
         case 'E':case 'e':
-            runMode(EXECUTION_MODE); 
-            return;
+            runMode(EXECUTION_MODE);
+            break;
 
-        // Debugger Mode
+            // Debugger Mode
         case 'X':case 'x':
-            runMode(DEBUGGER_MODE); 
-            return;
+            runMode(DEBUGGER_MODE);
+            break;
+
+            // Load S-Record File
         case 'L':case 'l':
             clearMemory();
             resetRegisters();
-
             printf("Enter the name of the S-Record file:");
-            scanf("%s", filename);
+            fgets(filename, sizeof(filename), stdin);
             loadSRecord(filename);
-            continue;
-        // Invalid command
+            break;
+
         default:
             printf("Invalid choice. Please enter a valid command.\n");
         }

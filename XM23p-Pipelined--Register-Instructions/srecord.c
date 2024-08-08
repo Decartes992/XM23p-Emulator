@@ -39,9 +39,10 @@ void loadSRecord(const char* filename) {
 
     FILE* file = fopen(filename, "r");
     if (!file) {
-        perror("Error opening file");
+        printf("Error opening file");
         return;
     }
+
     char line[LINE_SIZE];
     while (fgets(line, sizeof(line), file)) {
 
@@ -97,4 +98,5 @@ void loadSRecord(const char* filename) {
         }
     }
     fclose(file);
+    return;
 }

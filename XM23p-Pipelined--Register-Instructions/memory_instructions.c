@@ -34,19 +34,19 @@ void execute_st(){
 void execute_ldr(unsigned char src, unsigned char dst, short offset) {
     short effective_offset = SignExt(offset, 6);
     adjustAddressWithOffset(src, effective_offset);
-    reg_file[dst] = loadFromMemory(EA, wb);
+    reg_file[dst] = loadFromMemory(DMAR, wb);
 }
 
 // STR - Store register value into memory with an offset
 void execute_str(unsigned char src, unsigned char dst, short offset) {
     short effective_offset = SignExt(offset, 6);
     adjustAddressWithOffset(dst, effective_offset);
-    storeToMemory(EA, reg_file[src], wb);
+    storeToMemory(DMAR, reg_file[src], wb);
 }
 
 // Helper function to adjust the address with an offset
 void adjustAddressWithOffset(unsigned char base_reg, short offset) {
-    EA = (reg_file[base_reg] + offset/2);
+    DMAR = (reg_file[base_reg] + offset/2);
     DCTRL = (wb == WRITE) ? WRITE : READ;
 }
 
@@ -70,12 +70,12 @@ void storeToMemory(unsigned short address, unsigned short value, unsigned char w
 unsigned short loadFromMemory(unsigned short address, unsigned char wb) {
     if (wb == WORD) {
         return DMEM[address / 2]; // Load word
-        reg_file[dst] = DMEM[EA / 2]; // dst shouldnt change
+        reg_file[dst] = DMEM[DMAR / 2]; // dst shouldnt change
     }
     else {
         unsigned short wordVal = DMEM[address / 2];
         return (address % 2 == 0) ? (wordVal & 0x00FF) : ((wordVal & 0xFF00) >> 8); // Load byte
-        reg_file[dst] = DMEM[EA / 2] & 0x00FF; // dst shouldnt change
+        reg_file[dst] = DMEM[DMAR / 2] & 0x00FF; // dst shouldnt change
     }
 }
 

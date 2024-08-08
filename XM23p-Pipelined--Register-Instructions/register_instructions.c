@@ -11,10 +11,12 @@ File Purpose: This file contains the functions to handle execution of specific i
 #include "loader.h"
 #include "register_instructions.h"
 
+// Function to execute the ADD instruction
 void updatePSW_ZF(unsigned short result, unsigned char isByte) {
     psw.ZF = (result == 0);
 }
 
+// Function to update the Sign Flag in the PSW
 void updatePSW_SF(unsigned short result, unsigned char isByte) {
     if (isByte) {
         psw.SF = ((result & 0x80) != 0); // For byte operations
@@ -24,6 +26,7 @@ void updatePSW_SF(unsigned short result, unsigned char isByte) {
     }
 }
 
+// Function to update the Overflow Flag in the PSW
 void updatePSW_OF(unsigned short a, unsigned short b, unsigned short result, unsigned char isByte) {
     if (isByte) {
         psw.OF = (((a ^ b ^ result ^ (result >> 1)) & 0x80) != 0); // For byte operations
@@ -33,6 +36,7 @@ void updatePSW_OF(unsigned short a, unsigned short b, unsigned short result, uns
     }
 }
 
+// Function to update the Carry Flag in the PSW
 void updatePSW_CF(unsigned int result, unsigned char isByte) {
     if (isByte) {
         psw.CF = (result > 0xFF); // For byte operations
@@ -41,11 +45,15 @@ void updatePSW_CF(unsigned int result, unsigned char isByte) {
         psw.CF = (result > 0xFFFF); // For word operations
     }
 }
+
+// Function to execute the ADD instruction
 void executeSWAP(unsigned char src, unsigned char dst) {
     unsigned short value = reg_file[dst];
     reg_file[dst] = reg_file[src];
     reg_file[src] = value;
 }
+
+// Function to execute the ADD instruction
 void executeADD(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned int result;
@@ -70,6 +78,7 @@ void executeADD(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the ADDC instruction
 void executeADDC(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned int result;
@@ -94,6 +103,7 @@ void executeADDC(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the SUB instruction
 void executeSUB(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned int result;
@@ -118,6 +128,7 @@ void executeSUB(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the SUBC instruction
 void executeSUBC(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned int result;
@@ -142,6 +153,7 @@ void executeSUBC(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the CMP instruction
 void executeDADD(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned int result;
@@ -164,6 +176,7 @@ void executeDADD(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the CMP instruction
 void executeCMP(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned int result;
@@ -181,6 +194,7 @@ void executeCMP(unsigned char dst, unsigned short operand) {
     updatePSW_CF(result, isByte);
 }
 
+// Function to execute the DADD instruction
 void executeXOR(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned short result;
@@ -203,6 +217,7 @@ void executeXOR(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the AND instruction
 void executeAND(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned short result;
@@ -225,6 +240,7 @@ void executeAND(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the OR instruction
 void executeOR(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned short result;
@@ -247,6 +263,7 @@ void executeOR(unsigned char dst, unsigned short operand) {
     }
 }
 
+// Function to execute the BIT instruction
 void executeBIT(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
     unsigned short result;
@@ -262,6 +279,7 @@ void executeBIT(unsigned char dst, unsigned short operand) {
     updatePSW_SF(result, isByte);
 }
 
+// Function to execute the BIC instruction
 void executeBIC(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
 
@@ -276,6 +294,7 @@ void executeBIC(unsigned char dst, unsigned short operand) {
     updatePSW_SF(reg_file[dst], isByte);
 }
 
+// Function to execute the BIS instruction
 void executeBIS(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
 
@@ -290,6 +309,7 @@ void executeBIS(unsigned char dst, unsigned short operand) {
     updatePSW_SF(reg_file[dst], isByte);
 }
 
+// Function to execute the MOV instruction
 void executeMOV(unsigned char dst, unsigned short operand) {
     unsigned char isByte = wb == 1;
 
@@ -304,6 +324,7 @@ void executeMOV(unsigned char dst, unsigned short operand) {
     updatePSW_SF(reg_file[dst], isByte);
 }
 
+// Function to execute the SWPB instruction
 void executeSWPB(unsigned char dst) {
     unsigned short value = reg_file[dst];
     reg_file[dst] = (value << 8) | (value >> 8);
@@ -311,35 +332,38 @@ void executeSWPB(unsigned char dst) {
     updatePSW_SF(reg_file[dst] & 0xFF, 1);
 }
 
+// Function to execute the SXT instruction
 void executeSRA(unsigned char dst) {
     unsigned char isByte = wb == 1;
     unsigned short value = reg_file[dst];
 
-    if (isByte) {
+    if (isByte) {                                           // For byte operations
         reg_file[dst] = (value >> 1) | (value & 0x80);
         updatePSW_ZF(reg_file[dst] & 0xFF, isByte);
         updatePSW_SF(reg_file[dst] & 0xFF, isByte);
     }
-    else {
+    else {  										        // For word operations
         reg_file[dst] = (value >> 1) | (value & 0x8000);
         updatePSW_ZF(reg_file[dst], isByte);
         updatePSW_SF(reg_file[dst], isByte);
     }
 }
 
+// Function to execute the SXT instruction
 void executeRRC(unsigned char dst) {
     unsigned char isByte = wb == 1;
     unsigned short value = reg_file[dst];
     unsigned short newCarry;
 
-    if (isByte) {
+    // Rotate right through carry
+    if (isByte) {                                           // For byte operations
         newCarry = value & 0x01;
         reg_file[dst] = (value >> 1) | (psw.CF << 7);
         psw.CF = newCarry;
         updatePSW_ZF(reg_file[dst] & 0xFF, isByte);
         updatePSW_SF(reg_file[dst] & 0xFF, isByte);
     }
-    else {
+    else {												  // For word operations
         newCarry = value & 0x0001;
         reg_file[dst] = (value >> 1) | (psw.CF << 15);
         psw.CF = newCarry;
@@ -348,29 +372,39 @@ void executeRRC(unsigned char dst) {
     }
 }
 
+// Function to execute the SXT instruction
 void executeSXT(unsigned char dst) {
     reg_file[dst] = (reg_file[dst] & 0xFF) | ((reg_file[dst] & 0x80) ? 0xFF00 : 0x0000);
     updatePSW_ZF(reg_file[dst], 0); // SXT is a word operation
     updatePSW_SF(reg_file[dst], 0);
 }
 
+// Function to execute the MOVLZ instruction
 void executeMOVLZ(unsigned short dst, unsigned short operand) {
-    reg_file[dst] = operand & 0x00FF;
+    reg_file[dst] = operand & 0x00FF; // Load low byte
 }
 
+// Function to execute the MOVL instruction
 void executeMOVL(unsigned char dst, unsigned short operand) {
-    reg_file[dst] = (reg_file[dst] & 0xFF00) | (operand & 0x00FF);
+    // Keep the high byte of the destination register and load the low byte of the operand
+    reg_file[dst] = (reg_file[dst] & 0xFF00) | (operand & 0x00FF); 
 }
 
+// Function to execute the MOVLS instruction
 void executeMOVLS(unsigned char dst, unsigned short operand) {
+    // Keep the high byte of the destination register and load the low byte of the operand
     reg_file[dst] = 0xFF00 | (operand & 0x00FF);
 }
 
+// Function to execute the MOVH instruction
 void executeMOVH(unsigned char dst, unsigned short operand) {
+    // Keep the low byte of the destination register and load the high byte of the operand
     reg_file[dst] = (operand << 8) | (reg_file[dst] & 0x00FF);
 }
 
+// Function to execute the MOVHS instruction
 void executeSETCC() {
+    // Set the flags based on the condition codes
     if (c) psw.CF = 1;
     if (v) psw.OF = 1;
     if (n) psw.SF = 1;
@@ -378,7 +412,9 @@ void executeSETCC() {
     if (slp) psw.slp = 1;
 }
 
+// Function to execute the MOVHS instruction
 void executeCLRCC() {
+    // Clear the flags based on the condition codes
     if (c) psw.CF = 0;
     if (v) psw.OF = 0;
     if (n) psw.SF = 0;

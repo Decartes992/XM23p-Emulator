@@ -1,11 +1,3 @@
-﻿  pipeline.c
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(38,34): warning C4047: 'function': 'unsigned short' differs in levels of indirection from 'unsigned short *'
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(38,34): warning C4024: 'StatusPrint': different types for formal and actual parameter 1
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(38,38): warning C4020: 'StatusPrint': too many actual parameters
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(55,34): warning C4047: 'function': 'unsigned short' differs in levels of indirection from 'unsigned short *'
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(55,34): warning C4024: 'StatusPrint': different types for formal and actual parameter 1
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(55,38): warning C4020: 'StatusPrint': too many actual parameters
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(56,9): warning C4013: 'displayRegisters' undefined; assuming extern returning int
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(94,9): warning C4013: 'saveRegisterInfoToFile' undefined; assuming extern returning int
-D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(101,9): warning C4013: 'execute_cex_instructions' undefined; assuming extern returning int
-  XM23p-Pipelined--Register-Instructions.vcxproj -> D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
+﻿  manager.c
+C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\manager.c(161,5): warning C4013: 'memset' undefined; assuming extern returning int
+  XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
