@@ -31,12 +31,14 @@ void pipelineExecute(int display, const char step) {
 
     InstructionType type;
     int instruction_count = 1;
-    unsigned short IR_prev = 0;
+    unsigned short IR_prev;
+    unsigned short IR_prev_dummy = 0;
+    IR = 0x6800; // Set the initial instruction to the start of the program
     int count = 0;
     isBranch = 0;
     type = getInstructionType(IR);
 
-    if (display) StatusPrint(IR_prev);
+    if (display) StatusPrint(IR_prev_dummy);
 
     while (!(IR == 0x0000 || *PC == breakpoint || interrupted)) {
 
@@ -46,7 +48,7 @@ void pipelineExecute(int display, const char step) {
         D0Stage(&type);        // Decode the instruction
 
 
-        if (display) StatusPrint(IR_prev);
+        if (display) StatusPrint(IR_prev_dummy);
 
         tick();
 
@@ -66,13 +68,13 @@ void pipelineExecute(int display, const char step) {
 
         //printDecodedInstruction(*PC, type);
 
-        if (display) StatusPrint(IR_prev);
+        if (display) StatusPrint(IR);
         //displayRegisters();
 
         tick();
         count++;
 
-        if (step) getchar(); // Wait for user input to continue
+        if (step == 'y' || step == 'Y') getchar(); // Wait for user input to continue
 
         // Check if the loop was exited due to an interrupt
         if (interrupted) {
@@ -112,7 +114,7 @@ void E0Stage(InstructionType type) {
         }
     }
     else { // CEX enabled
-        execute_cex_instructions(IR); // handle executions accordingly
+        execute_cex_instructions(type); // handle executions accordingly
     }
 }
 

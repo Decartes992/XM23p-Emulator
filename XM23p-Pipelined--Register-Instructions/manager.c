@@ -30,7 +30,7 @@ unsigned short* LR = &reg_file[5]; // Link Register
 // Define IMAR, ICTRL, IR, breakpoint, and clock_ticks
 unsigned short IMAR;
 unsigned short ICTRL;
-unsigned short IR = 0x6800;
+unsigned short IR;
 unsigned long clock_ticks = 0;
 unsigned short DMAR; // Data Memory Address Register
 unsigned char DCTRL; // Data Control Register
@@ -64,6 +64,7 @@ unsigned char F;
 unsigned char TC;
 unsigned char FC;
 unsigned char cex_flag;
+unsigned short start_address; // Start address set by S9 record
 
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];
@@ -89,7 +90,7 @@ void manager(int argc, char* argv[]) {
     do {
         char filename[256]; // Ensure filename buffer is properly allocated
 
-        printf("Enter command (L to load XME file, I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
+        printf("Enter command (L to load XME file, P to set PC back to starting address, I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
         fgets(filename, sizeof(filename), stdin); // Use fgets to read the command
         sscanf(filename, " %c", &choice);         // Extract the command character
 
@@ -165,17 +166,16 @@ void manager(int argc, char* argv[]) {
             fgets(filename, sizeof(filename), stdin);
             // Remove the newline character if present
             filename[strcspn(filename, "\n")] = 0;
+
             loadSRecord(filename);
             break;
 
+        case 'P': case'p':
+            *PC = start_address;
+            break;
         default:
             printf("Invalid choice. Please enter a valid command.\n");
         }
-
-        // Clear the input buffer after using scanf
-        while (getchar() != '\n')
-            ;
-
         // Ask user if they want to enter another command
         do {
             printf("Do you want to enter another command? (Y for yes, N for no): ");

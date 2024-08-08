@@ -21,6 +21,7 @@ void execute_BL(void) {
 
 void execute_BEQBZ(void) {
     isBranch = TRUE;
+
     if (psw.ZF == TRUE) {
         *PC += offset_BR;
     }

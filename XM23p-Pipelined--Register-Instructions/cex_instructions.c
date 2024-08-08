@@ -12,12 +12,12 @@ File Purpose: This file contains the implementation of the CEX instructions.
 #include "loader.h"
 #include "decode_instructions.h"
 
-enum { EQ, NE, CSHS, CCLO, MI, PL, VS, VC, HI, LS, GE, LT, GT, LE, TR, FL };
 
 void execute_cex() {
     // This function manages the conditional execution of instructions
     // It establishes the cex_flag based on the condition prefix
     // TC and FC are set to determine the number of instructions to execute or skip
+    enum { EQ, NE, CSHS, CCLO, MI, PL, VS, VC, HI, LS, GE, LT, GT, LE, TR, FL };
 
     switch (C) {
     case EQ:  // Zero flag set

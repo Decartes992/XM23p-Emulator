@@ -10,6 +10,7 @@ File Purpose: This file contains the function to load S-Records from a file and 
 #include <stdio.h>
 #include "loader.h"
 
+// Calculate checksum for S-Record
 unsigned int calculateChecksum(const char* line, int count, int dataLength) {
     unsigned int checksum = 0;
     int i;
@@ -33,6 +34,7 @@ unsigned int calculateChecksum(const char* line, int count, int dataLength) {
     return checksum;
 }
 
+// Load S-Record from file
 void loadSRecord(const char* filename) {
     unsigned int byte;
     unsigned int data;
@@ -68,7 +70,8 @@ void loadSRecord(const char* filename) {
                 sscanf(line + HEADER_START + i, "%2x", &byte);
                 printf("%c", byte);
             }
-/*            printf("\n");
+            /*            
+            printf("\n");
             printf("Header (Bytes): ");
             for (int i = 0; i < dataLength + BYTE_SIZE; i += BYTE_SIZE) {
                 sscanf(line + HEADER_START + i, "%2x", &byte);
@@ -95,6 +98,7 @@ void loadSRecord(const char* filename) {
             sscanf(line + 4, "%4x", &address);
             printf("Starting address: %04X\n\n", address);
             reg_file[7] = address; // Store starting address in PC
+            start_address = address;
         }
     }
     fclose(file);

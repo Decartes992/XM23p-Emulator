@@ -29,6 +29,7 @@
 #define WORD 0
 #define TRUE 1
 #define FALSE 0
+#define CLEAR 0
 
 // PSW structure
 typedef struct {

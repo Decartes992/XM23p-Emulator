@@ -253,6 +253,7 @@ const char* getInstructionName(InstructionType type) {
     case BGE: return "BGE";
     case BLT: return "BLT";
     case BRA: return "BRA";
+    case CEX: return "CEX";
 
     default: return "INVALID";
     }
