@@ -7,19 +7,25 @@ Instructor: Larry Hughes
 File Name: manager.c
 File Purpose: This file contains the manager function which handles user input for memory display and calls the loadSRecord function to load S-Records from a file into memory.
 */
+
 #include <stdio.h>
+#include <signal.h>
 #include <stdlib.h>
+#include <string.h>
 #include "loader.h"
 #include "debugger_mode.h"
+#include "pipeline.h"
+#include "execute_instructions.h"
+#include "cex_instructions.h"
 
-//Global variables are defined in the manager.c file
+// Global variables are defined in the manager.c file
 unsigned short reg_file[REGFILE_SIZE]; // Define the register file
-unsigned short breakpoint = 0xFFFF; // Initialize breakpoint to an invalid address
+unsigned short breakpoint = 0xFFFF;    // Initialize breakpoint to an invalid address
 
 // Define the register pointers
-unsigned short* PC = &reg_file[7];  // Start execution at address in R7
-unsigned short* SP = &reg_file[6];  // Stack Pointer
-unsigned short* LR = &reg_file[5];  // Link Register
+unsigned short* PC = &reg_file[7]; // Start execution at address in R7
+unsigned short* SP = &reg_file[6]; // Stack Pointer
+unsigned short* LR = &reg_file[5]; // Link Register
 
 // Define IMAR, ICTRL, IR, breakpoint, and clock_ticks
 unsigned short IMAR;
@@ -67,22 +73,30 @@ unsigned short DMEM[DMEM_SIZE / 2];
 
 PSW psw = { 0, 0, 0, 0, 0 }; // Initialize PSW
 
-void manager(int argc, char* argv[]) {
-    char filename[256]; // Ensure filename buffer is properly allocated
 
+void manager(int argc, char* argv[]) {
     int start, end;
     char choice;
     char continueChoice;
     unsigned short address;
+    char filename[256]; // Ensure filename buffer is properly allocated
+
+    if (argc == 2) {
+        strcpy(filename, argv[1]);
+        loadSRecord(filename);
+    }
 
     do {
+        char filename[256]; // Ensure filename buffer is properly allocated
+
         printf("Enter command (L to load XME file, I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
-        scanf(" %c", &choice);
+        fgets(filename, sizeof(filename), stdin); // Use fgets to read the command
+        sscanf(filename, " %c", &choice);         // Extract the command character
 
         switch (choice) {
-
             // Display Instruction Memory
-        case 'I':case 'i':
+        case 'I':
+        case 'i':
             printf("\nDisplaying Instruction Memory (IMEM):\n");
             printf("Enter start address (in hex): ");
             scanf("%x", &start);
@@ -92,7 +106,8 @@ void manager(int argc, char* argv[]) {
             break;
 
             // Display Data Memory
-        case 'D':case 'd':
+        case 'D':
+        case 'd':
             printf("Displaying Data Memory (DMEM):\n");
             printf("Enter start address (in hex): ");
             scanf("%x", &start);
@@ -102,43 +117,54 @@ void manager(int argc, char* argv[]) {
             break;
 
             // Display Registers
-        case 'R':case 'r':
+        case 'R':
+        case 'r':
             displayRegisters();
             break;
 
             // Change Register
-        case 'C': case 'c':
+        case 'C':
+        case 'c':
             changeRegister();
             break;
 
             // Change Memory
-        case 'M': case 'm':
+        case 'M':
+        case 'm':
             changeMemory();
             break;
 
             // Set Breakpoint
-        case 'B':case 'b':
+        case 'B':
+        case 'b':
             printf("Enter breakpoint address (in hex): ");
             scanf("%hx", &address);
             setBreakpoint(address);
             break;
 
             // Execute Program
-        case 'E':case 'e':
+        case 'E':
+        case 'e':
             runMode(EXECUTION_MODE);
             break;
 
             // Debugger Mode
-        case 'X':case 'x':
+        case 'X':
+        case 'x':
             runMode(DEBUGGER_MODE);
             break;
 
             // Load S-Record File
-        case 'L':case 'l':
-            clearMemory();
-            resetRegisters();
-            printf("Enter the name of the S-Record file:");
+        case 'L':
+        case 'l':
+            //clearMemory();
+            //resetRegisters();
+            // Clear the filename buffer before taking input
+            memset(filename, 0, sizeof(filename));
+            printf("Enter the name of the S-Record file: ");
             fgets(filename, sizeof(filename), stdin);
+            // Remove the newline character if present
+            filename[strcspn(filename, "\n")] = 0;
             loadSRecord(filename);
             break;
 
@@ -146,15 +172,21 @@ void manager(int argc, char* argv[]) {
             printf("Invalid choice. Please enter a valid command.\n");
         }
 
+        // Clear the input buffer after using scanf
+        while (getchar() != '\n')
+            ;
+
         // Ask user if they want to enter another command
         do {
             printf("Do you want to enter another command? (Y for yes, N for no): ");
             scanf(" %c", &continueChoice);
+            // Clear the input buffer after using scanf
+            while (getchar() != '\n')
+                ;
             printf("\n");
         } while (continueChoice != 'Y' && continueChoice != 'y' && continueChoice != 'N' && continueChoice != 'n');
 
     } while (continueChoice == 'Y' || continueChoice == 'y');
-    return;
 }
 
 void clearMemory() {
@@ -168,3 +200,4 @@ void resetRegisters() {
     *PC = 0;
     *SP = 0;
 }
+
