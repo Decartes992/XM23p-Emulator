@@ -30,12 +30,6 @@
 #define TRUE 1
 #define FALSE 0
 
-
-
-
-
-
-
 // PSW structure
 typedef struct {
     unsigned char ZF; // Zero Flag
@@ -86,13 +80,21 @@ extern unsigned short EA; // Effective Address
 extern short offset_BL;
 extern short offset_BR;
 extern int isBranch; // Flag to indicate if the previous instruction is a branch
-
+extern unsigned char C;
+extern unsigned char T;
+extern unsigned char F;
+extern unsigned char TC;
+extern unsigned char FC;
+extern unsigned char cex_flag;
 
 // Declare functions for loading S-Records and displaying memory
 void loadSRecord(const char* filename);
 void displayMemory(unsigned char* memory, int start, int end);
 void manager(int argc, char* argv[]);
 unsigned int calculateChecksum(const char* line, int count, int dataLength);
+void resetRegisters();
+void clearMemory();
+
 
 
 

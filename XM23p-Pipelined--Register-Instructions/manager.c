@@ -52,6 +52,14 @@ short offset_BL;
 short offset_BR;
 int isBranch; // Flag to indicate if the previous instruction is a branch
 
+// Variables to store the extracted fields from the CEX instruction
+unsigned char C;
+unsigned char T;
+unsigned char F;
+unsigned char TC;
+unsigned char FC;
+unsigned char cex_flag;
+
 // Define a 64 KiB word-addressable instruction memory array
 unsigned short IMEM[IMEM_SIZE / 2];
 
@@ -61,21 +69,20 @@ unsigned short DMEM[DMEM_SIZE/2];
 PSW psw = { 0, 0, 0, 0, 0 }; // Initialize PSW
 
 void manager(int argc, char* argv[]) {
-    if (argc != ARG_COUNT) {
-        fprintf(stderr, "Error: XME file not detected.");
-        getchar();
-        return;
-    }
+    //if (argc != ARG_COUNT) {
+    //    //fprintf(stderr, "Error: XME file not detected.");
 
-    const char* filename = argv[1];
+    //    getchar();
+    //    return;
+    //}
+    char filename[256]; // Ensure filename buffer is properly allocated
     int start, end;
     char choice;
     char continueChoice;
     unsigned short address;
 
-    loadSRecord(argv[1]);
     do {
-        printf("Enter command (I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
+        printf("Enter command (L to load XME file, I for IMEM, D for DMEM, R to display registers, C to change register, M to change memory, B to set breakpoint, E for execute program, X for debugger mode): ");
         scanf(" %c", &choice);
 
         switch (choice) {
@@ -88,7 +95,7 @@ void manager(int argc, char* argv[]) {
             printf("Enter end address (in hex): ");
             scanf("%x", &end);
             displayMemory((unsigned char*)IMEM, start, end);
-            break;
+            return;
 
         // Display Data Memory
         case 'D':case 'd': 
@@ -98,40 +105,47 @@ void manager(int argc, char* argv[]) {
             printf("Enter end address (in hex): ");
             scanf("%x", &end);
             displayMemory((unsigned char*)DMEM, start, end);
-            break;
+            return;
 
         // Display Registers
         case 'R':case 'r':
             displayRegisters();
-            break;
+            return;
 
 		// Change Register
         case 'C': case 'c': 
             changeRegister(); 
-            break;
+            return;
 
         // Change Memory
         case 'M': case 'm':
             changeMemory();
-            break;
+            return;
 
         // Set Breakpoint
         case 'B':case 'b':
             printf("Enter breakpoint address (in hex): ");
             scanf("%hx", &address);
             setBreakpoint(address);
-            break;
+            return;
 
         // Execute Program
         case 'E':case 'e':
             runMode(EXECUTION_MODE); 
-            break;
+            return;
 
         // Debugger Mode
         case 'X':case 'x':
             runMode(DEBUGGER_MODE); 
-            break;
+            return;
+        case 'L':case 'l':
+            clearMemory();
+            resetRegisters();
 
+            printf("Enter the name of the S-Record file:");
+            scanf("%s", filename);
+            loadSRecord(filename);
+            continue;
         // Invalid command
         default:
             printf("Invalid choice. Please enter a valid command.\n");
@@ -146,4 +160,16 @@ void manager(int argc, char* argv[]) {
 
     } while (continueChoice == 'Y' || continueChoice == 'y');
     return;
+}
+
+void clearMemory() {
+    memset(IMEM, 0, sizeof(IMEM));
+    memset(DMEM, 0, sizeof(DMEM));
+}
+
+void resetRegisters() {
+    memset(reg_file, 0, sizeof(reg_file));
+    memset(&psw, 0, sizeof(psw));
+    *PC = 0;
+    *SP = 0;
 }

@@ -67,13 +67,13 @@ void loadSRecord(const char* filename) {
                 sscanf(line + HEADER_START + i, "%2x", &byte);
                 printf("%c", byte);
             }
-            printf("\n");
+/*            printf("\n");
             printf("Header (Bytes): ");
             for (int i = 0; i < dataLength + BYTE_SIZE; i += BYTE_SIZE) {
                 sscanf(line + HEADER_START + i, "%2x", &byte);
                 printf("%02X ", byte);
             }
-            printf("\n");
+            printf("\n")*/;
         }
         else if (line[1] == '1') {
             // S1 record: IMEM data
