@@ -6,7 +6,7 @@
 #include "decode_instructions.h"
 
 // Function prototypes
-void pipelineExecute(int display);
+void pipelineExecute(int display, const char step);
 void StatusPrint(unsigned short IR_prev);
 void F0Stage();
 void D0Stage(InstructionType* type);

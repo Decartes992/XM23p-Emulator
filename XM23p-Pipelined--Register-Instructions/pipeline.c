@@ -1,3 +1,13 @@
+/*
+Name: Iftekhar Rafi
+ID: B00871031
+Course: ECED 3403 Computer Architecture
+Instructor: Larry Hughes
+
+File Name: pipeline.c
+File Purpose: This file contains the pipeline functions for the execution of instructions
+*/
+
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -14,7 +24,7 @@ void handle_sigint(int sig) {
     interrupted = 1;
 }
 
-void pipelineExecute(int display) {
+void pipelineExecute(int display, const char step) {
     // Register the signal handler for SIGINT
     signal(SIGINT, handle_sigint);
 
@@ -54,13 +64,15 @@ void pipelineExecute(int display) {
 
         IR = IMEM[(*PC - 2) / 2];
 
-        printDecodedInstruction(*PC, type);
+        //printDecodedInstruction(*PC, type);
 
         if (display) StatusPrint(PC, IR_prev);
-        displayRegisters();
+        //displayRegisters();
 
         tick();
         count++;
+
+        if (step) getchar(); // Wait for user input to continue
 
         // Check if the loop was exited due to an interrupt
         if (interrupted) {

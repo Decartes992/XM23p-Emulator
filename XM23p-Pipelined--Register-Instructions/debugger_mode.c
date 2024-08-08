@@ -16,7 +16,11 @@ File Purpose: This file contains the runMode function which executes instruction
 
 
 void runMode(int debug) {
-    pipelineExecute(debug);          // Execute instructions
+    char step = 0;
+    printf("Press Y to execute in steps:");
+    scanf(" %c", &step);
+    
+    pipelineExecute(debug, step);          // Execute instructions
     displayRegisters();                  // Display register contents
     saveRegisterInfoToFile();            // Save register contents to file
     return;
