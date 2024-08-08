@@ -18,6 +18,7 @@ File Purpose: This file contains the pipeline functions for the execution of ins
 
 // Global variable to keep track of interrupt signal
 volatile sig_atomic_t interrupted = 0;
+IR = 0x6800;
 
 // Signal handler function
 void handle_sigint(int sig) {
@@ -31,7 +32,6 @@ void pipelineExecute(int display, const char step) {
     InstructionType type;
     int instruction_count = 1;
     unsigned short IR_prev = 0;
-    IR = 0x6800;
     int count = 0;
     isBranch = 0;
     type = getInstructionType(IR);
@@ -39,34 +39,34 @@ void pipelineExecute(int display, const char step) {
     if (display) StatusPrint(IR_prev);
 
     while (!(IR == 0x0000 || *PC == breakpoint || interrupted)) {
-        if (type == LD || type == LDR || type == ST || type == STR) {
-            E1Stage(type);  // Execute memory access completion stage
-        }
 
-        // Fetch the instruction
-        F0Stage();
+        F0Stage();        // Fetch the instruction
 
-        // Decode the instruction
-        D0Stage(&type);
 
-        if (display) StatusPrint(PC, IR_prev);
+        D0Stage(&type);        // Decode the instruction
+
+
+        if (display) StatusPrint(IR_prev);
 
         tick();
 
-        // Save the current instruction to the previous instruction register
-        IR_prev = IR;
+        IR_prev = IR;        // Save the current instruction to the previous instruction register
 
-        // Set instruction register to the next instruction
-        F1Stage();
 
-        // Execute the instruction
-        E0Stage(type);
+        F1Stage();        // Set instruction register to the next instruction
+
+
+        E0Stage(type);        // Execute the instruction
+
+
+
+        E1Stage(type); // Execute memory access completion stage
 
         IR = IMEM[(*PC - 2) / 2];
 
         //printDecodedInstruction(*PC, type);
 
-        if (display) StatusPrint(PC, IR_prev);
+        if (display) StatusPrint(IR_prev);
         //displayRegisters();
 
         tick();
@@ -106,9 +106,10 @@ void E0Stage(InstructionType type) {
     }
 
     if (((TC == 0) && (FC == 0)) || type == CEX) { // CEX disabled
-        unsigned short operand = getOperand(rc, src);
-        executeInstruction(type, operand);
-        saveRegisterInfoToFile();
+        if (!(type == LD || type == LDR || type == ST || type == STR)) {
+            unsigned short operand = getOperand(rc, src);
+            executeInstruction(type, operand);
+        }
     }
     else { // CEX enabled
         execute_cex_instructions(IR); // handle executions accordingly
@@ -126,11 +127,9 @@ void F1Stage() {
 }
 
 void E1Stage(InstructionType type) {
-    if (type == LD || type == ST) {
-        execute_ld();
-    }
-    else if (type == LDR || type == STR) {
-        execute_st();
+    if (type == LD || type == LDR || type == ST || type == STR) {
+        unsigned short operand = getOperand(rc, src);
+        executeInstruction(type, operand);
     }
 }
 
