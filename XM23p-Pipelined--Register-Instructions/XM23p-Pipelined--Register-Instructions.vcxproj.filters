@@ -48,6 +48,9 @@
     <ClCompile Include="branch_instructions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cex_instructions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugger_mode.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="branch_instructions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cex_instructions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

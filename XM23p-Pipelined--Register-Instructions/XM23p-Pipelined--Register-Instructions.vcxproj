@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="branch_instructions.c" />
+    <ClCompile Include="cex_instructions.c" />
     <ClCompile Include="debugger_mode.c" />
     <ClCompile Include="decode_instructions.c" />
     <ClCompile Include="execute_instructions.c" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="branch_instructions.h" />
+    <ClInclude Include="cex_instructions.h" />
     <ClInclude Include="debugger_mode.h" />
     <ClInclude Include="decode_instructions.h" />
     <ClInclude Include="execute_instructions.h" />
