@@ -47,10 +47,9 @@ void pipelineExecute(int display, const char step) {
 
         D0Stage(&type);        // Decode the instruction
 
+        tick();
 
         if (display) StatusPrint(IR_prev_dummy);
-
-        tick();
 
         IR_prev = IR;        // Save the current instruction to the previous instruction register
 
@@ -68,12 +67,13 @@ void pipelineExecute(int display, const char step) {
 
         //printDecodedInstruction(*PC, type);
 
+        tick();
+
         if (display) StatusPrint(IR);
         //displayRegisters();
 
-        tick();
         count++;
-
+        isBranch = FALSE;
         if (step == 'y' || step == 'Y') getchar(); // Wait for user input to continue
 
         // Check if the loop was exited due to an interrupt
@@ -145,7 +145,7 @@ void StatusPrint(unsigned short IR_prev) {
             printf("  %-3d %-9X %-10X F0: %-7X D0: %-5X \n", clock_ticks, IMAR * 2, IMEM[IMAR], *PC, IR);
         }
         else {
-            printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IR_prev, psw.ZF, psw.SF, psw.OF, psw.CF);
+            printf("  %-24d F1: %-19X E0: %-7X %d %d %d %d\n", clock_ticks, IR, IMEM[(*PC - 4) / 2], psw.ZF, psw.SF, psw.OF, psw.CF);
         }
     }
     else {
