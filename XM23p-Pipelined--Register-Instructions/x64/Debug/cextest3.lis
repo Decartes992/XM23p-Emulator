@@ -1,6 +1,6 @@
 X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
 Input file name: cextest3.asm
-Time of assembly: Thu 8 Aug 2024 11:14:46 
+Time of assembly: Thu 8 Aug 2024 13:59:02 
   1	    	     	
   2	    	     	V1	equ	$10
   3	    	     	V2	equ	$7

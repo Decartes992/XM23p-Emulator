@@ -1,6 +1,6 @@
 X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
 Input file name: cextest4.asm
-Time of assembly: Thu 8 Aug 2024 11:09:30 
+Time of assembly: Thu 8 Aug 2024 12:26:52 
   1	    	     	; Test_CEX_Branch.asm
   2	    	     	
   3	    	     	V1    equ    $10
@@ -14,7 +14,7 @@ Time of assembly: Thu 8 Aug 2024 11:09:30
  11	1000	6851	    movlz    V1,R1        ; R1 <- 10
  12	1002	683A	    movlz    V2,R2        ; R2 <- 7
  13	1004	4DA2	    setcc    Z            ; Set condition code Z (Zero)
- 14	1006	5012	    cex     eq,$2,$2      ; Conditional execution: 2 instructions if Z=0, 2 if Z=1
+ 14	1006	5012	    cex     eq,$2,$2      ; Conditional execution: 2 instructions if Z=0, 3 if Z=1
  15	1008	6FF8	    movlz   #FF,R0
  16	100A	2005	    beq     Subr1         ; Branch to Subr1 if Z=0
  17	100C	4011	    add     R2,R1         ; R1 <- R1 + R2 if Z=0

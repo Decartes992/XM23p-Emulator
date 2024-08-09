@@ -11,7 +11,7 @@ Main
     movlz    V1,R1        ; R1 <- 10
     movlz    V2,R2        ; R2 <- 7
     setcc    Z            ; Set condition code Z (Zero)
-    cex     eq,$2,$2      ; Conditional execution: 2 instructions if Z=0, 2 if Z=1
+    cex     eq,$2,$2      ; Conditional execution: 2 instructions if Z=0, 3 if Z=1
     movlz   #FF,R0
     beq     Subr1         ; Branch to Subr1 if Z=0
     add     R2,R1         ; R1 <- R1 + R2 if Z=0
