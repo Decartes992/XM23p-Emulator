@@ -81,12 +81,21 @@ void execute_cex_instructions(InstructionType instruction_number) {
     // This function handles the effect of the CEX instruction on subsequent instructions
     // Executes the instruction if the condition is true, otherwise skips it
     // Adjusts the True and False counters accordingly
-
+    unsigned short state = 0;
+    unsigned short PC_prev = *PC;
     if (cex_flag == TRUE) {
         if (TC > 0) {
+            if (isBranch) {
+                PC_prev = *PC + 2;
+                state = 1;
+            } 
+            if(PC_prev == *PC) state = 0;
+
             unsigned short operand = getOperand(rc, src);
             executeInstruction(instruction_number, operand);
-            TC--;
+            IR = IMEM[(*PC - 2) / 2];
+
+            if (state != 1) TC--;
         }
         else {
             printf("CEX skip\n");
@@ -99,9 +108,17 @@ void execute_cex_instructions(InstructionType instruction_number) {
             TC--;
         }
         else {
+            if (isBranch) {
+                PC_prev = *PC + 2;
+                state = 1;
+            }
+            if (PC_prev == *PC) state = 0;
             unsigned short operand = getOperand(rc, src);
             executeInstruction(instruction_number, operand);
-            FC--;
+            IR = IMEM[(*PC - 2) / 2];
+            if (state != 1) FC--;
+
         }
     }
 }
+
