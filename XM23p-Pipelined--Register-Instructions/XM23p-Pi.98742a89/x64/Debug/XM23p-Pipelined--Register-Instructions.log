@@ -1,7 +1,4 @@
-﻿  cex_instructions.c
-C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\cex_instructions.c(72,9): warning C4013: 'printf' undefined; assuming extern returning int
-C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\cex_instructions.c(103,13): warning C4013: 'executeInstruction' undefined; assuming extern returning int
-  debugger_mode.c
-  srecord.c
+﻿  branch_instructions.c
+  manager.c
   Generating Code...
   XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
