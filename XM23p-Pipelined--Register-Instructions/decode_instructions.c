@@ -37,10 +37,12 @@ void extractFields(unsigned short instruction, InstructionType type) {
         slp = (instruction >> 5) & 0x01; // SLP is bit 5
         break;
     case BEQ: case BNE: case BC: case BNC: case BN: case BGE: case BLT: case BRA:
+        isBranch = TRUE;
         offset_BR = (instruction & 0x03FF); // get the offset bit (BR-BRA)
         offset_BR = SignExt(offset_BR, 9); // Sign-extend the offset buffer (was 9 bits)
         break;
     case BL:
+        isBranch = TRUE;
         offset_BL = ((instruction) & 0x1FFF); // get the offset bit (BL)
         offset_BL = SignExt(offset_BL, 12); // Sign-extend the offset buffer (was 12 bits)
         break;
