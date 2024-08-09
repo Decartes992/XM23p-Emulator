@@ -78,6 +78,149 @@ void execute_cex() {
 }
 
 void execute_cex_instructions(InstructionType instruction_number) {
+    // This function handles the effect of the CEX instruction on subsequent instructions.
+    // Executes the instruction if the condition is true, otherwise skips it.
+    // Adjusts the True and False counters accordingly.
+
+    static unsigned short PC_prev = 0; // Store the previous value of the Program Counter (PC)
+    static unsigned char in_subroutine = 0; // Flag to indicate if in a subroutine
+
+    // Check if the condition for execution is true
+    if (cex_flag == TRUE) {
+        // If there are instructions left to execute under the true condition
+        if (TC > 0) {
+            // Check if the current instruction is a branch or if the PC has changed
+            if (isBranch || PC_prev != *PC) {
+                in_subroutine = 1; // Set flag to indicate a branch or subroutine entry
+            }
+            else if (in_subroutine && PC_prev == *PC) {
+                in_subroutine = 0; // Reset flag if PC has returned to previous value
+            }
+
+            // Get the operand for the instruction
+            unsigned short operand = getOperand(rc, src);
+            // Execute the instruction
+            executeInstruction(instruction_number, operand);
+            // Update the Instruction Register (IR) with the current instruction
+            IR = IMEM[(*PC - 2) / 2];
+
+            // Decrement TC only if not in a branch or subroutine
+            if (!in_subroutine) TC--;
+        }
+        else {
+            // If no instructions left to execute under the true condition, skip
+            printf("CEX skip\n");
+            FC--; // Decrement the false counter
+        }
+    }
+    else {
+        // If the condition for execution is false
+        if (TC > 0) {
+            // Skip the instruction and decrement the true counter
+            printf("CEX skip\n");
+            TC--;
+        }
+        else {
+            // If no instructions left to skip under the false condition
+            if (isBranch || PC_prev != *PC) {
+                in_subroutine = 1; // Set flag to indicate a branch or subroutine entry
+            }
+            else if (in_subroutine && PC_prev == *PC) {
+                in_subroutine = 0; // Reset flag if PC has returned to previous value
+            }
+
+            // Get the operand for the instruction
+            unsigned short operand = getOperand(rc, src);
+            // Execute the instruction
+            executeInstruction(instruction_number, operand);
+            // Update the Instruction Register (IR) with the current instruction
+            IR = IMEM[(*PC - 2) / 2];
+
+            // Decrement FC only if not in a branch or subroutine
+            if (!in_subroutine) FC--;
+        }
+    }
+
+    // Update PC_prev to the current PC value
+    PC_prev = *PC;
+}
+
+
+
+// Older version of the function execute_cex_instructions with comments added 
+//and function checks for subroutine calls through both branches and register instructions
+#ifdef USE_OLD_CODE 
+          
+void execute_cex_instructions(InstructionType instruction_number) {
+    // This function handles the effect of the CEX instruction on subsequent instructions.
+    // Executes the instruction if the condition is true, otherwise skips it.
+    // Adjusts the True and False counters accordingly.
+
+    unsigned short state = 0; // State to track if a branch or subroutine is entered
+    unsigned short PC_prev = *PC; // Store the previous value of the Program Counter (PC)
+
+    // Check if the condition for execution is true
+    if (cex_flag == TRUE) {
+        // If there are instructions left to execute under the true condition
+        if (TC > 0) {
+            // Check if the current instruction is a branch or if the PC has changed
+            if (isBranch || PC_prev != *PC) {
+                PC_prev = *PC + 2; // Update PC_prev to the new PC value
+                state = 1; // Set state to indicate a branch or subroutine entry
+            }
+            if (PC_prev == *PC) state = 0; // Reset state if PC has not changed
+
+            // Get the operand for the instruction
+            unsigned short operand = getOperand(rc, src);
+            // Execute the instruction
+            executeInstruction(instruction_number, operand);
+            // Update the Instruction Register (IR) with the current instruction
+            IR = IMEM[(*PC - 2) / 2];
+
+            // Decrement TC only if not in a branch or subroutine
+            if (state != 1) TC--;
+        }
+        else {
+            // If no instructions left to execute under the true condition, skip
+            printf("CEX skip\n");
+            FC--; // Decrement the false counter
+        }
+    }
+    else {
+        // If the condition for execution is false
+        if (TC > 0) {
+            // Skip the instruction and decrement the true counter
+            printf("CEX skip\n");
+            TC--;
+        }
+        else {
+            // If no instructions left to skip under the false condition
+            if (isBranch || PC_prev != *PC) {
+                PC_prev = *PC + 2; // Update PC_prev to the new PC value
+                state = 1; // Set state to indicate a branch or subroutine entry
+            }
+            if (PC_prev == *PC) state = 0; // Reset state if PC has not changed
+
+            // Get the operand for the instruction
+            unsigned short operand = getOperand(rc, src);
+            // Execute the instruction
+            executeInstruction(instruction_number, operand);
+            // Update the Instruction Register (IR) with the current instruction
+            IR = IMEM[(*PC - 2) / 2];
+
+            // Decrement FC only if not in a branch or subroutine
+            if (state != 1) FC--;
+        }
+    }
+}
+#endif // !1
+
+
+// Older version of the function  without comments and 
+// function checks for subroutine calls through branches only
+#ifdef USE_OLD_CODE
+
+void execute_cex_instructions(InstructionType instruction_number) {
     // This function handles the effect of the CEX instruction on subsequent instructions
     // Executes the instruction if the condition is true, otherwise skips it
     // Adjusts the True and False counters accordingly
@@ -88,8 +231,8 @@ void execute_cex_instructions(InstructionType instruction_number) {
             if (isBranch) {
                 PC_prev = *PC + 2;
                 state = 1;
-            } 
-            if(PC_prev == *PC) state = 0;
+            }
+            if (PC_prev == *PC) state = 0;
 
             unsigned short operand = getOperand(rc, src);
             executeInstruction(instruction_number, operand);
@@ -122,3 +265,5 @@ void execute_cex_instructions(InstructionType instruction_number) {
     }
 }
 
+
+#endif // !1

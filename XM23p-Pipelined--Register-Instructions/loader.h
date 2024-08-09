@@ -31,6 +31,10 @@
 #define FALSE 0
 #define CLEAR 0
 
+// Uncomment the following line to include the old code
+// #define USE_OLD_CODE
+
+
 // PSW structure
 typedef struct {
     unsigned char ZF; // Zero Flag
