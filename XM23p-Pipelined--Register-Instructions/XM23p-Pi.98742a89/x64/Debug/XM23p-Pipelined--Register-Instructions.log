@@ -1,4 +1,22 @@
 ﻿  branch_instructions.c
+  cex_instructions.c
+  debugger_mode.c
+  decode_instructions.c
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\cex_instructions.c(72,9): warning C4013: 'printf' undefined; assuming extern returning int
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\cex_instructions.c(103,13): warning C4013: 'executeInstruction' undefined; assuming extern returning int
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\decode_instructions.c(42,21): warning C4013: 'SignExt' undefined; assuming extern returning int
+  execute_instructions.c
+  memory_instructions.c
+  pipeline.c
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\pipeline.c(117,9): warning C4013: 'execute_cex_instructions' undefined; assuming extern returning int
+  register_instructions.c
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\register_instructions.c(362,18): warning C4244: '=': conversion from 'unsigned short' to 'unsigned char', possible loss of data
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\register_instructions.c(369,18): warning C4244: '=': conversion from 'unsigned short' to 'unsigned char', possible loss of data
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\register_instructions.c(406,6): warning C4026: function declared with formal parameter list
+D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\register_instructions.c(416,6): warning C4026: function declared with formal parameter list
+  loader.c
   manager.c
+  memory.c
+  srecord.c
   Generating Code...
-  XM23p-Pipelined--Register-Instructions.vcxproj -> C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe
+  XM23p-Pipelined--Register-Instructions.vcxproj -> D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\XM23p-Pipelined--Register-Instructions.exe

@@ -1,6 +1,6 @@
 X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
 Input file name: cextest4.asm
-Time of assembly: Thu 8 Aug 2024 12:26:52 
+Time of assembly: Fri 9 Aug 2024 12:09:53 
   1	    	     	; Test_CEX_Branch.asm
   2	    	     	
   3	    	     	V1    equ    $10
@@ -11,31 +11,26 @@ Time of assembly: Thu 8 Aug 2024 12:26:52
   8	    	     	CODE
   9	    	     	    org    #1000
  10	    	     	Main
- 11	1000	6851	    movlz    V1,R1        ; R1 <- 10
- 12	1002	683A	    movlz    V2,R2        ; R2 <- 7
- 13	1004	4DA2	    setcc    Z            ; Set condition code Z (Zero)
- 14	1006	5012	    cex     eq,$2,$2      ; Conditional execution: 2 instructions if Z=0, 3 if Z=1
- 15	1008	6FF8	    movlz   #FF,R0
- 16	100A	2005	    beq     Subr1         ; Branch to Subr1 if Z=0
- 17	100C	4011	    add     R2,R1         ; R1 <- R1 + R2 if Z=0
- 18	100E	2005	    beq     Subr2         ; Branch to Subr2 if Z=1
- 19	1010	4291	    sub     $2,R1         ; R1 <- R1 - 2 if Z=1
- 20	1012	7013	    movls   #02,R3        ; R3 <- 2
- 21	1014	3C04	    bra     Done          ; Branch to Done
- 22	    	     	
- 23	    	     	Subr1
- 24	1016	707C	    movls    #0F,R4       ; R4 <- 15
- 25	1018	4C2F	    mov     LR,PC         ; Return from Subr1
- 26	    	     	
- 27	    	     	Subr2
- 28	101A	7054	    movls    #0A,R4       ; R4 <- 10
- 29	101C	4C2F	    mov     LR,PC         ; Return from Subr2
- 30	    	     	
- 31	    	     	Done
- 32	101E	3FFF	    bra     Done          ; Infinite loop
- 33	    	     	    end     Main
+ 11	    	     	    LD #2000,R0   ; Load the memory address 0x2000 into R0
+			**** Invalid modifier or register (ADDR only): #2000
+ 12	1000	5C10	    ST R2,R0        ; Store the address from R0 into R2
+ 13	    	     	    LD @R2,R1       ; Indirectly load the value from the address in R2 into R1
+			**** Invalid modifier or register (ADDR only): @R2
+ 14	1002	3FFF	    bra     Done          ; Branch to Done
+ 15	    	     	
+ 16	    	     	Subr1
+ 17	1004	707C	    movls    #0F,R4       ; R4 <- 15
+ 18	1006	4C2F	    mov     LR,PC         ; Return from Subr1
+ 19	    	     	
+ 20	    	     	Subr2
+ 21	1008	7054	    movls    #0A,R4       ; R4 <- 10
+ 22	100A	4C2F	    mov     LR,PC         ; Return from Subr2
+ 23	    	     	
+ 24	    	     	Done
+ 25	100C	3FFF	    bra     Done          ; Infinite loop
+ 26	    	     	    end     Main
 
-Successful completion of assembly - 2P
+First pass errors - assembly terminated
 
 ** Symbol table **
 
@@ -46,9 +41,9 @@ V1                                 	CON	000A	10	PRI
 
 Labels (Code)
 Name                               	Type	Value	Decimal
-Done                               	REL	101E	4126	PRI
-Subr2                              	REL	101A	4122	PRI
-Subr1                              	REL	1016	4118	PRI
+Subr2                              	REL	1008	4104	PRI
+Subr1                              	REL	1004	4100	PRI
+Done                               	REL	100C	4108	PRI
 Main                               	REL	1000	4096	PRI
 
 Labels (Data)
@@ -66,6 +61,3 @@ R3                                 	REG	0003	3	PRI
 R2                                 	REG	0002	2	PRI
 R1                                 	REG	0001	1	PRI
 R0                                 	REG	0000	0	PRI
-
-.XME file: C:\Users\Decartes\Documents\GitHub\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\cextest4.xme
-

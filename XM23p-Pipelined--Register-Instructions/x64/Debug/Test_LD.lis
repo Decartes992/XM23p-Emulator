@@ -1,0 +1,62 @@
+X-Makina Assembler - Version XM-23P Single Pass+ Assembler - Release 24.04.17
+Input file name: Test_LD.asm
+Time of assembly: Fri 9 Aug 2024 12:29:09 
+  1	    	     	LR    EQU   R5
+  2	    	     	PC    EQU   R7
+  3	    	     	
+  4	    	     	        ORG   #1000
+  5	    	     	
+  6	    	     	CoR1
+  7	1000	6801	        MOVLZ   #0,R1
+  8	1002	07FE	        BL      CoR2
+  9	1004	4089	        ADD     #1,R1
+ 10	1006	4CAF	        SWAP    LR,PC
+ 11	    	     	
+ 12	    	     	CoR1_X
+ 13	1008	3FFF	        BRA     CoR1_X
+ 14	    	     	
+ 15	    	     	        ORG   #2000
+ 16	    	     	
+ 17	    	     	CoR2
+ 18	2000	4089	        ADD     #1,R1
+ 19	2002	4CAF	        SWAP    LR,PC
+ 20	2004	4091	        ADD     #2,R1
+ 21	2006	4CAF	        SWAP    LR,PC
+ 22	    	     	
+ 23	    	     	CoR2_X
+ 24	2008	3FFF	        BRA     CoR2_X
+ 25	    	     	
+ 26	    	     	        END   CoR1
+
+Successful completion of assembly - 2P
+
+** Symbol table **
+
+Constants (Equates)
+Name                               	Type	Value	Decimal
+
+Labels (Code)
+Name                               	Type	Value	Decimal
+CoR2_X                             	REL	2008	8200	PRI
+CoR1_X                             	REL	1008	4104	PRI
+CoR2                               	REL	2000	8192	PRI
+CoR1                               	REL	1000	4096	PRI
+
+Labels (Data)
+Name                               	Type	Value	Decimal
+
+Registers
+Name                               	Type	Value	Decimal
+PC                                 	REG	0007	7	PRI
+LR                                 	REG	0005	5	PRI
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: D:\DAL MAST\XM23p-Pipelined--Register-Instructions\XM23p-Pipelined--Register-Instructions\x64\Debug\Test_LD.xme
+

@@ -8,16 +8,9 @@ PC    equ    R7
 CODE
     org    #1000
 Main
-    movlz    V1,R1        ; R1 <- 10
-    movlz    V2,R2        ; R2 <- 7
-    setcc    Z            ; Set condition code Z (Zero)
-    cex     eq,$2,$2      ; Conditional execution: 2 instructions if Z=0, 3 if Z=1
-    movlz   #FF,R0
-    beq     Subr1         ; Branch to Subr1 if Z=0
-    add     R2,R1         ; R1 <- R1 + R2 if Z=0
-    beq     Subr2         ; Branch to Subr2 if Z=1
-    sub     $2,R1         ; R1 <- R1 - 2 if Z=1
-    movls   #02,R3        ; R3 <- 2
+    LD #2000,R0   ; Load the memory address 0x2000 into R0
+    ST R2,R0        ; Store the address from R0 into R2
+    LD @R2,R1       ; Indirectly load the value from the address in R2 into R1
     bra     Done          ; Branch to Done
 
 Subr1
